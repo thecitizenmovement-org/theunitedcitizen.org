@@ -1,0 +1,22 @@
+# United Citizens Movement — public site repo
+# Anything listed here is NEVER committed to the public repository.
+# Public repo = public site only. Private and paid content stays out.
+
+# --- Private working materials (concealed: never published) ---
+/_private/
+blueprints/
+drafts/
+notes/
+
+# --- Premium / paid content (stays out until the subscription
+# --- login on thecitizenmovement.store gates it) ---
+premium/
+members/
+comics-source/
+purchased-issues/
+
+# --- Local & system files ---
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
