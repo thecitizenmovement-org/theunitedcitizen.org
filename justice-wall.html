@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Justice Wall — The United Citizens Movement</title>
-<meta name="description" content="The Justice Wall: a public memorial record of citizens who lost life under questionable circumstances, preserved for inquiry. Case 001: Henry William Lane.">
+<meta name="description" content="The Justice Wall: a public memorial record of citizens who lost life under questionable circumstances, preserved for inquiry. Case 001: Henry William Lane. Case 002: Douglas Harless.">
 <style>
   :root { --gold: #d4af37; --ink: #0b1b33; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -130,6 +130,14 @@
       <div class="tap">Tap to open the case file</div>
     </div>
 
+    <div class="plaque" id="plaque-harless" role="button" tabindex="0" aria-label="Open case file for Douglas Harless">
+      <div class="portrait"><span class="ph">DH</span></div>
+      <div class="caseno">Case 002</div>
+      <h3>Douglas &ldquo;Doug&rdquo; Harless</h3>
+      <div class="dates">— December 23, 2024</div>
+      <div class="tap">Tap to open the case file</div>
+    </div>
+
   </div>
   <p class="pending-note">Additional cases are under review against the standard above and will be placed as their records are graded.</p>
 
@@ -162,18 +170,47 @@
   </div>
 </div>
 
+<!-- Case dossier modal: Harless -->
+<div class="overlay" id="dossier-harless" role="dialog" aria-label="Case file: Douglas Harless">
+  <div class="dossier">
+    <h3>Case 002 — Douglas &ldquo;Doug&rdquo; Harless</h3>
+    <p class="meta">Lily, Laurel County, Kentucky · December 23, 2024 · London Police Department</p>
+
+    <p>Douglas Harless, 63, was shot and killed in his own living room at 511 Vanzant Road, Lily, Kentucky, near midnight on December 23, 2024. London Police Department officers were executing a search warrant for stolen lawn equipment — a warrant written for 489 Vanzant Road. They raided 511. Awakened by intruders breaching his door, Harless stood in his living room holding a handgun. Detective Joshua Morgan fired five rifle rounds through the doorway, killing him. Harless never fired a shot. Round trajectories were recovered from the storm door, walls, refrigerator, and kitchen cabinets.</p>
+
+    <span class="grade">Official record</span>
+    <p>The Kentucky State Police investigative file — over 1,000 pages, released only after a court order following 14+ months withheld — established: dispatch audio has officers broadcasting the 489 address while raiding 511, realizing the error only after the shooting; &ldquo;511&rdquo; was posted on the house and lit by a motion light; officers claimed four sources had verified the address, and KSP tested all four — none supported it; the department&rsquo;s mandatory address-verification policy was violated, with no operational plan and no supervisory oversight; and the informant, already in custody, never named Harless or his address.</p>
+
+    <span class="grade">Why he is on the wall</span>
+    <p>A midnight raid hit the wrong house. A 63-year-old man, awakened by his own door being breached, was killed in his living room without firing a shot — and the department&rsquo;s own dispatch audio recorded the wrong address being broadcast as it happened. The file documenting all of it was withheld for over a year and released only by court order. On February 20, 2026, a grand jury returned a no-bill with a special prosecutor presenting; Morgan resigned after the records became public.</p>
+
+    <div class="status"><strong>Status:</strong> Daughters Nicki Lawson and Mona Alsip filed a federal wrongful-death suit October 7, 2025 — <em>Lawson v. London Police Department</em>, 6:25-cv-00176 (E.D. Ky.), naming the City of London and 11 officers. On February 24, 2026, all Laurel County elected officials jointly requested an FBI/DOJ Civil Rights Division investigation; Governor Beshear backed federal review. Family contact welcome via the <a href="contact.html">contact card</a>.</div>
+
+    <p style="margin-top:14px;font-size:.85rem;color:#8fa0bd;">Sources: WKYT (wrong-home report), FOX 56 (case file), WTVQ (records report), CourtListener (docket).</p>
+
+    <button class="closebtn" data-close>Close the file</button>
+  </div>
+</div>
+
 <script>
 (function () {
-  var plaque = document.getElementById('plaque-lane');
-  var overlay = document.getElementById('dossier-lane');
-  function open() { overlay.classList.add('open'); document.body.style.overflow = 'hidden'; }
-  function close() { overlay.classList.remove('open'); document.body.style.overflow = ''; }
-  plaque.addEventListener('click', open);
-  plaque.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
-  overlay.addEventListener('click', function (e) {
-    if (e.target === overlay || e.target.hasAttribute('data-close')) close();
+  [['plaque-lane', 'dossier-lane'], ['plaque-harless', 'dossier-harless']].forEach(function (pair) {
+    var plaque = document.getElementById(pair[0]);
+    var overlay = document.getElementById(pair[1]);
+    function open() { overlay.classList.add('open'); document.body.style.overflow = 'hidden'; }
+    function close() { overlay.classList.remove('open'); document.body.style.overflow = ''; }
+    plaque.addEventListener('click', open);
+    plaque.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay || e.target.hasAttribute('data-close')) close();
+    });
   });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.overlay.open').forEach(function (o) { o.classList.remove('open'); });
+      document.body.style.overflow = '';
+    }
+  });
 })();
 </script>
 </body>
