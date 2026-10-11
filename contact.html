@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The United Citizens Movement — Contact Card</title>
+<meta name="description" content="Contact card for The United Citizens Movement. Founded by Joshua Caleb Scott. Join free at thecitizenmovement.org.">
+<style>
+  :root { --gold: #d4af37; --ink: #0b1b33; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    color: #eef2f9;
+    min-height: 100vh;
+    display: flex; justify-content: center; align-items: flex-start;
+    padding: 28px 16px 48px;
+    background-color: var(--ink);
+    background-image:
+      linear-gradient(rgba(120,160,220,.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(120,160,220,.07) 1px, transparent 1px),
+      linear-gradient(rgba(120,160,220,.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(120,160,220,.045) 1px, transparent 1px);
+    background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+  }
+  .card {
+    width: 100%; max-width: 460px;
+    background: rgba(8, 20, 42, .92);
+    border: 1px solid rgba(212,175,55,.55);
+    border-radius: 14px;
+    padding: 34px 26px 28px;
+    text-align: center;
+    box-shadow: 0 18px 60px rgba(0,0,0,.5);
+  }
+  .seal {
+    width: 74px; height: 74px; margin: 0 auto 16px;
+    border: 2px solid var(--gold); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 34px; color: var(--gold);
+  }
+  h1 { font-size: 1.45rem; letter-spacing: .06em; color: var(--gold); margin-bottom: 6px; }
+  .tag { font-size: .92rem; font-style: italic; color: #b9c6dd; margin-bottom: 4px; }
+  .founder { font-size: .95rem; color: #eef2f9; margin: 14px 0 2px; }
+  .founder span { color: var(--gold); }
+  .rule { width: 64px; height: 2px; background: var(--gold); margin: 18px auto; opacity: .7; }
+  .btn {
+    display: block; width: 100%;
+    margin: 10px 0; padding: 14px 12px;
+    border: 1px solid rgba(212,175,55,.65); border-radius: 10px;
+    color: #f4f7fc; text-decoration: none; font-size: 1.02rem;
+    background: rgba(20, 38, 70, .55);
+    transition: background .15s, color .15s;
+    font-family: Georgia, serif;
+  }
+  .btn:hover, .btn:active { background: var(--gold); color: #0b1b33; }
+  .btn.primary { background: rgba(212,175,55,.16); font-weight: bold; }
+  .btn.primary:hover { background: var(--gold); color: #0b1b33; }
+  .follow-label { margin: 22px 0 10px; font-size: .85rem; letter-spacing: .14em; color: #8fa0bd; text-transform: uppercase; }
+  .socials { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .soc {
+    padding: 9px 14px; font-size: .88rem;
+    border: 1px dashed rgba(143,160,189,.5); border-radius: 999px;
+    color: #8fa0bd; text-decoration: none; cursor: default;
+  }
+  .soc.live { border-style: solid; border-color: rgba(212,175,55,.65); color: #eef2f9; cursor: pointer; }
+  .foot { margin-top: 24px; font-size: .78rem; color: #6d7f9c; line-height: 1.6; }
+  .foot a { color: var(--gold); text-decoration: none; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="seal">⚖</div>
+    <h1>THE UNITED CITIZENS MOVEMENT</h1>
+    <p class="tag">A living civic charter for preserving liberty through informed, sustained participation.</p>
+    <p class="founder">Founded by <span>Joshua Caleb Scott</span></p>
+    <div class="rule"></div>
+
+    <a class="btn primary" href="https://thecitizenmovement.org/">Visit the Website</a>
+    <a class="btn primary" href="https://thecitizenmovement.org/#member-panel">Join Free — Become a Member</a>
+    <a class="btn" href="https://thecitizenmovement.org/#library">Law Library &amp; Printables</a>
+    <a class="btn" href="https://thecitizenmovement.org/#intel">Scam Intel Suite</a>
+    <a class="btn" href="https://thecitizenmovement.org/#community">Community</a>
+    <a class="btn" href="mailto:Founder@thecitizenmovement.org">Email the Founder</a>
+    <a class="btn" href="contact.vcf" download>Save Contact to Phone</a>
+
+    <p class="follow-label">Follow the movement</p>
+    <div class="socials">
+      <span class="soc">Facebook — soon</span>
+      <span class="soc">X — soon</span>
+      <span class="soc">YouTube — soon</span>
+      <span class="soc">TikTok — soon</span>
+      <span class="soc">Instagram — soon</span>
+    </div>
+
+    <p class="foot">© 2026 The United Citizens Movement<br><a href="https://thecitizenmovement.org/">thecitizenmovement.org</a></p>
+  </div>
+</body>
+</html>
