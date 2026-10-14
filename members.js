@@ -83,12 +83,15 @@
         (mode === 'join' ? '<label for="m-name">Display name</label><input class="field" id="m-name" autocomplete="nickname" placeholder="What should we call you?">' : '') +
         '<label for="m-email">Email</label><input class="field" id="m-email" type="email" autocomplete="email" placeholder="you@example.com">' +
         '<label for="m-pass">Password</label><input class="field" id="m-pass" type="password" autocomplete="' + (mode === 'join' ? 'new-password' : 'current-password') + '" placeholder="' + (mode === 'join' ? 'Choose a password' : 'Your password') + '">' +
+        '<label class="muted small" style="display:block;margin:6px 0"><input type="checkbox" id="m-showpass"> Show password</label>' +
         '<button class="btn" id="m-go" type="button">' + (mode === 'join' ? '→ JOIN FREE' : '→ SIGN IN') + '</button>' +
         '<p class="coming" id="m-msg" aria-live="polite"></p>';
       $('tab-join').addEventListener('click', function () { mode = 'join'; render(); });
       $('tab-login').addEventListener('click', function () { mode = 'login'; render(); });
       $('m-go').addEventListener('click', go);
       $('m-pass').addEventListener('keydown', function (e) { if (e.key === 'Enter') go(); });
+      var sp = $('m-showpass');
+      if (sp) sp.addEventListener('change', function () { var p = $('m-pass'); if (p) p.type = sp.checked ? 'text' : 'password'; });
       refreshCount();
     }
   }
