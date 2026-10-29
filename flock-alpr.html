@@ -1,0 +1,692 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<link rel="icon" href="data:," />
+<title>Anti-Flock and Traffic Camera Opposition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff; --surface:#f4f4f2; --surface2:#ececea; --ink:#161616; --muted:#54524e; --line:#d9d7d2;
+  --red:#a6192e; --red-ink:#8f1426; --red-soft:#fbeeee; --gold:#7a5a00; --gold-soft:#fdf3d7;
+  --green:#14532d; --green-soft:#e6f2e9; --max:1080px;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#131311; --surface:#1c1c1a; --surface2:#242421; --ink:#f0efec; --muted:#b8b5ae; --line:#3a3936;
+  --red:#f08594; --red-ink:#f6a5b0; --red-soft:#2e1a1d; --gold:#e8c86a; --gold-soft:#2b2513; --green:#8fd0a3; --green-soft:#16261b; }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Serif 4",Georgia,serif;font-size:17px;line-height:1.6}
+h1,h2,h3,.sans{font-family:"Archivo",system-ui,sans-serif}
+a{color:var(--red-ink);text-decoration-thickness:1px;text-underline-offset:2px}
+a:hover{text-decoration-thickness:2px}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+.mono{font-family:"IBM Plex Mono",monospace;font-size:.78rem;letter-spacing:.02em}
+
+/* Hero */
+.hero{border-bottom:3px solid var(--ink);padding:36px 0 28px}
+.kicker{font-family:"Archivo",sans-serif;font-weight:800;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin:0 0 12px}
+h1{font-size:clamp(2rem,5.5vw,3.4rem);line-height:1.02;letter-spacing:-.02em;margin:0 0 16px;font-weight:900}
+.lede{font-size:1.18rem;line-height:1.55;max-width:46em;margin:0 0 8px}
+.lede strong{font-weight:700}
+.meta{color:var(--muted);font-size:.9rem;margin-top:14px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:26px 0 0}
+.stat{background:var(--bg);padding:16px}
+.stat b{display:block;font-family:"Archivo",sans-serif;font-size:1.7rem;line-height:1;font-weight:900}
+.stat span{display:block;font-size:.84rem;color:var(--muted);line-height:1.4;margin-top:6px}
+@media(max-width:760px){.stats{grid-template-columns:1fr 1fr}}
+
+/* Nav */
+nav.toc{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:10}
+nav.toc .wrap{display:flex;gap:6px;flex-wrap:wrap;padding-top:10px;padding-bottom:10px}
+nav.toc a{font-family:"Archivo",sans-serif;font-size:.82rem;font-weight:700;color:var(--ink);text-decoration:none;white-space:nowrap;padding:6px 12px;border:1px solid var(--line);border-radius:999px}
+nav.toc a:hover{border-color:var(--red);color:var(--red-ink)}
+
+section{padding:36px 0 8px}
+h2{font-size:clamp(1.45rem,3.4vw,2rem);line-height:1.1;margin:0 0 6px;font-weight:900;letter-spacing:-.01em}
+.sec-sub{color:var(--muted);max-width:44em;margin:0 0 20px}
+h3{font-size:1.08rem;margin:0 0 6px;font-weight:800;line-height:1.3}
+
+/* Cards */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}}
+.card{border:1px solid var(--line);padding:20px;background:var(--bg)}
+.card p{margin:0 0 10px;font-size:.98rem}
+.card p:last-child{margin-bottom:0}
+.tag{display:inline-block;font-family:"Archivo",sans-serif;font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:3px;margin-bottom:10px}
+.tag-red{background:var(--red-soft);color:var(--red-ink)}
+.tag-gold{background:var(--gold-soft);color:var(--gold)}
+.tag-green{background:var(--green-soft);color:var(--green)}
+.tag-grey{background:var(--surface2);color:var(--muted)}
+.src{font-size:.83rem;color:var(--muted)}
+.src a{font-weight:600}
+blockquote{margin:12px 0;padding:2px 0 2px 16px;border-left:3px solid var(--red);font-style:italic;font-size:1.02rem}
+blockquote footer{font-style:normal;font-size:.85rem;color:var(--muted);margin-top:6px;font-family:"Archivo",sans-serif}
+
+/* Alert / caution */
+.alert{border:1px solid var(--gold);background:var(--gold-soft);padding:16px 18px;margin:18px 0;font-size:.95rem}
+.alert b{font-family:"Archivo",sans-serif}
+.note{border:1px solid var(--line);background:var(--surface);padding:16px 18px;margin:18px 0;font-size:.95rem}
+
+/* Place rows */
+.filterbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 16px}
+.filterbar input{flex:1;min-width:200px;font:inherit;font-size:.95rem;padding:10px 12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:4px}
+.chip{font-family:"Archivo",sans-serif;font-size:.8rem;font-weight:700;padding:8px 14px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.place{display:grid;grid-template-columns:150px 1fr;gap:16px;padding:16px 0;border-top:1px solid var(--line)}
+@media(max-width:640px){.place{grid-template-columns:1fr;gap:6px}}
+.vote{font-family:"Archivo",sans-serif;font-weight:900;font-size:1.05rem;line-height:1.25}
+.vote small{display:block;font-weight:600;font-size:.76rem;color:var(--muted);margin-top:4px;letter-spacing:.04em;text-transform:uppercase}
+.place p{margin:0 0 6px;font-size:.97rem}
+.hidden{display:none !important}
+.empty{padding:18px;border:1px dashed var(--line);color:var(--muted);font-size:.95rem}
+
+/* Rebuttals */
+.reb{border-top:1px solid var(--line);padding:20px 0}
+.reb h3{font-size:1.15rem}
+.reb .claim{font-family:"Archivo",sans-serif;font-weight:700;font-size:.85rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.reb p{margin:0 0 10px;max-width:46em}
+
+/* Counts table -> stacked */
+.counts{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
+@media(max-width:760px){.counts{grid-template-columns:1fr}}
+.count{background:var(--bg);padding:16px}
+.count b{font-family:"Archivo",sans-serif;display:block;font-size:1.25rem;line-height:1.2}
+.count span{font-size:.9rem;color:var(--muted);display:block;margin-top:4px;line-height:1.45}
+.count .notshown{color:var(--gold);font-weight:600}
+
+footer.site{border-top:3px solid var(--ink);margin-top:44px;padding:24px 0 48px;font-size:.9rem;color:var(--muted)}
+footer.site p{max-width:46em}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker">Shasta &amp; Tehama Counties · California · Nationwide</p>
+    <h1>People are saying no to plate cameras — in their own words</h1>
+    <p class="lede">This page collects <strong>only the opposition</strong>: residents speaking against Flock and other automated license-plate readers (ALPRs), the rebuttals they make to pro-camera claims, the votes that removed cameras, and the groups and petitions organizing against them. No vendor claims, no success stories — except where opponents answer them directly.</p>
+    <p class="lede"><strong>The local fight is live, not finished.</strong> On October 27, 2026, Shasta County supervisors voted <strong>4–1</strong> to require a detailed sheriff's presentation on Flock, with contract termination possible if it falls short — a decision aimed for before the end of November 2026. No Shasta or Tehama vote to remove cameras was found in this research.</p>
+    <div class="stats">
+      <div class="stat"><b>25–26</b><span>Speakers on Flock at the Shasta board meeting, Oct. 27, 2026 — 25 per the Record Searchlight, 26 per Shasta Unfiltered. Both agree: only 2 in support.</span></div>
+      <div class="stat"><b>4–1</b><span>Shasta board vote directing the sheriff to report back, with termination on the table. Supervisor Allen Long voted no.</span></div>
+      <div class="stat"><b>1,000+</b><span>Petition signatures claimed by a speaker at that meeting (via Shasta Unfiltered). A speaker's claim — not a verified tally on any petition page.</span></div>
+      <div class="stat"><b>63</b><span>Cameras Monterey County voted 3–2 to remove on Sept. 22, 2026 — the largest California county removal in this research.</span></div>
+    </div>
+    <p class="meta">Researched October 29, 2026. Every count, vote, and date below is shown as its source reports it, with the source linked. Where a source shows no count, this page says so — it does not estimate.</p>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Sections">
+  <div class="wrap">
+    <a href="#local">Shasta &amp; Tehama</a>
+    <a href="#california">California removals</a>
+    <a href="#national">Other states</a>
+    <a href="#rebuttals">The rebuttals</a>
+    <a href="#traffic">Traffic cameras</a>
+    <a href="#groups">Groups &amp; counts</a>
+    <a href="#open">Open questions</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- ============ LOCAL ============ -->
+<section id="local">
+  <h2>Shasta &amp; Tehama — the local record</h2>
+  <p class="sec-sub">What residents in the two counties have actually said and done, as reported. Opposition here is organized and on the record — but as of this research, neither county has voted to remove a single camera.</p>
+
+  <div class="grid">
+    <article class="card">
+      <span class="tag tag-red">Shasta County · Oct. 27, 2026</span>
+      <h3>Residents give the board an earful</h3>
+      <p>At the October 27, 2026 Board of Supervisors meeting, residents turned out against the county's Flock cameras. The Record Searchlight counted <strong>25 speakers, all but two opposing</strong> — some of them school-aged children. Shasta Unfiltered counted <strong>26 speakers, only two in support</strong>. The two counts differ; the near-unanimity does not.</p>
+      <p>The board voted <strong>4–1</strong> (motion by Supervisor Kevin Crye; Supervisor Allen Long voting no) to direct Sheriff Michael Johnson to present on Flock at a future meeting — as early as <strong>November 10</strong> — after which the board may vote to terminate the contract. The contract background reported in the article: a five-year, <strong>$551,000</strong> Flock contract approved unanimously on November 6, 2025, with about two dozen cameras installed the following January.</p>
+      <blockquote>“What safeguards prevent someone from using that information to stalk, harass or target them?”
+        <footer>— Stephanie Montgomery, speaking against the cameras, on tracking teen drivers' habits and patterns (via Record Searchlight)</footer>
+      </blockquote>
+      <p>Shasta Unfiltered reported speaker Ellie calling the cameras a <strong>“Trojan Horse, desensitizing us to mass surveillance,”</strong> speaker Michelle opposing warrantless searches and mass surveillance, and speaker Ashley stating she had a petition with <strong>over 1,000 signatures</strong> in opposition. The board set a 30-day termination-notice clause in view, with a decision aimed for before the end of November and funding covered through June.</p>
+      <p class="src">Sources: <a href="https://www.redding.com/story/news/local/2026/10/27/shasta-county-residents-come-out-against-controversial-flock-cameras/92466593007/">Record Searchlight, Oct. 27, 2026</a> · <a href="https://www.shastaunfiltered.com/post/shasta-county-board-of-supervisors-addressed-mobile-home-park-rent-increases-and-flock-cameras-use-a">Shasta Unfiltered, Oct. 27, 2026 meeting report</a></p>
+    </article>
+
+    <article class="card">
+      <span class="tag tag-red">Petition · Anderson &amp; Shasta County</span>
+      <h3>“Flock Off Shasta County”</h3>
+      <p>The Change.org petition <em>“Flock Off Shasta County – Ban Flock Safety cameras in Shasta County, CA”</em> (published August 19, 2026; updated October 8, 2026) demands: halt expansion and renewals, complete removal of Flock cameras from public roads and property in Anderson and throughout Shasta County, and permanent deletion of historically collected location data and vehicle fingerprints. Its case, in its own words: warrantless mass tracking of every vehicle, private corporate cloud storage, and public roads turned into automated checkpoints. It is addressed to the Anderson City Council and Shasta County community leaders.</p>
+      <p>A companion petition site, <strong>“Flock Off SC,”</strong> carries the same demands and warns: <em>“Please do not sign this petition if you have signed our petition in person or on change.org”</em> — confirming in-person and online petitions are running in parallel.</p>
+      <p><strong>Signature counts are not shown</strong> on either petition page as fetched. The “over 1,000” figure above is a meeting speaker's claim, not either page's tally.</p>
+      <p class="src">Sources: <a href="https://www.change.org/p/flock-off-shasta-county-ban-flock-safety-cameras-in-shasta-county-ca/fbog/7779934/bsv">Change.org petition</a> · <a href="https://shastacounty.wixsite.com/my-site-11">Flock Off SC petition site</a></p>
+    </article>
+
+    <article class="card">
+      <span class="tag tag-grey">Anderson, California · Oct. 20, 2026</span>
+      <h3>Discussed — no action taken</h3>
+      <p>The City of Anderson, whose police department uses Flock, discussed the cameras at its October 20, 2026 council meeting. <strong>No action was taken</strong>, and no vote, speaker count, or petition count is given in the source.</p>
+      <p>Separate local coverage reports Anderson's Flock deployment grew from two cameras to a dozen, that Supervisor Kevin Crye — who voted for the county contract — has publicly called for the cameras to come down, and that Anderson Councilmember Darin Hale has said the city should pump the brakes. As of that article, neither jurisdiction had taken a formal vote to cancel. These are reported positions, not votes.</p>
+      <p class="src">Sources: <a href="https://www.redding.com/story/news/local/2026/10/27/shasta-county-residents-come-out-against-controversial-flock-cameras/92466593007/">Record Searchlight</a> · <a href="https://www.shastaunfiltered.com/post/florida-and-texas-pull-back-on-alpr-cameras-new-hampshire-already-solved-the-data-problem-shasta-s">Shasta Unfiltered, “Florida and Texas Pull Back on ALPR Cameras…”</a></p>
+    </article>
+
+    <article class="card">
+      <span class="tag tag-grey">Citizen site · Shasta County</span>
+      <h3>ShastaCountyALPR.com</h3>
+      <p>A citizen-run site by Richard Gallardo, who describes himself as a retired federal law enforcement officer who supports police but does <strong>not</strong> support ALPRs without individual consent or warrants. The site cites <em>Carpenter v. US</em>, <em>Jones v. US</em>, <em>Chatrie v. US</em>, and <em>US v. Kyle</em> (Oct. 2026), maps known ALPR locations in Shasta County, and solicits motorists' photos and locations of cameras.</p>
+      <p>The site claims the board voted unanimously in November 2025 to fund 24 ALPRs using Zogg fire settlement funds totaling over $500,000, and that Sheriff Michael Johnson, as Anderson police chief in 2019, was integral to introducing Flock cameras into Anderson. These are the advocacy site's own claims — attributed here, not independently verified. <strong>Group or member count: not shown.</strong></p>
+      <p class="src">Source: <a href="https://shastacountyalpr.com/">ShastaCountyALPR.com</a></p>
+    </article>
+
+    <article class="card">
+      <span class="tag tag-gold">Red Bluff · Tehama County</span>
+      <h3>Large crowd — no decision shown</h3>
+      <p>A Red Bluff City Council discussion of license-plate-reader cameras <strong>drew a large crowd</strong>, according to the Red Bluff Daily News as reported by DeFlock The USA. That report itself states: <em>“The report doesn't detail exactly what was decided or who spoke.”</em> Crowd size and speaker count are <strong>not shown</strong> — this is not a Red Bluff vote or petition, and it should not be presented as one.</p>
+      <p>The primary document: Red Bluff's September 15, 2026 council agenda lists the Automated License Plate Reader (ALPR) Program as Item 7 with the recommended action <strong>“Information only; no action needed.”</strong> No vote is recorded in that agenda item.</p>
+      <p class="src">Sources: <a href="https://deflocktheusa.com/red-bluff-turnout-shows-alpr-debates-arent-going-away/">DeFlock The USA, “Red Bluff Turnout Shows ALPR Debates Aren't Going Away,” Sept. 17, 2026</a> · <a href="https://cityofredbluff.legistar1.com/cityofredbluff/meetings/2026/9/1024_A_City_Council_26-09-15_Regular_Meeting_Agenda.pdf">City of Red Bluff agenda, Sept. 15, 2026 (PDF)</a></p>
+    </article>
+
+    <article class="card">
+      <span class="tag tag-red">Red Bluff · Tehama County · The document</span>
+      <h3>The Red Bluff order — Motorola / Vigilant, not Flock</h3>
+      <p>This is the record that started this page, from documents supplied for the Tehama County issues list. It is a <strong>Motorola Solutions / Vigilant</strong> license-plate-reader order — the same ALPR category as Flock, but a different vendor, and it is labeled that way here so the record stays accurate.</p>
+      <p><strong>Quote 3314603, (4) L5F</strong>, dated February 2, 2026, for the Red Bluff Police Department, 555 Washington St: four fixed/dual LPR kits, communications boxes, warranties, 5-year device licenses and monitoring, and delivery services. Subtotal <strong>$34,036.02</strong>, tax $1,419.55, grand total <strong>$35,455.57</strong>. The quote states installation is <strong>not included</strong>.</p>
+      <p>The signed Online Terms Acknowledgement, dated <strong>March 19, 2026</strong>, was signed by Motorola's Nicole Tolton (NA Sales VP) and Red Bluff Lt. Michael Brown. Its clause 4 authorizes Motorola to proceed with all deliverables of the order at <strong>$35,455.57</strong> — so this is past a bare quote: an order was authorized.</p>
+      <p><strong>What it does not prove:</strong> authorization is not proof the cameras were installed or are operating. That needs a separate record, and none is claimed here.</p>
+      <p class="src">Source: Motorola Solutions quote 3314603 and signed Online Terms Acknowledgement, Mar. 19, 2026 — documents supplied by the reader for this page; no public link was provided for them.</p>
+    </article>
+
+    <article class="card">
+      <span class="tag tag-gold">Corning &amp; Tehama County · Not found</span>
+      <h3>Deployment documented — opposition not found</h3>
+      <p>The EFF Atlas of Surveillance lists the Corning Police Department (Corning, Tehama County, CA) as operating both Flock Safety and Motorola Solutions ALPRs, in partnership with Red Bluff PD and the Tehama County Sheriff's Office; Red Bluff PD is likewise listed in partnership with Corning PD and the Sheriff.</p>
+      <p>No news article, council or board discussion, petition, or citizen group opposing Flock/ALPR in Corning, CA, or before the Tehama County Board of Supervisors was found in this research. Corning is therefore <strong>not</strong> listed on this page as an opposition location. (Corning, New York also appears in Atlas results — a different city.)</p>
+      <p>No standalone Redding City Council anti-Flock vote, petition, or group was found either, beyond Redding residents speaking at the county meeting and the county coverage above.</p>
+      <p class="src">Source: <a href="https://www.atlasofsurveillance.org/search?page=8&sort=agency_asc&technologies%5B%5D=automated-license-plate-readers">EFF Atlas of Surveillance — ALPR search</a></p>
+    </article>
+  </div>
+
+  <div class="note"><strong class="sans">Statewide context, Shasta angle:</strong> Shasta Scout asked on July 27, 2026, <em>“Across the state, communities are taking down Flock Safety cameras. Could Shasta be next?”</em> — noting Anderson and Redding police first acquired similar cameras in 2019 and 2020, the county's $550,000 contract for 24 Flock cameras approved in November 2025 using Zogg Fire settlement funds, and dozens of California cities cancelling Flock contracts over data-sharing concerns. Cited here as context; the vote details are in the sections below. <a href="https://shastascout.org/across-the-state-communities-are-taking-down-flock-safety-cameras-could-shasta-be-next/">Read at Shasta Scout</a> (cited via search/Flipboard snippet; page not fully opened in this research).</div>
+
+  <div class="alert"><b>Don't mix these up.</b> <strong>Anderson, California</strong> (Shasta County) discussed Flock on Oct. 20, 2026 and took no action. <strong>Anderson County, South Carolina</strong> also met on Oct. 20, 2026 — and advanced a county-funds ban (see Other States). Same name, same date, different states. And <strong>“Flock Off SC”</strong> is a <em>Shasta County</em> site — its URL is shastacounty.wixsite.com — not South Carolina.</div>
+</section>
+
+<!-- ============ CALIFORNIA ============ -->
+<section id="california">
+  <h2>California — where cameras came down</h2>
+  <p class="sec-sub">The strongest California opposition results found in this research, plus the fights still in progress. Filter by place or outcome.</p>
+
+  <div class="filterbar" role="group" aria-label="Filter California places">
+    <input type="search" id="caFilter" placeholder="Filter California places… e.g. Santa Cruz, pause, terminate" aria-label="Filter California places">
+    <button class="chip" data-scope="ca" data-f="all" aria-pressed="true">All</button>
+    <button class="chip" data-scope="ca" data-f="removed" aria-pressed="false">Removed / ended</button>
+    <button class="chip" data-scope="ca" data-f="pending" aria-pressed="false">Pending / blocked / failed</button>
+  </div>
+  <div id="caList">
+    <div class="place" data-cat="removed" data-text="santa cruz terminate 6-1 first california city">
+      <div class="vote">6–1<small>Terminate · Jan. 13, 2026</small></div>
+      <div><h3>Santa Cruz</h3>
+      <p>Voted 6–1 to terminate its Flock contract, effective February 12, 2026 — described by multiple sources as the first California city to terminate. Camera count differs by account (8 in one student-paper account, up to 14 in another); this page does not pick one without the council record. Over 20 people spoke against (in person and Zoom, per the student-paper summary); another summary describes public comment as running unanimous for termination.</p>
+      <p class="src"><a href="https://cityonahillpress.com/2026/01/24/santa-cruz-city-council-votes-6-to-1-to-ban-flock/">City on a Hill Press</a> · <a href="https://lookout.co/after-santa-cruz-banned-flock-cameras-activists-push-to-expand-fight-against-license-plate-readers/story">Lookout Santa Cruz</a></p></div>
+    </div>
+    <div class="place" data-cat="removed" data-text="los altos hills terminate offline immediately">
+      <div class="vote">Terminate<small>Jan. 15, 2026</small></div>
+      <div><h3>Los Altos Hills</h3>
+      <p>Terminated its Flock contract with cameras offline immediately and removal arranged after the vote. The vote margin is not shown in the summary source.</p>
+      <p class="src"><a href="https://www.deflockatlanta.org/Current-Events/">DeFlock Atlanta — current events tracker</a></p></div>
+    </div>
+    <div class="place" data-cat="removed" data-text="mountain view unanimous terminate 30 cameras audit federal access">
+      <div class="vote">Unanimous<small>Terminate · Feb. 24, 2026</small></div>
+      <div><h3>Mountain View</h3>
+      <p>Voted unanimously to terminate. Its 30 stationary cameras had been off since February 2, 2026, after a police audit found federal and state access in violation of city policy; the city moved to remove them as soon as possible.</p>
+      <p class="src"><a href="https://www.mountainview.gov/Home/Components/News/News/1211/284">City of Mountain View — official news release</a></p></div>
+    </div>
+    <div class="place" data-cat="removed" data-text="santa clara county 3-2 policy sheriff data cupertino saratoga">
+      <div class="vote">3–2<small>Policy bar · Feb. 24, 2026</small></div>
+      <div><h3>Santa Clara County</h3>
+      <p>Voted 3–2 to amend its Surveillance Use Policy so the sheriff cannot operate, manage, or use Flock data — covering the contract cities of Cupertino and Saratoga and the town of Los Altos Hills, per the tracker summary.</p>
+      <p class="src"><a href="https://whoapprovedthis.org/cancellations/">Who Approved This — cancellations tracker</a></p></div>
+    </div>
+    <div class="place" data-cat="removed" data-text="el cerrito 3-2 not renew 40 cameras speakers">
+      <div class="vote">3–2<small>Non-renewal · May 5, 2026</small></div>
+      <div><h3>El Cerrito</h3>
+      <p>Voted 3–2 not to renew (Motoyama, Saltzman, and Ktsanes for non-renewal; Mayor Quinto and Wysinger against). Forty cameras shut down June 6, 2026, per an El Cerrito Police Nixle notice, with removal July 31–August 18, 2026 per the tracker. <strong>47 people signed up to speak</strong>, and opponents outnumbered supporters.</p>
+      <p class="src"><a href="https://local.nixle.com/alert/12453547/?sub_id=0">El Cerrito Police — Nixle alert</a> · <a href="https://www.livableelcerrito.org/post/canceled">Livable El Cerrito</a></p></div>
+    </div>
+    <div class="place" data-cat="removed" data-text="monterey county 3-2 reject remove 63 cameras sheriff">
+      <div class="vote">3–2<small>Reject &amp; remove · Sept. 22, 2026</small></div>
+      <div><h3>Monterey County</h3>
+      <p>Supervisors voted 3–2 (Askew, Daniels, Church for; Alejo, Lopez against) to reject a 10-year, $1.7M contract and remove the sheriff's <strong>63 cameras</strong> within 60 days; an earlier $2.78M expansion from 63 to 103 cameras was dropped. The vote covered sheriff cameras only — city Flock cameras in Salinas, Monterey, Seaside, Marina, Pacific Grove, and Carmel were not covered.</p>
+      <p class="src"><a href="https://californiacitynews.org/2026/09/monterey-county-supervisors-vote-remove-flock-cameras.html">California City News</a> · <a href="https://www.gtfomontereycounty.com/">GTFO Monterey County</a></p></div>
+    </div>
+    <div class="place" data-cat="pending" data-text="fullerton 3-1 pause six months 19 cameras town hall">
+      <div class="vote">3–1<small>Pause · Oct. 6, 2026</small></div>
+      <div><h3>Fullerton — paused, not ended</h3>
+      <p>Voted 3–1 (Zahra, Charles, Dunlap for; Valencia against; Mayor Jung absent) to pause for six months. Its 19 cameras (17 stationary, 2 mobile) sit under a ~$51,000/year contract running through at least 2028 that was <strong>not</strong> ended; the city planned a town hall and a crime-solving/audit review, revisiting around April.</p>
+      <p class="src"><a href="https://www.govtech.com/public-safety/flock-safety-cameras-go-dark-in-fullerton-calif">Government Technology</a></p></div>
+    </div>
+    <div class="place" data-cat="pending" data-text="san diego committee unanimous advance termination 500 cameras veto lawsuit aclu pending">
+      <div class="vote">Committee<small>Unanimous to advance · Oct. 21, 2026</small></div>
+      <div><h3>San Diego — pending, not final</h3>
+      <p>The Budget &amp; Government Efficiency Committee voted unanimously to advance a termination ordinance to the full council — <strong>not a final vote</strong>. At stake: roughly 500 ALPR cameras and a ~$2M contract. Mayor Gloria was expected to veto, which would require a 6-of-9 override; no completed full-council vote was shown. Separately, the ACLU sued the city over ALPR on September 29, 2026 (see Rebuttals).</p>
+      <p class="src"><a href="https://particle.news/story/san-diego-committee-votes-to-end-flock-licenseplate-camera-contract">Particle News summary</a></p></div>
+    </div>
+    <div class="place" data-cat="pending" data-text="los angeles axon pilot failed stop committee veto motion">
+      <div class="vote">Failed<small>To stop pilot · Oct. 27, 2026</small></div>
+      <div><h3>Los Angeles — opposition effort failed</h3>
+      <p>Included so the record stays honest: the Public Safety Committee voted 3–2 on Oct. 20 to recommend rejecting an Axon streetlight ALPR pilot, but the full-council veto motion <strong>failed 9–6</strong> on Oct. 27 (10 votes needed), so the 3-month, no-cost pilot in Council District 3 (Encino, Woodland Hills, Tarzana) moved ahead. LAPD had let its Flock agreement lapse in summer 2026 over ICE/CBP sharing reports. This is a different action from LA's 2011 red-light camera shutdown (see Traffic Cameras).</p>
+      <p class="src"><a href="https://mynewsla.com/government/2026/10/27/divided-la-council-moves-ahead-with-alpr-pilot-program/">MyNewsLA</a></p></div>
+    </div>
+    <div class="place" data-cat="pending" data-text="oakland expansion blocked subcommittee deadlock speakers 100">
+      <div class="vote">2–2<small>Deadlock blocks expansion · 2025</small></div>
+      <div><h3>Oakland — expansion blocked</h3>
+      <p>The Public Safety Subcommittee deadlocked 2–2 in November 2025, so a proposed $2.25M, 2-year Flock contract — 292 existing plus 40 new cameras — did not proceed to the full council. <strong>More than 100 speakers signed up, the vast majority opposed</strong>, filling council chambers and two overflow rooms.</p>
+      <p class="src"><a href="https://oaklandnorth.net/2025/11/19/under-pressure-from-residents-oakland-council-committee-backs-off-plate-reader-contract/">Oakland North, Nov. 19, 2025</a></p></div>
+    </div>
+    <div class="place" data-cat="removed" data-text="albany rejected motorola replacement september">
+      <div class="vote">Rejected<small>Sept. 8, 2026</small></div>
+      <div><h3>Albany, CA</h3>
+      <p>Rejected a Motorola ALPR replacement on September 8, 2026, days before its Flock contract expired, per the tracker summary. Vote margin not shown in that summary.</p>
+      <p class="src"><a href="https://thethriftydev.com/blog/flock-cameras-surveillance-resistance/">The Thrifty Dev — resistance tracker summary</a></p></div>
+    </div>
+    <div class="place" data-cat="pending" data-text="grass valley suspended indefinitely police review">
+      <div class="vote">Suspended<small>August 2026</small></div>
+      <div><h3>Grass Valley, CA</h3>
+      <p>Police indefinitely suspended the fixed-point ALPR program in August 2026 while reviewing privacy, retention, sharing, and oversight, per DeFlock Livermore's victories list (secondary source). Vote/margin not shown.</p>
+      <p class="src"><a href="https://www.deflocklivermore.org/victories.html">DeFlock Livermore — victories</a></p></div>
+    </div>
+    <div class="place" data-cat="pending" data-text="richmond shut down turned back on 4-3 not a removal eff searches">
+      <div class="vote">4–3<small>Turned back on — not a removal</small></div>
+      <div><h3>Richmond, CA — do not list as a removal</h3>
+      <p>Richmond briefly shut Flock down in late 2025 after a national-sharing feature exposed its data, then the council voted 4–3 to turn the cameras back on. The EFF later reported roughly 1.5 million out-of-state and federal searches of Richmond data (see Rebuttals).</p>
+      <p class="src"><a href="https://ccpulse.org/2026/10/08/out-of-state-agencies-searched-richmond-flock-data-1-5-million-times-eff/">Richmond Pulse / CC Pulse</a></p></div>
+    </div>
+    <div class="place" data-cat="pending" data-text="santa ana consider study ending october no outcome">
+      <div class="vote">No outcome<small>Found · Oct. 20, 2026</small></div>
+      <div><h3>Santa Ana</h3>
+      <p>Set to consider on October 20, 2026 a proposal to study ending or not renewing its plate-reader contracts, as reported in Fullerton coverage. No outcome was found.</p>
+      <p class="src"><a href="https://forflocksakes.com/news/">For Flock's Sake — news</a></p></div>
+    </div>
+  </div>
+  <p class="empty hidden" id="caEmpty">No California place matches that filter.</p>
+
+  <div class="alert"><b>Statewide tallies conflict — read them as claims, not a settled total.</b> Secure Justice, via SF Public Press: <strong>214</strong> cities/counties had dropped Flock since 2021 as of August 2026, including 90 in that month alone (Flock disputes the significance). SF Standard, via TechTimes: <strong>nearly 150</strong> cities/local governments deactivated or cancelled in the 2026 backlash. Institute for Justice tracker, via the Fine Print Report: <strong>277</strong> local governments cancelled or declined to renew since the start of 2025. Trackers count differently — cancelled vs. paused vs. vendor-switched vs. non-renewed. Sources: <a href="https://www.sfpublicpress.org/san-francisco-tightens-flock-camera-rules-but-privacy-advocate-calls-changes-performative/">SF Public Press</a> · <a href="https://www.techtimes.com/articles/328244/20260929/sf-keeps-flock-cameras-after-16m-illegal-queries-new-rules-weaker-company-standard.htm">TechTimes</a></div>
+</section>
+
+<!-- ============ NATIONAL ============ -->
+<section id="national">
+  <h2>Other states — high-opposition places</h2>
+  <p class="sec-sub">Removals, suspensions, and ballot fights outside California, each with its vote and source. Partial results are labeled partial.</p>
+
+  <div class="filterbar" role="group" aria-label="Filter other-state places">
+    <input type="search" id="usFilter" placeholder="Filter places… e.g. Texas, unanimous, petition" aria-label="Filter other-state places">
+    <button class="chip" data-scope="us" data-f="all" aria-pressed="true">All</button>
+    <button class="chip" data-scope="us" data-f="removed" aria-pressed="false">Removed / ended</button>
+    <button class="chip" data-scope="us" data-f="pending" aria-pressed="false">Paused / pending / partial</button>
+  </div>
+  <div id="usList">
+    <div class="place" data-cat="removed" data-text="anderson county south carolina ordinance county funds unanimous not california">
+      <div class="vote">Unanimous<small>Both readings · Oct. 2026</small></div>
+      <div><h3>Anderson County, SOUTH CAROLINA — not California</h3>
+      <p>Ordinance 2026-054 passed first reading Oct. 6 and second reading Oct. 20, 2026, both reported unanimous. It bars <strong>county-appropriated funds, county property, equipment, IT, and county-funded personnel</strong> from buying, leasing, installing, operating, maintaining, renewing, or accessing Flock systems. It is <strong>not</strong> a ban on every Flock camera: it does not direct independently elected officials or govern non-county funds or property. The county's 10 cameras (boat ramps, parks) expired or were about to expire and will not be renewed; some were already shut down. The City of Anderson, SC, separately has 16 Flock cameras in use. A public hearing and third reading were still ahead (scheduled Nov. 17 in one preview).</p>
+      <p class="src"><a href="https://www.andersonobserver.com/news/council-moves-ahead-on-spec-building-tax-breaks-flock-camera-ban">Anderson Observer</a> · <a href="https://www.independentmail.com/story/news/crime/2026/10/12/anderson-county-advances-plan-to-stop-funding-flock-cameras/92137004007/">Independent Mail</a> · <a href="https://publicpulsesc.substack.com/p/anderson-county-council-gives-first">Public Pulse SC</a></p></div>
+    </div>
+    <div class="place" data-cat="removed" data-text="sedona arizona 7-0 terminate first arizona 11 cameras">
+      <div class="vote">7–0<small>Terminate · Sept. 9, 2025</small></div>
+      <div><h3>Sedona, AZ</h3>
+      <p>Voted 7–0 to permanently terminate, after an earlier 5–1 pause — the first Arizona city to fully terminate. Eleven cameras had been installed in June 2025 without prior public notice at $51,146 for the first year; a cited trigger was the Flock CEO's admission of federal sharing.</p>
+      <p class="src"><a href="https://consumerrights.wiki/w/Flock_license_plate_readers">Consumer Rights Wiki — Flock license plate readers</a></p></div>
+    </div>
+    <div class="place" data-cat="removed" data-text="asheville north carolina 5-2 terminate 11 cameras">
+      <div class="vote">5–2<small>Terminate · Aug. 25, 2026</small></div>
+      <div><h3>Asheville, NC</h3>
+      <p>Voted 5–2 to terminate. The resolution directs removal of 11 stationary cameras, suspends access and data sharing, and orders a broader surveillance review. It does not by itself end other ALPR technology.</p>
+      <p class="src"><a href="https://828newsnow.com/news/228822-asheville-council-votes-5-2-to-terminate-flock-camera-contract/">828 News Now</a></p></div>
+    </div>
+    <div class="place" data-cat="removed" data-text="fort wayne indiana unanimous not renew 36 cameras petition 800">
+      <div class="vote">Unanimous<small>Non-renewal · Aug. 25, 2026</small></div>
+      <div><h3>Fort Wayne, IN</h3>
+      <p>Voted unanimously not to renew; the system went offline by August 31, 2026. Thirty-six cameras; the police subscription was cancelled, Flock data deleted per the chief, and cameras to be removed. Before the vote, activists delivered <strong>nearly 800 combined petition signatures</strong> (see Groups &amp; counts for the source's exact, ambiguous wording).</p>
+      <p class="src"><a href="https://www.us933fm.com/2026/09/01/city-council-postpones-vote-on-renewing-flock-camera-contract/">US 93.3 FM</a> · <a href="http://www.yaliberty.org/blog/how-grassroots-activists-forced-a-delay-in-a-surveillance-expansion-vote">Young Americans for Liberty blog</a></p></div>
+    </div>
+    <div class="place" data-cat="removed" data-text="henrico county virginia terminate 122 cameras october">
+      <div class="vote">Terminate<small>Announced Oct. 6, 2026</small></div>
+      <div><h3>Henrico County, VA</h3>
+      <p>Terminated its Flock contract, cutting ties within 7 days — <strong>122 cameras</strong> per the WHRO/WRIC press count — with privacy concerns cited.</p>
+      <p class="src"><a href="https://deflocktampa.com/wins">DeFlock Tampa — wins tracker</a></p></div>
+    </div>
+    <div class="place" data-cat="removed" data-text="mount vernon washington 4-1 turn off petition 490 indivisible skagit">
+      <div class="vote">4–1<small>Turn off · June 24, 2026</small></div>
+      <div><h3>Mount Vernon, WA</h3>
+      <p>Voted 4–1 to turn off 6 Flock cameras. Organized opposition included a <strong>~490-signature petition from Indivisible Skagit</strong>. The mayor objected to the process (no advance agenda notice, two members absent), not the outcome; the contract had been set to expire in November.</p>
+      <p class="src"><a href="https://censorshiptracker.com/surveillance.php">Censorship Tracker — surveillance</a></p></div>
+    </div>
+    <div class="place" data-cat="removed" data-text="plymouth minnesota 6-1 terminate cameras discrepancy 16 18">
+      <div class="vote">6–1<small>Terminate · Sept. 22, 2026</small></div>
+      <div><h3>Plymouth, MN</h3>
+      <p>Voted 6–1 to stop using and terminate, the mayor the lone no; accounts were suspended the morning after. Camera count differs by outlet — 16 permanent (MPR) vs. 18, counting 16 standalone plus 2 portable (KSTP). The discrepancy is reported here, not resolved.</p>
+      <p class="src"><a href="https://deflocktampa.com/wins">DeFlock Tampa — wins tracker</a></p></div>
+    </div>
+    <div class="place" data-cat="removed" data-text="wylie texas 7-0 not renew 6 cameras">
+      <div class="vote">7–0<small>Non-renewal · Aug. 26, 2026</small></div>
+      <div><h3>Wylie, TX</h3>
+      <p>Voted 7–0 not to renew. Six cameras at about $27,000/year, in use since August 2024; contract expires October 31, 2026.</p>
+      <p class="src"><a href="https://nothingtosee.fyi/tags/tech/alpr/">Nothing To See — ALPR tag</a></p></div>
+    </div>
+    <div class="place" data-cat="removed" data-text="lansing michigan 7-1 cancel deflock records access">
+      <div class="vote">7–1<small>Aug. 24, 2026</small></div>
+      <div><h3>Lansing, MI</h3>
+      <p>Council voted 7–1 asking the administration to cancel its Flock contracts. DeFlock Lansing later cited records showing 141 organizations with access in a July 2026 snapshot, contradicting the chief's account of a 2025 opt-out.</p>
+      <p class="src"><a href="https://rhinocerosmedia.org/flock-sharing-snapshot">Rhinoceros Media — Flock sharing snapshot</a></p></div>
+    </div>
+    <div class="place" data-cat="removed" data-text="new hanover county north carolina 4-0 41 residents spoke">
+      <div class="vote">4–0<small>Sept. 8, 2026</small></div>
+      <div><h3>New Hanover County, NC</h3>
+      <p>Voted 4–0 (per tracker summary). <strong>41 residents spoke against</strong> the cameras.</p>
+      <p class="src"><a href="https://thethriftydev.com/blog/flock-cameras-surveillance-resistance/">The Thrifty Dev — resistance tracker summary</a></p></div>
+    </div>
+    <div class="place" data-cat="removed" data-text="franklin county frankfort kentucky unanimous non-renewal motion failed petition">
+      <div class="vote">Unanimous<small>Non-renewal · Oct. 12, 2026</small></div>
+      <div><h3>Frankfort / Franklin County, KY</h3>
+      <p>A termination motion failed 2–3 on September 28, then the city voted unanimous non-renewal on October 12. The petition timeline counts 19 city cameras plus 10 sheriff cameras countywide, and asks the sheriff to follow suit.</p>
+      <p class="src"><a href="https://www.change.org/p/ban-flock-all-alprs-in-franklin-county-ky/fbog/1389155870/bsv">Change.org — Ban Flock / all ALPRs in Franklin County, KY</a></p></div>
+    </div>
+    <div class="place" data-cat="removed" data-text="cambridge massachusetts terminate breach trust reinstalled">
+      <div class="vote">Terminate<small>Announced Jan. 2026</small></div>
+      <div><h3>Cambridge, MA</h3>
+      <p>Terminated after cameras were reinstalled without the city's awareness — conduct called <em>“a material breach of our trust”</em> in secondary coverage.</p>
+      <p class="src"><a href="https://www.deflockatlanta.org/Current-Events/">DeFlock Atlanta — current events tracker</a></p></div>
+    </div>
+    <div class="place" data-cat="removed" data-text="harrisonburg virginia unanimous bagged removal">
+      <div class="vote">Unanimous<small>Late July 2026</small></div>
+      <div><h3>Harrisonburg, VA</h3>
+      <p>Unanimous council vote; cameras bagged pending removal, per tracker summary. Margin and camera-count detail beyond this are not in the summary.</p>
+      <p class="src"><a href="https://thethriftydev.com/blog/flock-cameras-surveillance-resistance/">The Thrifty Dev — resistance tracker summary</a></p></div>
+    </div>
+    <div class="place" data-cat="removed" data-text="pflugerville texas unanimous rejection 28 cameras shut down">
+      <div class="vote">Unanimous<small>Rejection · Late Aug. 2026</small></div>
+      <div><h3>Pflugerville, TX</h3>
+      <p>Unanimous rejection of a new agreement; 28 cameras shut down, per tracker summary.</p>
+      <p class="src"><a href="https://thethriftydev.com/blog/flock-cameras-surveillance-resistance/">The Thrifty Dev — resistance tracker summary</a></p></div>
+    </div>
+    <div class="place" data-cat="removed" data-text="st charles county missouri ended audit personal lookup 28">
+      <div class="vote">Ended<small>Aug. 20, 2026</small></div>
+      <div><h3>St. Charles County, MO</h3>
+      <p>Ended its contract — 28 cameras down — after an internal audit found an employee had looked up Flock data for personal reasons.</p>
+      <p class="src"><a href="https://thethriftydev.com/blog/flock-cameras-surveillance-resistance/">The Thrifty Dev — resistance tracker summary</a></p></div>
+    </div>
+    <div class="place" data-cat="pending" data-text="kyle texas 4-3 suspend ballot referendum may">
+      <div class="vote">4–3<small>Suspend · Oct. 5, 2026</small></div>
+      <div><h3>Kyle, TX — suspension + ballot question, not a cancellation</h3>
+      <p>Voted 4–3 to suspend city-owned Flock readers until a May ballot referendum; during the pause the cameras collect, capture, send, and store no plate data. The council decides after the May vote.</p>
+      <p class="src"><a href="https://deflocktampa.com/wins">DeFlock Tampa — wins tracker</a></p></div>
+    </div>
+    <div class="place" data-cat="pending" data-text="denver colorado expired axon replacement vendor switch not camera free">
+      <div class="vote">Vendor switch<small>Mar. 31, 2026</small></div>
+      <div><h3>Denver, CO — partial only</h3>
+      <p>The Flock contract expired and 110 cameras were removed — but the same day, the council approved an Axon replacement 7–6 (50 cameras, $150,000/year). Private Flock cameras remained across Denver. Opponents cite this as a partial win only: a vendor switch, not a camera-free city.</p>
+      <p class="src"><a href="https://consumerrights.wiki/w/Flock_license_plate_readers">Consumer Rights Wiki — Flock license plate readers</a></p></div>
+    </div>
+    <div class="place" data-cat="pending" data-text="league city texas proposition a vote november upcoming referendum">
+      <div class="vote">Vote ahead<small>Nov. 3, 2026</small></div>
+      <div><h3>League City, TX — outcome not known</h3>
+      <p>The council adopted a resolution under which a “No” vote on Proposition A requires the city to begin shutting the roadway system down after certification — described in local coverage as the first Texas municipality to put ALPR continuation to a citywide vote. The outcome was not known at research time; it is not reported here as a win.</p>
+      <p class="src"><a href="https://talkoflc.com/league-city-council-approves-flock-camera-removal-vote/">Talk of League City</a></p></div>
+    </div>
+    <div class="place" data-cat="pending" data-text="florida texas state action dot revoked abbott pause 900 cameras unplugged">
+      <div class="vote">State action<small>Aug. 2026</small></div>
+      <div><h3>Florida &amp; Texas — state level</h3>
+      <p>Florida DOT revoked approvals for ALPRs in state rights-of-way on August 31, 2026; Texas Gov. Abbott ordered state agencies to pause Flock funding on August 27, 2026. Reporting cited at least 900 Texas cameras unplugged since, with 14 cities/counties dropping or cutting — attributed here to reporting, not an official tally.</p>
+      <p class="src"><a href="https://thethriftydev.com/blog/flock-cameras-surveillance-resistance/">The Thrifty Dev — resistance tracker summary</a></p></div>
+    </div>
+    <div class="place" data-cat="pending" data-text="avondale estates georgia petition 800 signatures no vote">
+      <div class="vote">Petition<small>Oct. 2026</small></div>
+      <div><h3>Avondale Estates, GA</h3>
+      <p>A Change.org petition gathered <strong>more than 800 signatures</strong> to remove about 10 Flock cameras; organizers seek legal frameworks, not internal policies. No council vote is shown.</p>
+      <p class="src"><a href="https://fox5atlanta.com/news/800-sign-petition-asking-avondale-estates-remove-flock-cameras">FOX 5 Atlanta</a></p></div>
+    </div>
+    <div class="place" data-cat="pending" data-text="middleborough massachusetts citizens petition warrant article town counsel">
+      <div class="vote">Petition<small>Nov. 9 warrant</small></div>
+      <div><h3>Middleborough, MA</h3>
+      <p>A citizens' petition, Article 23 on the November 9 warrant, would bar the town from acquiring or operating ALPRs, terminate the contract at the earliest date, delete data within 30 days, and bar sharing except by court order or warrant. Town counsel's opinion said it was likely unenforceable and in conflict with state law and the charter. Signature count not shown in the summary.</p>
+      <p class="src"><a href="https://thegoatnewsinmiddleborough.com/2026/10/19/a-24-article-warrant-3-5-million-and-a-vote-on-the-towns-license-plate-readers/">The GOAT News in Middleborough</a></p></div>
+    </div>
+  </div>
+  <p class="empty hidden" id="usEmpty">No place matches that filter.</p>
+</section>
+
+<!-- ============ REBUTTALS ============ -->
+<section id="rebuttals">
+  <h2>The rebuttals — opponents answer the claims</h2>
+  <p class="sec-sub">The only place pro-camera claims appear on this page is here, as the claim being answered — each rebuttal quoted or closely paraphrased and attributed to its source.</p>
+
+  <div class="reb">
+    <p class="claim">Claim: “It solves crime / keeps us safe”</p>
+    <h3>The civil-liberties cost outweighs the benefit</h3>
+    <blockquote>“For us, the threat to our civil liberties was greater than any benefit we could get from the flawed product.”
+      <footer>— Santa Cruz Mayor Fred Keeley, at the Jan. 13, 2026 termination (via Permit Atlas summary of the council record)</footer></blockquote>
+    <blockquote>“You can't surveil your way to public safety… but you can not do it in a way that maintains people's civil liberties and freedoms.”
+      <footer>— Gabriel Barraza, Get the Flock Out, Watsonville (<a href="https://cityonahillpress.com/2026/02/10/santa-cruz-voted-to-end-its-contract-with-flock-safety-what-about-the-rest-of-the-county/">City on a Hill Press</a>)</footer></blockquote>
+    <p>Fight for the Future's “FLOCK Out” petition argues the money should go instead to <em>“resources that are proven to keep communities safe: jobs, housing, health services, education.”</em> San Diego speaker Carmen Valdez (District 9, Youth Will intern) called continuing the contracts <em>“scary, dangerous and creepy”</em>: <em>“It's really sad to see how we're using money to stalk and target vulnerable communities instead of investing it towards solutions”</em> such as mental health care, transit, accessibility, and affordable housing. Sources: <a href="https://www.fightforthefuture.org/actions/flockout/#lowes">Fight for the Future</a> · <a href="https://www.daylightsandiego.org/san-diegans-demand-city-cancel-automated-license-plate-reader-contracts/">Daylight San Diego</a></p>
+    <p><strong>Denver, handled carefully:</strong> opponents cite Denver Open Data / 9NEWS figures via Consumer Rights Wiki — motor-vehicle theft of ~430 in April 2025 (cameras on) vs. ~301–313 in April 2026 (cameras off), a ~29–30% decrease, while clearance by arrest fell 13% to 3%. The same source explicitly warns the year-over-year change <em>“cannot be attributed to the camera lapse alone”</em> and rests on a single month. It is not proof cameras increase crime, and this page does not present it that way. <a href="https://consumerrights.wiki/w/Flock_license_plate_readers">Consumer Rights Wiki</a></p>
+  </div>
+
+  <div class="reb">
+    <p class="claim">Claim: “Data is not shared with ICE / out-of-state / federal agencies”</p>
+    <h3>The audit logs say otherwise</h3>
+    <p><strong>Marin County:</strong> the EFF reported audit logs showing the Marin Sheriff shared ALPR data <strong>254,131 times in November 2024 alone</strong>, including agencies in Alabama, Indiana, Kentucky, Florida, and Texas — sharing the EFF says violates California SB 34, and, for immigration enforcement, SB 54. <em>“ALPRs are cameras that capture images of vehicles and upload their location to a searchable, shareable database. They are a mass surveillance technology that collects data indiscriminately on every vehicle on the road.”</em> <a href="https://www.eff.org/deeplinks/2026/10/we-demand-more-information-how-marin-cops-illegally-shared-flock-alpr-data">EFF, Oct. 2026</a></p>
+    <p><strong>Richmond:</strong> out-of-state and federal agencies queried Richmond Flock data <strong>around 1.5 million times</strong>, including for immigration-related purposes, per an EFF presentation to the council — about 500 FBI searches in one period, at least 275 referencing immigration authorities. <a href="https://ccpulse.org/2026/10/08/out-of-state-agencies-searched-richmond-flock-data-1-5-million-times-eff/">CC Pulse, Oct. 8, 2026</a></p>
+    <p><strong>The ICE hotlist:</strong> the EFF notes Flock systems commonly compare plates against FBI NCIC hotlists, and the “Immigration Violator” hotlist is populated exclusively by ICE, including plates tied to administrative warrants issued by ICE agents without judicial review. <a href="https://www.eff.org/deeplinks/2026/06/are-your-local-police-using-flock-safety-alprs-scan-immigrants">EFF, June 2026</a></p>
+    <p><strong>Monterey &amp; Mountain View:</strong> Monterey County's vote followed reporting that county Flock data was accessible to out-of-state agencies in 2025 despite state law (the sheriff blamed a Flock configuration error). Mountain View's cameras went off after a police audit found federal and state access in violation of city policy. Sources: <a href="https://californiacitynews.org/2026/09/monterey-county-supervisors-vote-remove-flock-cameras.html">California City News</a> · <a href="https://www.mountainview.gov/Home/Components/News/News/1211/284">City of Mountain View</a></p>
+    <blockquote>“Even when used exactly as intended, Flock cameras are an affront to our privacy… Local flock data has been directly shared with Trump's FBI as recently as May of 2026… the only way to protect this highly sensitive data is to not produce it in the first place.”
+      <footer>— Humboldt Against A.I. Surveillance Hell (HAASH), via <a href="https://lostcoastoutpost.com/agendizer/humboldt-county-supes/895/">Lost Coast Outpost</a></footer></blockquote>
+    <p><strong>DeFlock Monongalia's answer</strong> to “no federal agencies have access”: Flock makes the claim but <em>“they don't put it in the contract”</em>; audit logs show federally funded HIDTA task forces, the WV Fusion Center, and regional networks searching county data — and <em>“no audit log can see an agent using a partner agency's account.”</em> <a href="https://deflockmonongalia.org/">DeFlock Monongalia</a></p>
+  </div>
+
+  <div class="reb">
+    <p class="claim">Claim: “Safeguards, audits, and retention limits protect you”</p>
+    <h3>Moving data is not deleting it; audits document abuse after the fact</h3>
+    <p>The EFF's analysis of San Francisco's ALPR policy: the 30-day move of data from vendor to city servers is <em>“moving data is not deleting it”</em>; the policy does not require a warrant or judicial authorization; an incident/CAD number is <em>“not judicial authorization”</em>; and audit-log improvements <em>“can expose abuse only after a search has occurred.”</em> For contrast, New Hampshire requires deletion within 3 minutes; Flock's default was 7 days. Via <a href="https://stateofsurveillance.org/news/daily-surveillance-briefing-october-2-2026/">State of Surveillance briefing, Oct. 2, 2026</a></p>
+    <p>DeFlock Illinois' talking points: <em>“Retention limits are just another overridable default”</em> — one sheriff set 30 days, then said within days he was “reevaluating” it, while the vendor moved its own default to 7. <em>“Audits don't stop misuse — they only document it after the fact. A Mooresville officer ran 31 searches to stalk a private citizen; the audit logged every one and prevented none.”</em> The reason field is self-entered. <em>“You cannot regulate a warrantless dragnet into something that honors a warrant.”</em> <a href="https://deflockilm.org/talking-points-against-flock-ai-alpr-cameras/">DeFlock IL talking points</a></p>
+    <p>The EFF's analysis also found search reasons including <em>“LMAO”</em>; the ACLU says Flock's Audit Assistance effectiveness <em>“had not been independently verified”</em> and should be assumed ineffective — “window dressing” — via Consumer Rights Wiki summaries. <a href="https://consumerrights.wiki/w/Flock_license_plate_readers">Consumer Rights Wiki</a></p>
+  </div>
+
+  <div class="reb">
+    <p class="claim">Claim: “It is not warrantless tracking / not a search”</p>
+    <h3>A federal judge called it indiscriminate mass surveillance</h3>
+    <p>In <em>United States v. Kyle</em> (N.D. Okla., Oct. 1, 2026), U.S. District Judge Sara E. Hill called Flock a <em>“type of indiscriminate mass surveillance”</em>: <em>“Freedom from persistent, dragnet-style surveillance while in public is not a foreign concept in our society, and it is a reasonable expectation that society already accepts.”</em> She ruled that a warrantless search of more than 50 records over about a month, across multiple states — a deputy queried after seeing a California plate, before observing a violation — violated the Fourth Amendment, and suppressed the evidence. <strong>Limits, stated plainly:</strong> it is a trial-court ruling, not binding precedent; most other Oklahoma federal courts had reached the opposite conclusion; and the decision did not outlaw the technology outright. Sources: <a href="https://dailycaller.com/2026/10/04/federal-judge-flock-warrantless-search-fourth-amendment">Daily Caller</a> · <a href="https://www.military.com/sheriff-deputy-warrantless-tracking-woman-via-flock-violated-fourth-amendment-judge">Military.com</a></p>
+    <blockquote>“The issue isn't one snapshot; it's that enough snapshots become a map of your life… They record where we were, when we were there, and over time can reveal our religious practices, medical visits, political activities, personal relationships and daily routines.”
+      <footer>— ACLU San Diego, <em>PANA v. San Diego</em>, filed Sept. 29, 2026 — demanding the city cease ALPR use, uninstall cameras, and delete data, under the California Constitution's privacy right (<a href="https://www.aclu-sdic.org/cases/pana-v-city-of-san-diego/">ACLU San Diego</a>)</footer></blockquote>
+    <p>The Shasta petition's own language: Flock <em>“continuously log[s], photograph[s], and track[s] the movement of every single vehicle that passes them… without a warrant or individualized suspicion,”</em> <em>“turning public roads into automated checkpoints.”</em> <a href="https://www.change.org/p/flock-off-shasta-county-ban-flock-safety-cameras-in-shasta-county-ca/fbog/7779934/bsv">Change.org</a> And Monterey speaker Miles Wade: <em>“Law enforcement sees judicial process as a hurdle that is inconvenient, and they don't want to deal with that. And so they want to bypass that and be able to surveil people without a warrant.”</em> Via <a href="https://www.lapost.com/content/monterey-county-rejects-10-year-flock-cameras-deal-after-residents-blast-privacy-fears">LA Post / KSBW</a></p>
+  </div>
+
+  <div class="reb">
+    <p class="claim">Claim: “Misidentification is rare / alerts are verified”</p>
+    <h3>Wrong plates, gunpoint stops, a month in jail</h3>
+    <p><strong>Hugo Parra, San Diego</strong> — opponents' central example: police had no plate, only a vehicle description and witness ID. A Flock “hit” allegedly showed Parra <strong>five miles away</strong> from the Golden Hill attempted carjacking at the time of the crime, before any pursuit began. Parra spent <strong>nearly a month in jail</strong> before assault/evasion charges were dropped. He and driver Ariel Beltran are suing, seeking $1.5M each — a claim, not a judgment. Sources: <a href="https://yro.slashdot.org/story/26/06/07/2357243/police-sued-after-imprisoning-innocent-man-placed-near-violent-crime-by-flock-license-plate-reader?sdsrc=nextbtmnext">Slashdot / YRO</a> · <a href="https://www.daylightsandiego.org/san-diegans-demand-city-cancel-automated-license-plate-reader-contracts/">Daylight San Diego</a></p>
+    <p><strong>LAPD audit:</strong> the Police Commission suspended LAPD Flock use in July 2026 after an Inspector General audit found officers improperly investigated <strong>161 people</strong> whose vehicles were wrongly flagged as stolen. Via <a href="https://facenotfound.com/blogs/fight-back-protect-your-rights/streetlight-license-plate-cameras-la-committee-votes-no">Face Not Found</a></p>
+    <p><strong>Other misread examples opponents list</strong> (each attributed, not verified in this research): a York County, SC motorist detained at gunpoint after a one-character misread (stolen flag); Morristown, TN grandparents detained at gunpoint after “O” was read as “0,” with a 3-year-old watching; a Toledo, OH driver detained at gunpoint, a dog used, jailed for hours after “7” was read as “2.” Via <a href="https://en.wikipedia.org/wiki/Flock_Safety">Wikipedia — Flock Safety</a></p>
+    <p><strong>Speaker claim, attributed as such:</strong> at San Diego, Elizabeth Gibbon cited a Vallejo police study finding up to 37% of fixed-position ALPR reads were misreads. <a href="https://www.daylightsandiego.org/san-diegans-demand-city-cancel-automated-license-plate-reader-contracts/">Daylight San Diego</a></p>
+    <p><strong>Abuse tallies differ — do not merge them:</strong> 241 documented ALPR abuse incidents in one DeFlock summary; at least 27 cases since 2018 of innocent motorists stopped, detained at gunpoint, or jailed over ALPR error in another; 28 cases since 2024 of officers using Flock to stalk in another. Sources: <a href="https://deflockmonongalia.org/">DeFlock Monongalia</a> · <a href="https://maxintel.org/alpr-misuse-documented-cases.html">Max Intel — documented ALPR misuse cases</a></p>
+  </div>
+
+  <div class="reb">
+    <p class="claim">Claim: “It is cheap / worth the cost”</p>
+    <h3>Opponents read the price tags back</h3>
+    <p>Opponents point to the contract prices themselves as the cost of a contested system: Shasta <strong>$551,000 over 5 years</strong>; Monterey's rejected <strong>$1.7M over 10 years</strong>; Fullerton <strong>~$51,000/year</strong>; El Cerrito <strong>$105,000/year</strong>; Oakland's proposed <strong>$2.25M over 2 years</strong>; San Diego <strong>~$2M</strong>. Their argument (above) is that the money should go to jobs, housing, health, education, mental health, and transit instead. No opponent source reviewed provides a cost-effectiveness study comparing ALPR to those alternatives — it is presented here as an argument, not a finding.</p>
+  </div>
+</section>
+
+<!-- ============ TRAFFIC ============ -->
+<section id="traffic">
+  <h2>Traffic cameras — a separate fight</h2>
+  <p class="sec-sub">Red-light and speed cameras are automated <em>ticketing</em> cameras — a different technology from Flock/ALPR plate-tracking networks. They are kept in this section only, not mixed into the sections above. Milford, CT paused both together and is flagged as such.</p>
+
+  <h3 style="margin-top:22px">California</h3>
+  <div class="place"><div class="vote">~73%<small>Ballot ban · Anaheim, 2010</small></div>
+    <div><p><strong>Measure K:</strong> Anaheim voters approved a charter ban on red-light cameras with about 73% of ~45,000 votes cast — with no cameras then in place. Mayor Curt Pringle backed it, saying voters recognised red-light cameras are <em>“not a proven deterrent to traffic violations or traffic accidents”</em> and that other cities used them as a revenue tool.</p>
+    <p class="src"><a href="http://blog.commonsenseforbelmar.org/the-voters-speak-out-on-red-light-cameras/">Common Sense for Belmar, quoting the LA Times</a></p></div></div>
+  <div class="place"><div class="vote">13–0<small>Program ended · Los Angeles, 2011</small></div>
+    <div><p>LA's City Council voted 13–0 to end the red-light program (per a Vocal Media summary); a contemporaneous Truth About Cars account says the council voted unanimously to drop it, primarily because county courts refused to enforce unpaid tickets, depriving the city of expected revenue, and instructed removal. A different action from LA's 2026 ALPR pilot above.</p>
+    <p class="src"><a href="https://vocal.media/wheel/real-reason-why-red-light-cameras-was-banned-in-la">Vocal Media</a> · <a href="https://www.thetruthaboutcars.com/category/news-blog/law-and-order/?page_num=12">The Truth About Cars</a></p></div></div>
+  <div class="place"><div class="vote">Banned<small>Newport Beach, 2012</small></div>
+    <div><p>Voters banned red-light cameras in 2012. The vote margin is not shown in the excerpt source.</p>
+    <p class="src"><a href="https://fireredflex.com/cameras.html">Fire Redflex — cameras</a></p></div></div>
+  <div class="place"><div class="vote">Unanimous<small>Santa Ana, 2015</small></div>
+    <div><p>Santa Ana's council unanimously decided to stop doing business with Redflex; photo ticketing ended when the Redflex contract expired June 21, 2015, after Redflex's $2M Chicago bribery scandal.</p>
+    <p class="src"><a href="https://fireredflex.com/cameras.html">Fire Redflex — cameras</a></p></div></div>
+  <div class="place"><div class="vote">Ended<small>San Rafael</small></div>
+    <div><p>San Rafael got rid of its 2 red-light cameras after five years, saying they only slightly reduced accidents at a key downtown intersection, and did not plan to renew its Redflex contract at month-end. Date and margin are not shown in the excerpt.</p>
+    <p class="src"><a href="https://fireredflex.com/cameras.html">Fire Redflex — cameras</a></p></div></div>
+  <div class="place"><div class="vote">4–1<small>First reading · Laguna Niguel</small></div>
+    <div><p>Laguna Niguel's council voted 4–1 on first reading (date in the source's context ~2011) of a measure prohibiting automated ticketing machines; the city had never allowed vendors to operate. It cited “mixed reviews” and studies showing cameras increase accidents.</p>
+    <p class="src"><a href="https://www.thetruthaboutcars.com/category/news-blog/traffic-news-blog/?page_num=2">The Truth About Cars</a></p></div></div>
+
+  <div class="note"><strong class="sans">California speed cameras — opposition, not removals.</strong> The National Motorists Association / KFI petition — <em>“Sign the petition to tell legislators NO SPEED CAMERA IN CALIFORNIA”</em> — opposed AB 645's pilot (LA, San Jose, Oakland, Glendale, Long Beach, San Francisco; up to 125 cameras in LA), objecting to ticketing at 11 mph over limits set up to 12 mph below the 85th-percentile speed, no safety benefit for reasonable drivers, speed-feedback signs as more effective, and due-process protections removed. Signature count: <strong>not shown</strong>. <a href="https://kfiam640.iheart.com/featured/the-john-kobylt-show/content/2023-08-29-sign-the-speed-camera-petition/">KFI AM 640</a> Human Rights Watch's August 7, 2023 letter opposing AB 645 warned expansions of policing tech <em>“often shift from temporary to permanent and from limited to expansive,”</em> that AB 645 would <em>“continue and replicate racial bias,”</em> and cited Chicago's race-neutral cameras ticketing majority-Black/Hispanic ZIP codes twice as much — via <a href="https://lbwatchdog.com/long-beach-is-getting-speed-cameras-residents-city-staff-and-advocacy-groups-have-concerns/">Long Beach Watchdog</a>. In 2026 Long Beach public comment, residents called speed cameras a <em>“revenue grab”</em> and a privacy concern — comment, not a removal vote; Long Beach was proceeding in that coverage. A California Senate floor analysis for SB 720 adds the state-level context: <em>“A number of local jurisdictions across the state have discontinued their red light camera programs for a variety of reasons, many of which center on infeasibility.”</em> <a href="https://ctweb.capitoltrack.com/Bills/25Bills%5Csen%5Csb_0701-0750/sb_720_cfa_393522_sen_comm.html">SB 720 floor analysis (PDF via CapitolTrack)</a></div>
+
+  <h3 style="margin-top:22px">National</h3>
+  <div class="place"><div class="vote">52.82%<small>Houston, TX · Nov. 2010</small></div>
+    <div><p>Houston voters repealed red-light cameras with 52.82% (47.18% to keep); the City Council then voted <strong>14–1</strong> to repeal the ATS ordinance covering 50 intersections. Citizens Against Red Light Cameras spokesman Philip Owens called it <em>“a total victory for the voters.”</em></p>
+    <p class="src"><a href="https://www.thetruthaboutcars.com/category/news-blog/traffic-news-blog/?page_num=2">The Truth About Cars</a> · <a href="http://www.techdirt.com/tag/houston/page/3/">Techdirt</a></p></div></div>
+  <div class="place"><div class="vote">58%<small>Baytown, TX · 2010</small></div>
+    <div><p>Baytown voters chose to terminate the red-light program with 58%.</p>
+    <p class="src"><a href="https://houstonarchitecture.com/profile/4740-scott08/content/?change_section=1">Houston Architecture</a></p></div></div>
+  <div class="place"><div class="vote">Statewide ban<small>Texas · HB 1631, 2019</small></div>
+    <div><p>HB 1631, signed June 2, 2019 and effective the same day, prohibits local authorities from installing or operating photographic traffic-signal enforcement; contracts from before May 7, 2019 could run to expiry only. Before the ban, 50+ Texas cities operated programs; Houston alone had 50+ intersections.</p>
+    <p class="src"><a href="https://content.govdelivery.com/accounts/TXDMV/bulletins/24e0769">Texas DMV bulletin</a> · <a href="https://legalclarity.org/which-traffic-cameras-are-legal-in-texas/">Legal Clarity</a></p></div></div>
+  <div class="place"><div class="vote">Paused<small>Milford, CT · 2026 — both kinds</small></div>
+    <div><p><strong>Both traffic and Flock:</strong> Milford's Board of Aldermen voted August 27, 2026 to pause most speed, red-light, and Flock cameras after a 4+ hour meeting; the mayor confirmed all speed cameras were off, most Flock cameras disabled, and 14 remaining at city borders (I-95, Route 15, etc.), with a Public Safety &amp; Technology Review Committee created. On September 14 the board voted <strong>9–6 against a full Flock ban</strong>, opting for the 90-day committee review instead.</p>
+    <p class="src"><a href="https://nothingtosee.fyi/tags/tech/alpr/">Nothing To See — ALPR tag</a> · <a href="https://theorangetimes.com/surveillance-tech-continues-to-roil-milford/">The Orange Times</a></p></div></div>
+  <div class="place"><div class="vote">Ballot<small>Rejections elsewhere</small></div>
+    <div><p>Mukilteo, WA: <strong>70% against</strong>. Sykesville, MD: <strong>61%</strong> overturned a speed-camera ordinance (May 2010). Sulphur, LA: <strong>86% rejected</strong> speed cameras (2009). Chillicothe, OH: <strong>72% no</strong>. Cincinnati, OH rejected red-light cameras (2008). Steubenville, OH: <strong>76% rejected</strong> photo radar in one summary, 66% in another — a discrepancy in the secondary summaries, reported here unresolved.</p>
+    <p class="src"><a href="https://www.washingtonpolicy.org/publications/detail/voters-in-seven-cities-reject-photo-enforcement-including-wa-state">Washington Policy Center</a></p></div></div>
+</section>
+
+<!-- ============ GROUPS ============ -->
+<section id="groups">
+  <h2>Groups, petitions &amp; social counts</h2>
+  <p class="sec-sub">Counts appear here <strong>only as shown on the source itself</strong>. “Not shown” means the page reviewed did not display a member or signature count — it is not zero. No Facebook member or follower count was shown for any local or California anti-Flock group in the sources reviewed; Facebook pages themselves were not opened in this research (signed-out window; groups may require login), so no count is claimed from a login-gated page.</p>
+
+  <div class="counts">
+    <div class="count"><b>Over 1,000 signatures</b><span>Shasta County anti-Flock petition — a speaker's claim at the Oct. 27, 2026 board meeting, via Shasta Unfiltered. Not a verified tally; do not attribute it to the Change.org or Wix page.</span></div>
+    <div class="count"><b>25 / 26 speakers; 2 in support</b><span>Shasta County board, Oct. 27, 2026 — 25 per Record Searchlight, 26 per Shasta Unfiltered. The discrepancy is noted; both agree on 2 supporters.</span></div>
+    <div class="count"><b class="notshown">Not shown</b><span>Flock Off Shasta County — Change.org petition (published Aug. 19, 2026; updated Oct. 8, 2026). No signature count displayed on the fetched page.</span></div>
+    <div class="count"><b class="notshown">Not shown</b><span>Flock Off SC — Wix petition site (Shasta County). No signature or member count displayed.</span></div>
+    <div class="count"><b class="notshown">Not shown</b><span>ShastaCountyALPR.com — single-admin citizen site. No group or member count displayed.</span></div>
+    <div class="count"><b>“Large crowd”</b><span>Red Bluff council ALPR discussion, Tehama County — qualitative only. No number shown in the source.</span></div>
+    <div class="count"><b>Nearly 800 signatures</b><span>Fort Wayne, IN — activists delivered nearly 800 combined petition signatures before the vote; the source also says “over 250 petitions delivered as of last meeting.” The wording is ambiguous between signatures and petitions, so it is quoted, not converted.</span></div>
+    <div class="count"><b>~490 signatures</b><span>Indivisible Skagit petition, Mount Vernon, WA — approximate, as reported.</span></div>
+    <div class="count"><b>More than 800 signatures</b><span>Avondale Estates, GA — Change.org petition to remove ~10 Flock cameras (<a href="https://fox5atlanta.com/news/800-sign-petition-asking-avondale-estates-remove-flock-cameras">FOX 5 Atlanta</a>).</span></div>
+    <div class="count"><b>41 residents spoke against</b><span>New Hanover County, NC, before its 4–0 vote.</span></div>
+    <div class="count"><b>100+ speakers signed up</b><span>Oakland, CA subcommittee — vast majority opposed. Exact opposed count not shown.</span></div>
+    <div class="count"><b>47 signed up to speak</b><span>El Cerrito, CA — opponents outnumbered supporters. Exact opposed count not shown.</span></div>
+    <div class="count"><b>20+ spoke against</b><span>Santa Cruz, CA, Jan. 13, 2026 — in person and Zoom, per the student-paper summary; another summary says public comment “ran unanimous for termination.” Not merged into one exact count.</span></div>
+    <div class="count"><b>“Dozens” spoke</b><span>Humboldt County, CA — opponents at an early June 2026 meeting. HAASH petition signature count: not shown.</span></div>
+    <div class="count"><b class="notshown">Not shown</b><span>Fight for the Future “FLOCK Out” national petition — urges ending Flock and other ALPRs and claims “over two dozen cities and towns” have ended contracts. Signature count not shown.</span></div>
+    <div class="count"><b class="notshown">Not shown</b><span>DeFlock Tampa Facebook group (public group), DeFlock Ridgecrest Facebook group, DeFlock the Shoals (AL), GTFO Santa Cruz County, and GTFO Monterey County — group existence, rallies, petitions, and council testimony are documented; member counts were not shown on the pages reviewed.</span></div>
+  </div>
+
+  <h3 style="margin-top:26px">The groups behind the fights</h3>
+  <div class="grid">
+    <article class="card">
+      <span class="tag tag-green">Santa Cruz County, CA</span>
+      <h3>Get the Flock Out (GTFO)</h3>
+      <p>Santa Cruz-based grassroots group led by Ami Chen Mills. It pressed the Santa Cruz termination, then the Watsonville and Capitola campaigns, and kicked off the Bay Area National Week of Action Against ALPRs rally on August 16, 2026 at the Santa Cruz County courthouse. <strong>Member count: not shown.</strong></p>
+      <p class="src"><a href="https://santacruzlocal.org/2025/11/07/ice-accessed-capitola-license-plate-data-police-say-it-was-a-mistake/">Santa Cruz Local</a> · <a href="https://lookout.co/after-santa-cruz-banned-flock-cameras-activists-push-to-expand-fight-against-license-plate-readers/story">Lookout Santa Cruz</a> · <a href="https://citizenportal.ai/articles/7236601/Santa-Cruz-County/California/Residents-urge-Santa-Cruz-council-to-halt-Flock-license-plate-cameras-over-data-security-and-civil-rights-concerns">Citizen Portal</a></p>
+    </article>
+    <article class="card">
+      <span class="tag tag-green">Monterey County, CA</span>
+      <h3>GTFO Monterey County</h3>
+      <p>The local chapter, with the Monterey County Coalition Against Mass Surveillance, pressed the 3–2 Monterey removal. Its site tracks the remaining city contracts the county vote did not cover. <strong>Member count: not shown.</strong></p>
+      <p class="src"><a href="https://www.gtfomontereycounty.com/">gtfomontereycounty.com</a></p>
+    </article>
+    <article class="card">
+      <span class="tag tag-green">Humboldt County, CA</span>
+      <h3>Humboldt Against A.I. Surveillance Hell (HAASH)</h3>
+      <p>HAASH circulated a petition on social media urging cancellation of the Humboldt Sheriff's Flock contract, citing a “climate of fear and mistrust”; dozens of opponents spoke at an early June 2026 meeting. The board voted 4–1 on September 15, 2026 to reconstitute a surveillance ad-hoc group to return a countywide policy and draft ordinance by the end of 2027 — <strong>no ban was voted</strong>. Petition signature count: not shown.</p>
+      <p class="src"><a href="https://lostcoastoutpost.com/agendizer/humboldt-county-supes/895/">Lost Coast Outpost</a> · <a href="https://www.madriverunion.com/articles/countys-regulation-of-surveillance-slowly-advances/">Mad River Union</a></p>
+    </article>
+    <article class="card">
+      <span class="tag tag-green">Ridgecrest, CA · Facebook group</span>
+      <h3>DeFlock Ridgecrest</h3>
+      <p>Organizers Brenda and Mike Licitra. The Facebook group is named in RoadRunner395's coverage of a six-hour Ridgecrest council meeting where residents with “Get the Flock Out” signs objected; the council remained in support in that account. <strong>Facebook member count: not shown.</strong></p>
+      <p class="src"><a href="https://roadrunner395.com/2026/10/08/get-the-flock-out-city-of-ridgecrest-holds-crying-session-on-flock-safety-surveillance-cameras-tempers-flare-during-six-hour-meeting/">RoadRunner395, Oct. 8, 2026</a></p>
+    </article>
+    <article class="card">
+      <span class="tag tag-green">Chapters nationwide</span>
+      <h3>DeFlock chapters &amp; allied sites</h3>
+      <p><strong>DeFlock Tampa (FL)</strong> — public Facebook group; member count not shown. Tampa's own item was FDOT state-road compliance (17 readers removed), not a city council cancellation. <a href="https://deflocktampa.com/tampa">deflocktampa.com/tampa</a></p>
+      <p><strong>DeFlock the Shoals (AL)</strong> — Florence / Muscle Shoals / Sheffield / Tuscumbia petition plus a Facebook group link; member and signature counts not shown. <a href="https://deflocktheshoals.site/">deflocktheshoals.site</a></p>
+      <p><strong>DeFlock Monongalia (WV), DeFlock Lansing (MI), DeFlock Livermore (CA), DeFlock Atlanta</strong> — local chapter sites documenting rebuttals and cancellations; member counts not shown in the sources reviewed.</p>
+    </article>
+    <article class="card">
+      <span class="tag tag-green">Marin County, CA</span>
+      <h3>EFF / ACLU pressure — no removal vote</h3>
+      <p>No Marin removal vote was found; instead, an EFF/ACLU demand letter in October 2026 over the illegal data sharing detailed in the Rebuttals section.</p>
+      <p class="src"><a href="https://www.eff.org/deeplinks/2026/10/we-demand-more-information-how-marin-cops-illegally-shared-flock-alpr-data">EFF Deeplinks, Oct. 2026</a></p>
+    </article>
+  </div>
+</section>
+
+<!-- ============ OPEN ============ -->
+<section id="open">
+  <h2>Open questions — marked plainly</h2>
+  <div class="note">
+    <ul style="margin:0;padding-left:20px">
+      <li>No Shasta County, Anderson CA, Redding, Red Bluff, Corning CA, or Tehama County Board vote to remove or ban Flock was found as of October 29, 2026. The Shasta decision was pending — presentation aimed for November 10, decision before the end of November.</li>
+      <li>No signature count is displayed on the Shasta Change.org or Wix petition pages as fetched; the “over 1,000” figure is only a meeting speaker's claim.</li>
+      <li>No Facebook member or follower count was shown for any local or California anti-Flock group in the sources reviewed.</li>
+      <li>The Red Bluff Daily News original article behind the DeFlock USA summary was not opened in this research; its crowd size, speakers, and any decision remain unconfirmed.</li>
+      <li>The Shasta Scout article was cited from search/Flipboard snippets, not a full open; its details are used here as context only.</li>
+      <li>National tallies (214 / ~150 / 277, and others) conflict because trackers use different definitions and dates. They are reported attributed, never as a single total.</li>
+      <li>Older traffic-camera ballot margins (e.g., Steubenville 66% vs. 76%) differ between secondary summaries and are flagged, not resolved.</li>
+    </ul>
+  </div>
+  <div class="alert"><b>Same-name places, one more time.</b> Anderson, CA ≠ Anderson County, SC ≠ City of Anderson, SC. “Flock Off SC” = Shasta County. Corning, Tehama County, CA ≠ Corning, NY. Santa Cruz the city terminated Jan. 13, 2026; Capitola (~10 cameras) and Watsonville (37 cameras) kept their contracts at that time. Monterey County's vote removed sheriff cameras only. Denver switched vendors; it is not camera-free. Tampa's 17 removed readers were a state-road compliance action, not a council cancellation.</div>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <p><strong class="sans" style="color:var(--ink)">About this page.</strong> A link collection of opposition to Flock Safety and other ALPR systems, and — kept separate — to red-light and speed cameras. Researched October 29, 2026 from the sources linked throughout. Every figure is attributed to its source; hedges, discrepancies, and “not shown” counts are carried as the sources state them. Nothing on this page is presented as an independently verified finding.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  function setup(inputId, listId, emptyId, scope){
+    var input=document.getElementById(inputId), list=document.getElementById(listId), empty=document.getElementById(emptyId);
+    var cat='all';
+    function apply(){
+      var q=(input.value||'').toLowerCase().trim();
+      var visible=0;
+      var items=list.querySelectorAll('.place');
+      items.forEach(function(it){
+        var okCat = (cat==='all' || it.getAttribute('data-cat')===cat);
+        var hay=(it.textContent+' '+(it.getAttribute('data-text')||'')).toLowerCase();
+        var okQ = (!q || hay.indexOf(q)>-1);
+        var show = okCat && okQ;
+        it.classList.toggle('hidden', !show);
+        if(show) visible++;
+      });
+      empty.classList.toggle('hidden', visible>0);
+    }
+    input.addEventListener('input', apply);
+    document.querySelectorAll('.chip[data-scope="'+scope+'"]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        document.querySelectorAll('.chip[data-scope="'+scope+'"]').forEach(function(b){b.setAttribute('aria-pressed','false')});
+        btn.setAttribute('aria-pressed','true');
+        cat=btn.getAttribute('data-f');
+        apply();
+      });
+    });
+  }
+  setup('caFilter','caList','caEmpty','ca');
+  setup('usFilter','usList','usEmpty','us');
+})();
+</script>
+</body>
+</html>
