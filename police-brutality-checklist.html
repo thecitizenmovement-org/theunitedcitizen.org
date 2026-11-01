@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="A bare-bones checklist to get ready for the legal assistant.">
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <title>Police Brutality Filing Checklist — United Citizens Movement</title>
+  <style>
+    :root{
+      --navy:#0d2140;--navy-2:#102b50;--ink:#f7edcf;--gold:#c6a45d;--bright:#f1cf7a;
+      --muted:#d8c79e;--panel:rgba(7,20,42,.88);--line:rgba(214,181,106,.58);--soft:rgba(214,181,106,.12);
+      --alert:#ff8c00;--shadow:0 14px 44px rgba(0,0,0,.34);
+    }
+    @media(prefers-color-scheme:dark){:root{--navy:#071227;--navy-2:#0b2342;--ink:#fff4d3;--gold:#caa75f;--bright:#f2d17b;--muted:#d8cba8;--panel:rgba(4,14,31,.9);--line:rgba(222,188,110,.62);--soft:rgba(222,188,110,.12)}}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:72px}body{margin:0;background:var(--navy);color:var(--ink);font-family:"Libre Franklin",sans-serif;line-height:1.55;overflow-x:hidden}a{color:inherit}
+    .serif,h1,h2,h3{font-family:"Playfair Display",Georgia,serif}
+    .blueprint{position:relative;isolation:isolate}.blueprint:before{content:"";position:absolute;inset:0;z-index:-2;background-image:linear-gradient(rgba(117,167,210,.1) 1px,transparent 1px),linear-gradient(90deg,rgba(117,167,210,.1) 1px,transparent 1px),linear-gradient(rgba(117,167,210,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(117,167,210,.035) 1px,transparent 1px);background-size:80px 80px,80px 80px,16px 16px,16px 16px}
+    .wrap{width:min(1180px,calc(100% - 40px));margin:auto}.section{padding:84px 0;border-top:1px solid rgba(198,164,93,.22);position:relative}
+    .section-title{margin:0 auto 14px;max-width:920px;text-align:center;color:var(--bright);font-size:clamp(2rem,4.6vw,3.6rem);line-height:1.08}
+    .lede{max-width:860px;margin:0 auto 42px;text-align:center;color:var(--muted);font-size:clamp(1rem,2vw,1.18rem)}
+    .kicker{display:flex;align-items:center;gap:12px;color:var(--gold);font-size:.73rem;letter-spacing:.18em;text-transform:uppercase;font-weight:700}.kicker:before,.kicker:after{content:"";height:1px;flex:1;background:linear-gradient(90deg,transparent,var(--line))}.kicker:after{background:linear-gradient(90deg,var(--line),transparent)}
+    .panel{background:linear-gradient(145deg,rgba(20,46,79,.64),var(--panel));border:1px solid var(--line);box-shadow:var(--shadow),inset 0 0 0 1px rgba(255,236,181,.05);padding:28px;position:relative}
+    .panel:before,.panel:after{content:"";position:absolute;width:18px;height:18px;border-color:var(--bright);opacity:.75}.panel:before{top:6px;left:6px;border-top:1px solid;border-left:1px solid}.panel:after{right:6px;bottom:6px;border-right:1px solid;border-bottom:1px solid}
+    header.top{padding:18px 0;border-bottom:1px solid rgba(198,164,93,.22)}
+    nav.primary{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:center;font-size:.92rem}
+    nav.primary a{text-decoration:none;color:var(--muted)}nav.primary a:hover,nav.primary a:focus-visible{color:var(--bright)}nav.primary a.current{color:var(--bright);font-weight:700;border-bottom:1px solid var(--bright)}
+    .wall{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:26px;max-width:1180px;margin:0 auto}
+    .placard{display:flex;flex-direction:column;text-decoration:none;overflow:hidden;padding:0}
+    .placard .photo{width:100%;height:210px;object-fit:cover;display:block;border-bottom:1px solid var(--line)}
+    .placard .mono{height:210px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--line);background:radial-gradient(ellipse at 50% 35%,rgba(198,164,93,.16),transparent 65%)}
+    .placard .mono span{font-family:"Playfair Display",Georgia,serif;font-size:2rem;color:var(--gold);letter-spacing:.06em;text-align:center;padding:0 16px}
+    .placard .body{padding:22px 24px 26px;display:flex;flex-direction:column;gap:10px;flex:1}
+    .placard h3{margin:0;font-size:1.45rem;color:var(--bright);line-height:1.15}
+    .placard .place{color:var(--muted);font-size:.95rem}
+    .placard .line{color:var(--ink);font-size:1rem;flex:1}
+    .placard .tap{color:var(--gold);font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+    .ribbon{display:inline-block;align-self:flex-start;padding:4px 12px;font-size:.72rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;border:1px solid var(--alert);color:var(--alert)}
+    .ribbon.closed{border-color:var(--bright);color:#0b1830;background:linear-gradient(180deg,#d6ae52,#9e741c)}
+    .sheet{max-width:920px;margin:0 auto}
+    .sheet h2{color:var(--bright);font-size:clamp(1.7rem,3.6vw,2.5rem);margin:0 0 6px;line-height:1.12}
+    .sheet h3{color:var(--bright);font-size:1.25rem;margin:30px 0 8px}
+    .sheet p{color:var(--ink);margin:8px 0}
+    .sheet .sub{color:var(--muted);margin:0 0 18px}
+    table.specs{width:100%;border-collapse:collapse;margin:16px 0 8px}
+    table.specs th,table.specs td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top;font-size:.97rem}
+    table.specs th{width:34%;color:var(--gold);font-weight:700;background:rgba(198,164,93,.07)}
+    .finding{border-left:3px solid var(--gold);padding:4px 0 4px 16px;margin:16px 0}
+    .finding .fid{color:var(--gold);font-weight:800;letter-spacing:.08em;font-size:.82rem;text-transform:uppercase}
+    .finding p{margin:4px 0}
+    .ask{color:var(--muted);font-style:italic}
+    .dedication{border:1px solid var(--line);background:rgba(198,164,93,.06);padding:22px 24px;margin:26px 0}
+    .sources{color:var(--muted);font-size:.9rem;border-top:1px solid var(--line);padding-top:14px;margin-top:30px}
+    .credit{color:var(--muted);font-size:.82rem;text-align:center;margin-top:10px}
+    footer{padding:44px 0 60px;border-top:1px solid rgba(198,164,93,.22);color:var(--muted);text-align:center;font-size:.95rem}
+    .backlink{display:inline-block;margin:0 auto 26px;color:var(--gold);text-decoration:none;font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700}
+  </style>
+</head>
+<body class="blueprint">
+  <header class="top">
+    <div class="wrap">
+      <nav class="primary" aria-label="Primary navigation">
+        <a href="index.html#mission">Mission Statement</a>
+        <a href="index.html#member-panel">Sign Up</a>
+        <a href="index.html#library">Law Library</a>
+        <a href="index.html#families">Families</a>
+        <a href="index.html#contacts">Join</a>
+        <a href="index.html#community">Community</a>
+        <a href="index.html#services">Services</a>
+        <a href="justice-wall.html">Justice Wall</a>
+        <a href="facility-complaints.html" class="current">Facility Complaints</a>
+        <a href="contact.html">Contact Card</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="section" style="border-top:none">
+    <div class="wrap">
+      <p class="kicker">Facility Complaints</p>
+      <h1 class="section-title serif">The Record, On The Wall</h1>
+      <p class="lede">Every facility on this wall is here because the public record put it here — inspector general audits, court records, whistleblower referrals, and documented deaths. Tap a placard for its facts &amp; spec sheet: what the place is, what is documented there, and what is being asked of the authorities. A facility that closes stays on this wall as a memorial, so it is never quietly forgotten — or quietly reopened.</p>
+
+      <div class="wall">
+        <a class="placard panel" href="#fc-001" aria-label="Open the fact sheet for FCC Butner">
+          <div class="mono"><span>FCC BUTNER</span></div>
+          <div class="body">
+            <span class="ribbon">Active Complaint</span>
+            <h3 class="serif">Federal Correctional Complex, Butner</h3>
+            <p class="place">FC-001 · Butner, North Carolina · Federal Bureau of Prisons</p>
+            <p class="line">About one in four of all federal custody deaths over a decade happened at this one complex — and the Inspector General found the Bureau could not even measure whether its medical care was timely.</p>
+            <span class="tap">Open fact sheet →</span>
+          </div>
+        </a>
+
+        <a class="placard panel" href="#fc-002" aria-label="Open the fact sheet for MDC Brooklyn">
+          <div class="mono"><span>MDC BROOKLYN</span></div>
+          <div class="body">
+            <span class="ribbon">Active Complaint</span>
+            <h3 class="serif">Metropolitan Detention Center, Brooklyn</h3>
+            <p class="place">FC-002 · Brooklyn, New York · Federal Bureau of Prisons</p>
+            <p class="line">Two men stabbed to death in six weeks, a man dead after staff pepper-sprayed him, and a building the Inspector General found could not monitor its own temperatures — holding mostly people not convicted of anything.</p>
+            <span class="tap">Open fact sheet →</span>
+          </div>
+        </a>
+
+        <a class="placard panel" href="#fc-003" aria-label="Open the fact sheet for FCI Dublin">
+          <img class="photo" src="https://upload.wikimedia.org/wikipedia/commons/5/50/Aerial_view_of_the_front_of_Federal_Correctional_Institution%2C_Dublin.jpg" alt="Aerial view of the Federal Correctional Institution in Dublin, California">
+          <div class="body">
+            <span class="ribbon closed">Deactivated — Closed</span>
+            <h3 class="serif">Federal Correctional Institution, Dublin</h3>
+            <p class="place">FC-003 · Dublin, California · Federal Bureau of Prisons</p>
+            <p class="line">A federal women's prison where the staff itself became the danger — inspected by a judge with her own eyes, put under a special master, and shut down. This listing stands for the women who survived it.</p>
+            <span class="tap">Open fact sheet →</span>
+          </div>
+        </a>
+      </div>
+      <p class="credit">Photo (FC-003): aerial view of FCI Dublin — Jesstess87, CC BY-SA 4.0, via Wikimedia Commons.</p>
+    </div>
+  </section>
+
+  <section class="section" id="fc-001">
+    <div class="wrap sheet">
+      <a class="backlink" href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">↑ Back to the wall</a>
+      <p class="kicker">FC-001 · Active Complaint</p>
+      <h2 class="serif">FCC Butner — Butner, North Carolina</h2>
+      <p class="sub">Federal Correctional Complex · U.S. District Court jurisdiction: Eastern District of North Carolina</p>
+      <table class="specs">
+        <tr><th>Facilities</th><td>FCI Butner Medium I, FCI Butner Medium II, FCI Butner Low, FMC Butner (federal medical center), satellite prison camp</td></tr>
+        <tr><th>Operator</th><td>Federal Bureau of Prisons</td></tr>
+        <tr><th>Population</th><td>Roughly 5,000 men. FMC Butner is the Bureau's largest medical complex — the system's sickest people are sent here, which is why its medical findings carry system-wide weight.</td></tr>
+        <tr><th>Status</th><td>ACTIVE — under complaint</td></tr>
+      </table>
+
+      <h3>The death record</h3>
+      <p>NPR's analysis of Bureau of Prisons records (September 2023) counted roughly <strong>4,950 deaths in federal custody over about a decade — and about one in four of them, on the order of 1,200, occurred at Butner alone</strong>, one complex among more than 120 federal facilities. Documented individual cases include a man who died after staff failed to give him anti-epileptic medication, and two men who died overnight after not receiving timely medical attention. Current and former Butner staff told NPR the main driver was understaffing. This wall publishes the share documented by NPR; the Bureau does not publish a per-capita death rate for the complex, and none is claimed here.</p>
+
+      <h3>Findings</h3>
+      <div class="finding"><span class="fid">F-B1 · Medical care the Bureau cannot measure</span>
+        <p>DOJ Office of the Inspector General, Audit 22-052 (March 16, 2022): the Bureau had no reliable, consistent process to evaluate the timeliness or quality of inmate healthcare at Butner, and transport failures for off-site appointments routinely delayed care. Fifteen recommendations were issued; by March 2023 only six were closed — nine remained open.</p>
+        <p class="ask">Inspection ask: the current status of all 15 recommendations, and the wait-time data behind them.</p></div>
+      <div class="finding"><span class="fid">F-B2 · Kitchen sanitation — partially substantiated by the Bureau's own investigators</span>
+        <p>A Cook Supervisor's whistleblower disclosure, referred by the U.S. Office of Special Counsel to the President (June 4, 2025): FCI II kitchen roof leaks, standing water, damaged ceiling tiles, rainwater through light fixtures, apparent mold exposing staff and inmates; meals stored at improper temperatures; expired food served; routine unapproved deviations from the National Meal Plan; birds in food areas. The Bureau's Office of Internal Affairs partially substantiated the allegations.</p>
+        <p class="ask">Inspection ask: kitchen temperature logs, meal-plan deviation approvals, roof repair records.</p></div>
+      <div class="finding"><span class="fid">F-B3 · Water reported undrinkable</span>
+        <p>Families of men held at Butner report brown, undrinkable water — echoed independently by former inmates ("brown as coffee"; brown water at the Low; mold, broken showers, and unusable water in the medical cadre workers' unit) in October 2026 reporting by Aaron Peila of the prisons and parole beat.</p>
+        <p class="ask">Inspection ask: water-quality test results for each housing unit, produced for the record.</p></div>
+      <div class="finding"><span class="fid">F-B4 · Release processing delays</span>
+        <p>Case managers stalling First Step Act credits and halfway-house / home-confinement dates, reported from multiple families (Peila, October 2026; described as Bureau-systemic).</p>
+        <p class="ask">Inspection ask: the First Step Act credit application backlog, by unit.</p></div>
+
+      <h3>What is being asked</h3>
+      <p>Re-inspection by the DOJ Office of the Inspector General and the Bureau's Office of Internal Affairs against findings F-B1 through F-B4; a pattern-or-practice investigation by the DOJ Civil Rights Division under the Civil Rights of Institutionalized Persons Act; and judicial oversight in the Eastern District of North Carolina — up to a special master and closure evaluation, on the FCI Dublin model (FC-003) — if the complex cannot be brought to standard.</p>
+
+      <h3>For families</h3>
+      <p>Formal channels: the Bureau's Administrative Remedy Program (28 C.F.R. Part 542) — institution, regional office, Central Office; the DOJ Office of the Inspector General hotline (oig.justice.gov/hotline); congressional casework through the North Carolina delegation; the ACLU National Prison Project. Document every step — outside reviewers ask for it first.</p>
+
+      <p class="sources"><strong>Sources:</strong> DOJ OIG Audit 22-052 (Mar 16, 2022); NPR investigation, "1 in 4 inmate deaths happens in the same federal prison" (Sept 23, 2023); U.S. Office of Special Counsel §1213 whistleblower referral (transmitted June 4, 2025); Aaron Peila, "The issues at Butner federal prison complex, part 1" (Oct 13, 2026) and family confirmations in its comments. A reported recent stabbing death at Butner could not be independently confirmed in public records as of this writing and is not presented as fact.</p>
+    </div>
+  </section>
+
+  <section class="section" id="fc-002">
+    <div class="wrap sheet">
+      <a class="backlink" href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">↑ Back to the wall</a>
+      <p class="kicker">FC-002 · Active Complaint</p>
+      <h2 class="serif">MDC Brooklyn — Brooklyn, New York</h2>
+      <p class="sub">Metropolitan Detention Center · U.S. District Court jurisdiction: Eastern District of New York</p>
+      <table class="specs">
+        <tr><th>Facility</th><td>Federal detention center, 80 29th Street, Sunset Park, Brooklyn — the only federal jail inside New York City</td></tr>
+        <tr><th>Operator</th><td>Federal Bureau of Prisons</td></tr>
+        <tr><th>Population</th><td>Roughly 1,100–1,700 people — mostly <strong>pretrial detainees</strong>: people held awaiting trial, not convicted of the charge they are held on</td></tr>
+        <tr><th>Status</th><td>ACTIVE — under complaint. Federal judges have repeatedly refused to send defendants here, calling conditions "dreadful."</td></tr>
+      </table>
+
+      <h3>The death &amp; violence record</h3>
+      <p><strong>June 2020</strong> — Jamel Floyd died after being pepper-sprayed by staff. The DOJ Inspector General conducted a formal investigation into his death. <strong>June 7, 2024</strong> — Uriel Whyte, 37, held pretrial, was stabbed to death. <strong>July 17, 2024</strong> — Edwin Cordero was stabbed to death by three fellow inmates with makeshift weapons: two homicides in six weeks. <strong>February 22, 2025</strong> — a unit-wide melee left at least ten inmates stabbed or slashed. <strong>September 6, 2026</strong> — a gang brawl involving some twenty inmates left several stabbed and slashed, followed by days of lockdown. In <strong>October 2026</strong> a correctional officer at the facility was indicted by a federal grand jury for allegedly smuggling contraband for cash over seventeen months (charges are allegations).</p>
+
+      <h3>Findings</h3>
+      <div class="finding"><span class="fid">F-M1 · A known, documented temperature-control failure</span>
+        <p>The Inspector General's inspection (September 26, 2019) of the January–February 2019 power and heat crisis — some 1,700 detainees in cold, dark cells — found <strong>longstanding</strong> temperature-regulation failures had already driven housing units to 59°F before the outage, and that the building <strong>lacked the equipment to continuously monitor temperatures</strong>.</p>
+        <p class="ask">Inspection ask: current temperature-monitoring capability and logs — the 2019 defect, verified fixed or not.</p></div>
+      <div class="finding"><span class="fid">F-M2 · Violence the Bureau answered with an "urgent action team"</span>
+        <p>In October 2024 the Bureau formed an urgent action team for MDC Brooklyn and ran an interagency contraband sweep, naming staffing shortfalls and contraband itself. The murders, the mass-casualty melee, and the gang brawl above surround that intervention inside twenty-seven months.</p>
+        <p class="ask">Inspection ask: staffing ratios by shift against authorized levels; contraband interdiction results since the sweep.</p></div>
+      <div class="finding"><span class="fid">F-M3 · Staff integrity</span>
+        <p>A serving correctional officer stands indicted for an alleged contraband-for-cash scheme run in part through a contraband phone (DOJ, Eastern District of New York, October 2026).</p>
+        <p class="ask">Inspection ask: the results of the post-indictment integrity review, if one exists.</p></div>
+
+      <h3>What is being asked</h3>
+      <p>Re-inspection by the DOJ Office of the Inspector General and the Bureau's Office of Internal Affairs against findings F-M1 through F-M3; a pattern-or-practice investigation by the DOJ Civil Rights Division under the Civil Rights of Institutionalized Persons Act; and judicial oversight in the Eastern District of New York — up to a special master and closure evaluation, on the FCI Dublin model (FC-003) — if the jail cannot be brought to standard.</p>
+
+      <h3>For families</h3>
+      <p>Formal channels: the Bureau's Administrative Remedy Program (28 C.F.R. Part 542); the DOJ Office of the Inspector General hotline (oig.justice.gov/hotline); congressional casework through the New York delegation; the Federal Defenders of New York, who sued over the 2019 crisis and continue to litigate conditions. Document every step — outside reviewers ask for it first.</p>
+
+      <p class="sources"><strong>Sources:</strong> DOJ OIG inspection of the 2019 power/heat crisis (Sept 26, 2019); DOJ OIG Report of Investigation into the death of Jamel Floyd (listed in the DOJ 2024 Chief FOIA Officer report); DOJ, U.S. Attorney's Office for the Eastern District of New York — charges in the Whyte murder and the March 2025 charging sweep (incl. the February 22, 2025 melee), the Cordero murder indictment (24-CR-380), and the October 2026 correctional-officer bribery indictment; New York Daily News reporting on the September 6, 2026 brawl (BOP confirmed).</p>
+    </div>
+  </section>
+
+  <section class="section" id="fc-003">
+    <div class="wrap sheet">
+      <a class="backlink" href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">↑ Back to the wall</a>
+      <p class="kicker">FC-003 · Deactivated — Closed · Memorial Listing</p>
+      <h2 class="serif">FCI Dublin — Dublin, California</h2>
+      <p class="sub">Federal Correctional Institution · closed April 15, 2024</p>
+      <table class="specs">
+        <tr><th>Facility</th><td>Federal Correctional Institution, Dublin (FCI Dublin) + satellite prison camp</td></tr>
+        <tr><th>Location</th><td>5701 8th Street, Dublin, California (Alameda County, ~20 miles southeast of Oakland)</td></tr>
+        <tr><th>Type</th><td>Low-security federal prison for women, with a minimum-security camp</td></tr>
+        <tr><th>Operator</th><td>Federal Bureau of Prisons</td></tr>
+        <tr><th>Opened</th><td>1974 (women-only from 2012)</td></tr>
+        <tr><th>Population at closure</th><td>726 (115 in the camp)</td></tr>
+        <tr><th>Closed</th><td>April 15, 2024 — last women transferred out by May 1, 2024</td></tr>
+        <tr><th>Status</th><td>DEACTIVATED. The Bureau's own 2026 analysis recommends it never reopen.</td></tr>
+      </table>
+
+      <h3>What happened there</h3>
+      <p>For years, staff at FCI Dublin sexually abused the women held there — a culture so open that inmates and staff alike called the prison "the rape club." The warden himself, Ray Garcia, was charged in 2021 with sexually assaulting an incarcerated woman and keeping nude photos of victims on his work computer. In the end, <strong>nine correctional officers, including the warden, were convicted.</strong> Survivors said the abuse had run for decades while warnings were ignored.</p>
+
+      <h3>How it ended — the Dublin precedent</h3>
+      <p><strong>August 16, 2023</strong> — the California Coalition for Women Prisoners filed a class action: <em>CCWP v. BOP</em>, No. 4:23-cv-04155-YGR, U.S. District Court, Northern District of California. <strong>January 2024</strong> — after a <em>60 Minutes</em> exposé, the FBI raided the prison and its leadership was removed; Judge <strong>Yvonne Gonzalez Rogers</strong> held evidentiary hearings and made an <strong>unannounced, nine-hour inspection of the facility herself</strong>. <strong>March 15, 2024</strong> — the court certified the class and ordered a <strong>special master — the first ever imposed on a federal prison</strong>. <strong>April 2024</strong> — with the special master watching, the Bureau announced closure; the court supervised the transfers, found the Bureau's closure plan "ill-conceived," and ordered weekly status reports on every woman moved. <strong>February 25, 2025</strong> — final approval of a <strong>consent decree with independent monitoring</strong> (at least two years), and a <strong>$116 million settlement</strong> paid to more than 100 survivors.</p>
+
+      <h3>The watch — why this listing stays up</h3>
+      <p>The Bureau's own September 2026 report concludes the facility should be deactivated — repairs would run about $118 million over ten years — and notes that of some 7,500 public comments on the closure, virtually all opposed ever using it to hold people again. When federal officials floated converting it to immigration detention, the Dublin City Council and the Alameda County Board of Supervisors passed resolutions in March 2026 opposing any reopening as a place of incarceration. This listing stands guard with them.</p>
+
+      <div class="dedication">
+        <h3 style="margin-top:0">For the survivors</h3>
+        <p>To the women who were held at FCI Dublin: this page is kept so the country cannot pretend your prison was ordinary, or that what happened to you was your fault, or that it did not happen at all. A judge walked your halls. The record is permanent. You survived a terrible place — and the place, not you, is the one that closed.</p>
+      </div>
+
+      <p class="sources"><strong>Sources:</strong> Court record, <em>CCWP v. BOP</em>, No. 4:23-cv-04155-YGR (N.D. Cal.) — class certification &amp; special master order (Mar 15, 2024), closure orders (Apr–May 2024), consent decree final approval (Feb 25, 2025); KTVU reporting on the Bureau's deactivation report (Sept 2, 2026, signed by BOP Director William K. Marshall III); facility specifications cross-checked against the court timeline. Photo: Jesstess87, CC BY-SA 4.0, via Wikimedia Commons (commons.wikimedia.org/w/index.php?curid=90796483).</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <p><strong>The Condolences Wall</strong> — memorializing the incarcerated who died in lockup, and the loved ones they left behind — is in preparation and will stand beside this wall.</p>
+      <p>The United Citizens Movement · Facility Complaints · Every entry on this wall is built from the public record and graded before publication.</p>
+    </div>
+  </footer>
+</body>
+</html><body><div class="blueprint">
+<header class="top"><div class="wrap"><nav class="primary"><a href="index.html">Home</a><a href="justice-wall.html">Justice Wall</a><a href="contact.html">Contact</a></nav></div></header>
+<main><section class="section"><div class="wrap"><div class="sheet">
+<a class="backlink" href="index.html">← Back to the movement home</a>
+<h2>Police Brutality Filing Checklist</h2>
+<p class="sub">Gather it, then paste the wording below into the assistant once purchased.</p>
+<p>General information only — not legal advice. Gather the items below first, then paste the wording at the bottom into the store assistant once you have purchased it, and you can hit the ground running.</p>
+
+<h3>Gather this first</h3>
+<ul><li><label><input type="checkbox"> Date, time, and place of the incident.</label></li><li><label><input type="checkbox"> Agency, officer names or badge numbers, and supervisor on scene, if known.</label></li><li><label><input type="checkbox"> What happened, step by step, in your own words.</label></li><li><label><input type="checkbox"> Injuries and medical care received, with records if you have them.</label></li><li><label><input type="checkbox"> Video and its source link, plus any photos — originals, unedited.</label></li><li><label><input type="checkbox"> Witness names and how to reach them.</label></li><li><label><input type="checkbox"> Any complaints already filed, and any reference numbers.</label></li></ul>
+<h3>File in this order</h3>
+<ul><li><label><input type="checkbox"> Agency internal affairs — Penal Code 832.5.</label></li><li><label><input type="checkbox"> POST, California Attorney General, DOJ Civil Rights / FBI.</label></li><li><label><input type="checkbox"> California government claim first if suing a city or county — generally 6 months for personal injury.</label></li><li><label><input type="checkbox"> Civil filing under 42 U.S.C. 1983 — Graham, Monell, and qualified immunity apply.</label></li></ul><div class="dedication"><p><strong>Copy this into the assistant:</strong></p><p>I need help filing a police brutality complaint. Incident date: ____. Agency: ____. Officers: ____. What happened: ____. Injuries and medical care: ____. Evidence I have: ____. Complaints filed so far: ____. What do I file first, and what are my deadlines?</p></div>
+</div></div></section></main>
+<footer>The United Citizens Movement · Civic education, documentation, and accountability</footer>
+</div></body></html>
