@@ -67,7 +67,8 @@
         '<h3>Welcome, ' + esc(name) + '</h3>' +
         (since ? '<p class="member-since">Member since <strong>' + esc(since) + '</strong></p>' : '') +
         '<p class="muted small">' + esc(session.user.email) + '</p>' +
-        '<button class="btn ghost" id="member-signout" type="button">Sign out</button>';
+        '<button class="btn ghost" id="member-signout" type="button">Sign out</button>' +
+        '<p class="muted small" style="margin-top:14px"><a href="https://thecitizenmovement.com/info-member-profile.html">Your member profile — optional information</a><br><a href="https://thecitizenmovement.store/">Add your personal information (optional)</a> — saved only if you choose to, in the store.</p>';
       $('member-signout').addEventListener('click', function () {
         client.auth.signOut().then(function () {
           session = null; member = null; render(); refreshCount(); say('Signed out.');
@@ -83,15 +84,12 @@
         (mode === 'join' ? '<label for="m-name">Display name</label><input class="field" id="m-name" autocomplete="nickname" placeholder="What should we call you?">' : '') +
         '<label for="m-email">Email</label><input class="field" id="m-email" type="email" autocomplete="email" placeholder="you@example.com">' +
         '<label for="m-pass">Password</label><input class="field" id="m-pass" type="password" autocomplete="' + (mode === 'join' ? 'new-password' : 'current-password') + '" placeholder="' + (mode === 'join' ? 'Choose a password' : 'Your password') + '">' +
-        '<label class="muted small" style="display:block;margin:6px 0"><input type="checkbox" id="m-showpass"> Show password</label>' +
         '<button class="btn" id="m-go" type="button">' + (mode === 'join' ? '→ JOIN FREE' : '→ SIGN IN') + '</button>' +
         '<p class="coming" id="m-msg" aria-live="polite"></p>';
       $('tab-join').addEventListener('click', function () { mode = 'join'; render(); });
       $('tab-login').addEventListener('click', function () { mode = 'login'; render(); });
       $('m-go').addEventListener('click', go);
       $('m-pass').addEventListener('keydown', function (e) { if (e.key === 'Enter') go(); });
-      var sp = $('m-showpass');
-      if (sp) sp.addEventListener('change', function () { var p = $('m-pass'); if (p) p.type = sp.checked ? 'text' : 'password'; });
       refreshCount();
     }
   }
