@@ -68,7 +68,47 @@
         (since ? '<p class="member-since">Member since <strong>' + esc(since) + '</strong></p>' : '') +
         '<p class="muted small">' + esc(session.user.email) + '</p>' +
         '<button class="btn ghost" id="member-signout" type="button">Sign out</button>' +
+        '<label class="muted small" style="display:block;margin-top:12px"><input type="checkbox" id="member-music-opt"> Member music: cue up slowly after I sign in</label>' +
+        '<p class="muted small">Safety precaution: volume is capped and fades in slowly, so it never blasts ears or speakers. Visitors always get click-to-play.</p>' +
+        '<button class="btn ghost" id="member-music-play" type="button" style="display:none">▶ Play member music</button>' +
         '<p class="muted small" style="margin-top:14px"><a href="https://thecitizenmovement.com/info-member-profile.html">Your member profile — optional information</a><br><a href="https://thecitizenmovement.store/">Add your personal information (optional)</a> — saved only if you choose to, in the store.</p>';
+      // Member music magic: post-login only, option-checked only, slow fade to a capped level.
+      (function(){
+        var opt=$('member-music-opt'); if(!opt) return;
+        opt.checked = localStorage.getItem('cm_music_opt')==='1';
+        var tracks=[
+          'https://tunes.stocktune.com/public/2/5/2/2525ed68-5577-4f3b-b26a-18c631e797b2/ethereal-nocturnal-pathways-stocktune.mp3',
+          'https://tunes.stocktune.com/public/2/0/b/20b055ac-94d5-4272-92d9-f1dd03bb8a61/quiet-reflections-hip-hop-stocktune.mp3',
+          'https://tunes.stocktune.com/public/b/3/d/b3d7566c-727e-4173-b905-cd0c12771d74/echoes-in-the-dark-stocktune.mp3'
+        ];
+        var audio=window.__cmMusic; if(!audio){ audio=document.createElement('audio'); audio.preload='none'; window.__cmMusic=audio; }
+        var ti=0, fading=false;
+        function fadeTo(target, step){
+          clearInterval(audio.__fade);
+          audio.__fade=setInterval(function(){
+            var v=audio.volume + (target>audio.volume? step : -step);
+            if((step>0 && v>=target)||(step<0 && v<=target)){ audio.volume=target; clearInterval(audio.__fade); if(target===0) audio.pause(); }
+            else audio.volume=Math.max(0, Math.min(0.6, v));
+          }, 250);
+        }
+        function playTrack(i){
+          ti=i % tracks.length; audio.src=tracks[ti]; audio.volume=0;
+          audio.play().catch(function(){}); fadeTo(0.6, 0.03);
+          audio.onended=function(){ playTrack(ti+1); };
+        }
+        opt.addEventListener('change', function(){
+          localStorage.setItem('cm_music_opt', opt.checked?'1':'0');
+          if(opt.checked) playTrack(0); else fadeTo(0, 0.05);
+        });
+        // Cue on this sign-in only if the member already checked the option before.
+        // Browsers still require a prior tap on this site before sound is allowed;
+        // if play is blocked, the Play button below appears for one tap.
+        if(opt.checked){
+          audio.src=tracks[0]; audio.volume=0;
+          var pr=audio.play(); if(pr && pr.catch) pr.catch(function(){ var b=$('member-music-play'); if(b){ b.style.display='inline-block'; b.addEventListener('click', function(){ playTrack(0); b.style.display='none'; }); } });
+          else fadeTo(0.6, 0.03);
+        }
+      })();
       $('member-signout').addEventListener('click', function () {
         client.auth.signOut().then(function () {
           session = null; member = null; render(); refreshCount(); say('Signed out.');
