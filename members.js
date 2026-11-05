@@ -72,7 +72,8 @@
         '<p class="muted small">Safety precaution: volume is capped and fades in slowly, so it never blasts ears or speakers. Visitors always get click-to-play.</p>' +
         '<button class="btn ghost" id="member-music-play" type="button" style="display:none">▶ Play member music</button>' +
         '<p class="muted small" style="margin-top:14px"><a href="https://thecitizenmovement.com/info-member-profile.html">Your member profile — optional information</a><br><a href="https://thecitizenmovement.store/">Add your personal information (optional)</a> — saved only if you choose to, in the store.</p>';
-      // Member music magic: post-login only, option-checked only, slow fade to a capped level.
+        var egg=$('member-profile-egg'); if(egg) egg.hidden=false;
+       // Member music magic: post-login only, option-checked only, slow fade to a capped level.
       (function(){
         var opt=$('member-music-opt'); if(!opt) return;
         opt.checked = localStorage.getItem('cm_music_opt')==='1';
@@ -115,7 +116,8 @@
         });
       });
     } else {
-      box.innerHTML =
+      var egg2=$('member-profile-egg'); if(egg2) egg2.hidden=true;
+       box.innerHTML =
         '<h3>Member Sign In</h3>' +
         '<p id="member-count" class="member-count"></p>' +
         '<div class="auth-tabs" role="tablist">' +
