@@ -6,6 +6,7 @@
   'use strict';
   var SUPABASE_URL = 'https://jesrbqrwbacuirwxbkis.supabase.co';
   var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Implc3JicXJ3YmFjdWlyd3hia2lzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE2NTU2OTcsImV4cCI6MjEwNzIzMTY5N30._LCnNC2JIjijt6n0u3kKestF5G2Zsjju4hEv1d1tImc';
+  var FOUNDER_EMAIL = 'thecitizenmovement@gmail.com';
 
   function $(id) { return document.getElementById(id); }
   function esc(s) {
@@ -74,6 +75,7 @@
       }
     }
     render();
+    updateFoundryLinks();
   }
 
   function render() {
@@ -247,7 +249,43 @@
     return false;
   }
 
-  window.CitizenMembers = { requireMember: requireMember, refresh: loadMember };
+  /* Foundry Easter egg gate: the Foundry only exists for the Founder and
+     for members who own the toolkit. Everyone else never sees it — no link,
+     no panel, no "locked" note. Fail closed on any error. */
+  async function checkFoundryAccess() {
+    try {
+      var s = await client.auth.getSession();
+      var sess = s.data.session || null;
+      if (!sess) return { signedIn: false, entitled: false, email: null };
+      var email = (sess.user.email || '').toLowerCase();
+      if (email === FOUNDER_EMAIL) return { signedIn: true, entitled: true, email: email };
+      try {
+        var r = await client.from('entitlements').select('*').eq('user_id', sess.user.id);
+        if (!r.error && r.data) {
+          for (var i = 0; i < r.data.length; i++) {
+            var row = r.data[i] || {};
+            var active = row.active === true || row.status === 'active' || row.status === 'granted';
+            var prod = ((row.tier || '') + ' ' + (row.product || '') + ' ' + (row.entitlement || '') + ' ' + (row.name || '')).toLowerCase();
+            if (active && /toolkit|foundry|osint/.test(prod)) return { signedIn: true, entitled: true, email: email };
+          }
+        }
+      } catch (e) { /* entitlement read blocked — fail closed */ }
+      return { signedIn: true, entitled: false, email: email };
+    } catch (e) { return { signedIn: false, entitled: false, email: null }; }
+  }
+
+  function updateFoundryLinks() {
+    var links = document.querySelectorAll('.foundry-link');
+    if (!links.length) return;
+    if (!session) { links.forEach(function (el) { el.hidden = true; }); return; }
+    var email = (session.user.email || '').toLowerCase();
+    if (email === FOUNDER_EMAIL) { links.forEach(function (el) { el.hidden = false; }); return; }
+    checkFoundryAccess().then(function (res) {
+      links.forEach(function (el) { el.hidden = !res.entitled; });
+    });
+  }
+
+  window.CitizenMembers = { requireMember: requireMember, refresh: loadMember, checkFoundryAccess: checkFoundryAccess };
   client.auth.onAuthStateChange(function () { loadMember(); refreshCount(); });
   loadMember();
   refreshCount();
