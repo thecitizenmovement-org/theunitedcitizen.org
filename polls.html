@@ -3,14 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Citizen polls of the United Citizens Movement — the people vote.">
+<meta name="description" content="Citizen polls of the United Citizens Movement — members only. The people vote.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 <title>Polls — Citizens Vote — United Citizens Movement</title>
 <style>
-:root{--navy:#0d2140;--navy-2:#102b50;--ink:#f7edcf;--gold:#c6a45d;--bright:#f1cf7a;--muted:#d8c79e;--panel:rgba(7,20,42,.88);--line:rgba(214,181,106,.58);--soft:rgba(214,181,106,.12);--blue:#276db2;--red:#9d2f32;--paper:#d9c8a1}
-@media(prefers-color-scheme:dark){:root{--navy:#071227;--navy-2:#0b2342;--ink:#fff4d3;--gold:#caa75f;--bright:#f2d17b;--muted:#d8cba8;--panel:rgba(4,14,31,.9);--line:rgba(222,188,110,.62);--soft:rgba(222,188,110,.12)}}
+:root{--navy:#0d2140;--navy-2:#102b50;--ink:#f7edcf;--gold:#c6a45d;--bright:#f1cf7a;--muted:#d8c79e;--panel:rgba(7,20,42,.88);--line:rgba(214,181,106,.58);--soft:rgba(214,181,106,.12);--blue:#5eb3ff;--blue-dark:#2f8fe8;--red:#9d2f32;--paper:#d9c8a1}
 *{box-sizing:border-box}body{margin:0;background:var(--navy);color:var(--ink);font-family:"Libre Franklin",sans-serif;line-height:1.55}
 a{color:inherit}
 .serif,h1,h2,h3{font-family:"Playfair Display",Georgia,serif}
@@ -23,17 +22,31 @@ a{color:inherit}
 .hero h1{color:var(--bright);font-size:clamp(2.2rem,5vw,3.6rem);margin:0 0 12px}
 .hero p{color:var(--muted);max-width:820px;margin:0 auto;font-size:1.1rem}
 .section{padding:44px 0}
+.member-note{border:1px solid var(--blue);background:rgba(94,179,255,.08);padding:14px 18px;margin-bottom:28px;text-align:center}
+.member-note strong{color:var(--blue)}
+.filters{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:28px}
+.filters button{background:transparent;border:1px solid var(--line);color:var(--ink);padding:10px 20px;cursor:pointer;font:inherit;border-radius:4px;font-weight:600}
+.filters button.active{background:var(--blue-dark);border-color:var(--blue-dark);color:#fff}
 .poll{background:linear-gradient(145deg,rgba(20,46,79,.64),var(--panel));border:1px solid var(--line);padding:28px;margin-bottom:28px}
-.poll h2{color:var(--bright);margin:0 0 6px;font-size:1.5rem}
+.poll h2{color:var(--blue);margin:0 0 6px;font-size:1.5rem}
 .poll .tag{color:var(--gold);font-size:.8rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
 .poll p{margin:0 0 16px;color:var(--muted)}
+.poll .criteria{margin:0 0 16px;padding-left:22px;color:var(--muted)}
+.poll .criteria li{margin-bottom:4px}
 .opt{display:block;width:100%;text-align:left;background:transparent;border:1px solid var(--line);color:var(--ink);padding:12px 16px;margin-bottom:8px;cursor:pointer;font:inherit;border-radius:4px}
 .opt:hover{background:var(--soft)}
+.opt.selected{border-color:var(--blue);background:rgba(94,179,255,.12)}
 .opt.voted{border-color:var(--bright);background:var(--soft)}
+.take{display:block;width:100%;background:var(--blue-dark);color:#fff;border:1px solid var(--blue-dark);padding:14px 16px;margin-top:12px;cursor:pointer;font:inherit;font-weight:700;border-radius:4px;font-size:1rem}
+.take:hover{background:var(--blue)}
+.take:disabled{opacity:.45;cursor:not-allowed}
 .bar{height:8px;background:rgba(214,181,106,.2);border-radius:4px;margin-top:6px;overflow:hidden}
-.bar i{display:block;height:100%;background:var(--gold)}
+.bar i{display:block;height:100%;background:var(--blue)}
 .res{display:flex;justify-content:space-between;font-size:.9rem;color:var(--muted);margin-top:4px}
 .total{font-size:.9rem;color:var(--muted);margin-top:10px}
+.readmore{display:inline-block;margin-top:14px;color:var(--blue);font-weight:700;text-decoration:none}
+.readmore:hover{text-decoration:underline}
+.coming{opacity:.75}
 .note{border-left:3px solid var(--gold);padding:10px 14px;background:var(--soft);margin:14px 0;font-size:.95rem}
 footer{border-top:1px solid rgba(198,164,93,.22);padding:28px 0;text-align:center;color:var(--muted);font-size:.9rem}
 </style>
@@ -44,24 +57,72 @@ footer{border-top:1px solid rgba(198,164,93,.22);padding:28px 0;text-align:cente
 </nav>
 <header class="hero"><div class="wrap">
 <h1>Polls — Citizens Vote</h1>
-<p>The citizens vote. These polls measure community sentiment — they are not official votes or elections. They are the people's voice, counted in the open. Your vote is stored on your own device.</p>
+<p>The citizens vote. These polls measure community sentiment — they are not official votes or elections. They are the people's voice, counted in the open.</p>
 </div></header>
 <main class="wrap section">
 
-<div class="poll" data-poll="flock">
+<div class="member-note"><strong>Members only.</strong> Polls are for members — <a href="https://thecitizenmovement.online">sign in to vote</a>. One vote per poll per member. Pick an option, then hit <strong>Take the Poll</strong> — the numbers and the graph change the moment you vote.</div>
+
+<div class="filters" role="group" aria-label="Filter polls by county">
+<button class="active" data-filter="all">All counties</button>
+<button data-filter="shasta">Shasta</button>
+<button data-filter="tehama">Tehama</button>
+</div>
+
+<div class="poll" data-poll="flock" data-county="shasta">
 <div class="tag">Investigation 2 — Shasta Flock ALPR</div>
 <h2>Should Flock cameras stay in Shasta County?</h2>
-<p>SCSO asked for public comment after the cameras were installed. Now the citizens answer.</p>
+<p>SCSO asked for public comment after the cameras were installed. Now the citizens answer. The claims below come from Flock Safety&rsquo;s own explainer and SCSO&rsquo;s statements — a press release, not an independent finding. Every one of them is a claim to be questioned:</p>
+<ul class="criteria">
+<li>No facial biometric analysis</li>
+<li>No traffic citations</li>
+<li>No tracking of individuals</li>
+<li>No database</li>
+<li>SCSO controls sharing</li>
+<li>Data deleted after 30 days</li>
+</ul>
 <div class="opts">
 <button class="opt" data-v="Yes, keep them">Yes, keep them</button>
 <button class="opt" data-v="No, remove them">No, remove them</button>
 <button class="opt" data-v="Need more information">Need more information</button>
 </div>
+<button class="take" disabled>Take the Poll</button>
 <div class="results"></div>
 <div class="total"></div>
+<a class="readmore" href="flock-discussion.html">Read more &rarr;</a>
 </div>
 
-<div class="poll" data-poll="roster">
+<div class="poll" data-poll="trust" data-county="both">
+<div class="tag">Both counties — The Method of Operation</div>
+<h2>Do Shasta and Tehama departments expect trust from the people while giving nothing in return?</h2>
+<p>The pattern is consistent across both counties: trust is demanded, nothing is shown. Cases closed, reports never published, questions unanswered. In Tehama, the Ward case was declared solved by DNA after the suspect died — no trial, no courtroom, no public evidence. In Shasta, the same pattern.</p>
+<div class="opts">
+<button class="opt" data-v="Yes, that is the pattern">Yes, that is the pattern</button>
+<button class="opt" data-v="No">No</button>
+<button class="opt" data-v="Need more proof">Need more proof</button>
+</div>
+<button class="take" disabled>Take the Poll</button>
+<div class="results"></div>
+<div class="total"></div>
+<a class="readmore" href="investigations.html">Read more &rarr;</a>
+</div>
+
+<div class="poll" data-poll="ward" data-county="tehama">
+<div class="tag">Investigation 13 — Tehama Rashell Ward Murder (1983)</div>
+<h2>Should the Ward murder questions be reopened?</h2>
+<p>Rashell Ward, 14, was murdered in 1983. DNA named Johnny Lee Coy in October 2023, and the case was cleared by exception because he died in 2019. But nobody has seen the evidence, nobody has seen any proof, and we&rsquo;re not satisfied. The open questions: what came back from Koenig&rsquo;s 1985 DOJ referral, whether Koenig was actually cleared, whether the rumor names Ward, the Lucas confession, and the babysitting claim.</p>
+<div class="opts">
+<button class="opt" data-v="Yes, reopen the questions">Yes, reopen the questions</button>
+<button class="opt" data-v="No, the case is closed">No, the case is closed</button>
+<button class="opt" data-v="Need more information">Need more information</button>
+</div>
+<button class="take" disabled>Take the Poll</button>
+<div class="results"></div>
+<div class="total"></div>
+<a class="readmore" href="investigations.html">Read more &rarr;</a>
+</div>
+
+<div class="poll" data-poll="roster" data-county="both">
 <div class="tag">Investigation 1 — Tehama / Shasta Roster</div>
 <h2>Should the roster investigation keep publishing findings as they land?</h2>
 <p>The 2,724-person public payroll roster, the surname matches, and the accountability list — publish as findings land, or wait until the work is complete?</p>
@@ -70,11 +131,13 @@ footer{border-top:1px solid rgba(198,164,93,.22);padding:28px 0;text-align:cente
 <button class="opt" data-v="No, wait until complete">No, wait until complete</button>
 <button class="opt" data-v="Unsure">Unsure</button>
 </div>
+<button class="take" disabled>Take the Poll</button>
 <div class="results"></div>
 <div class="total"></div>
+<a class="readmore" href="investigations.html">Read more &rarr;</a>
 </div>
 
-<div class="poll" data-poll="zogg">
+<div class="poll" data-poll="zogg" data-county="shasta">
 <div class="tag">Investigation 3 — Zogg Fire Money</div>
 <h2>Should the Zogg fire money spending be made public?</h2>
 <p>Relief money was raised for Zogg fire victims in 2020. Should there be a full public accounting of where it went?</p>
@@ -83,37 +146,64 @@ footer{border-top:1px solid rgba(198,164,93,.22);padding:28px 0;text-align:cente
 <button class="opt" data-v="No">No</button>
 <button class="opt" data-v="Unsure">Unsure</button>
 </div>
+<button class="take" disabled>Take the Poll</button>
 <div class="results"></div>
 <div class="total"></div>
+<a class="readmore" href="investigations.html">Read more &rarr;</a>
 </div>
 
-<div class="poll" data-poll="da">
-<div class="tag">Investigation 4 — DA Satisfaction Rating</div>
+<div class="poll" data-poll="da" data-county="shasta">
+<div class="tag">Investigation 9 — DA Satisfaction Rating</div>
 <h2>How satisfied are you with the Shasta County District Attorney's office?</h2>
 <p>Stephanie Bridgett is the Shasta County District Attorney. This is the people's satisfaction rating of the DA's office — voted by the citizens.</p>
 <div class="opts">
-<button class="opt" data-v="Very satisfied">Very satisfied</button>
-<button class="opt" data-v="Satisfied">Satisfied</button>
-<button class="opt" data-v="Neutral">Neutral</button>
-<button class="opt" data-v="Dissatisfied">Dissatisfied</button>
-<button class="opt" data-v="Very dissatisfied">Very dissatisfied</button>
+<button class="opt" data-v="Very satisfied">&#9733;&#9733;&#9733;&#9733;&#9733; Very satisfied</button>
+<button class="opt" data-v="Satisfied">&#9733;&#9733;&#9733;&#9733; Satisfied</button>
+<button class="opt" data-v="Neutral">&#9733;&#9733;&#9733; Neutral</button>
+<button class="opt" data-v="Dissatisfied">&#9733;&#9733; Dissatisfied</button>
+<button class="opt" data-v="Very dissatisfied">&#9733; Very dissatisfied</button>
 </div>
+<button class="take" disabled>Take the Poll</button>
 <div class="results"></div>
 <div class="total"></div>
+<a class="readmore" href="investigations.html">Read more &rarr;</a>
 </div>
 
-<div class="note">These polls are community sentiment, not official results. Votes are counted in your browser and stored on your device — no account, no tracking, no personal data collected.</div>
+<div class="poll coming" data-poll="coming" data-county="both">
+<div class="tag">Coming soon</div>
+<h2>More polls on the way</h2>
+<p>Being drafted now: the Sheriff Kain recall poll, the Stephanie Bridgett recall poll, and the Zogg fire money laundering poll. Each one gets its own card, its own Read More, and its own vote.</p>
+</div>
+
+<div class="note">These polls are community sentiment, not official results. Votes are counted in your browser and stored on your device for now — member sign-in and shared counts come next. No personal data collected.</div>
 
 </main>
 <footer><div class="wrap">The United Citizens Movement &middot; The citizens vote.</div></footer>
 <script>
 (function(){
   function key(id){return 'ucm-poll-'+id;}
-  document.querySelectorAll('.poll').forEach(function(poll){
+  // County filters
+  var filterBtns = Array.prototype.slice.call(document.querySelectorAll('.filters button'));
+  filterBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      filterBtns.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      var f = btn.getAttribute('data-filter');
+      document.querySelectorAll('.poll[data-county]').forEach(function(p){
+        var c = p.getAttribute('data-county');
+        p.style.display = (f === 'all' || c === f || c === 'both') ? '' : 'none';
+      });
+    });
+  });
+  // Polls
+  document.querySelectorAll('.poll[data-poll]').forEach(function(poll){
     var id = poll.getAttribute('data-poll');
+    if(!poll.querySelector('.opts')) return;
     var opts = Array.prototype.slice.call(poll.querySelectorAll('.opt'));
+    var takeBtn = poll.querySelector('.take');
     var resultsEl = poll.querySelector('.results');
     var totalEl = poll.querySelector('.total');
+    var selected = null;
     function load(){
       try{ return JSON.parse(localStorage.getItem(key(id)) || '{}'); }catch(e){ return {}; }
     }
@@ -137,15 +227,22 @@ footer{border-top:1px solid rgba(198,164,93,.22);padding:28px 0;text-align:cente
     }
     opts.forEach(function(btn){
       btn.addEventListener('click', function(){
-        var v = btn.getAttribute('data-v');
-        var mine = localStorage.getItem(key(id)+'-mine');
-        var d = load();
-        if(mine && d[mine]){ d[mine]--; if(d[mine]<=0) delete d[mine]; }
-        d[v] = (d[v]||0)+1;
-        localStorage.setItem(key(id)+'-mine', v);
-        save(d);
-        render();
+        opts.forEach(function(b){ b.classList.remove('selected'); });
+        btn.classList.add('selected');
+        selected = btn.getAttribute('data-v');
+        takeBtn.disabled = false;
       });
+    });
+    takeBtn.addEventListener('click', function(){
+      if(!selected) return;
+      var mine = localStorage.getItem(key(id)+'-mine');
+      var d = load();
+      if(mine && d[mine]){ d[mine]--; if(d[mine]<=0) delete d[mine]; }
+      d[selected] = (d[selected]||0)+1;
+      localStorage.setItem(key(id)+'-mine', selected);
+      save(d);
+      render();
+      takeBtn.textContent = 'Vote counted — change it any time';
     });
     render();
   });
