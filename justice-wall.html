@@ -177,6 +177,17 @@ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px 24px;
       </div>
     </div>
 
+    <!-- Case 006 -->
+    <div class="rig">
+      <div class="plaque" id="plaque-nikki" role="button" tabindex="0" aria-label="Open case file for Nikki Cheng Orn Saelee-McCain">
+        <div class="portrait"><div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:64px;color:var(--gold);font-family:Georgia,serif;">NS</div></div>
+        <div class="caseno">Case 006</div>
+        <h3>Justice for Nikki</h3>
+        <div class="dates">Missing since May 17, 2024</div>
+        <div class="tap">Tap to open the case file</div>
+      </div>
+    </div>
+
   </div>
 
   <p class="pending">More placards will be mounted as cases are verified and placed.</p>
@@ -319,9 +330,27 @@ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px 24px;
   </div>
 </div>
 
+<!-- Case dossier: Nikki -->
+<div class="overlay" id="dossier-nikki" role="dialog" aria-label="Case file: Nikki Cheng Orn Saelee-McCain">
+  <div class="dossier">
+    <h3>Case 006 &mdash; Justice for Nikki</h3>
+    <p class="meta">Anderson, California (Shasta County) &middot; Missing since May 17, 2024 &middot; Shasta County Sheriff&rsquo;s Office Case No. SCSO24-002069</p>
+    <p>Nikki Cheng Orn Saelee-McCain, 39, a mother of four from Anderson, has been missing since May 17, 2024. Her body has never been found. In March 2025 her case was ruled a homicide &mdash; Shasta County&rsquo;s first no-body murder case. Her husband, Tyler Scott McCain, is accused of her murder and is awaiting trial. He has pleaded not guilty and is presumed innocent until proven guilty. This case is on the wall because Nikki is still missing, and because the injustice is still happening now.</p>
+    <span class="grade">Official record</span>
+    <p>Nikki suffered domestic violence in her marriage. In December 2023 she went to the emergency room after a prolonged assault and gave police a statement; her sister said Tyler had also pointed a gun at her. Tyler was charged with felony domestic violence and pleaded not guilty. Nikki was the key witness, due to testify. Her last contact was a text to her sister Chloe close to midnight on May 17, 2024. She was last seen at home on May 18, 2024, and was reported missing on May 22, 2024. On May 25, 2024 her truck &mdash; a 2002 Chevrolet Avalanche &mdash; was found in western Tehama County with a decomposition smell and blood and DNA evidence. On July 5, 2024 the domestic violence case was dismissed because Nikki could not appear. On March 14, 2025 authorities searched their home and ruled Nikki a homicide victim.</p>
+    <p>On August 20, 2025 Tyler McCain was arrested for murder with a special circumstance &mdash; killing to prevent testimony &mdash; and pleaded not guilty. He is held without bail in the Shasta County Jail. On October 7, 2025 a preliminary hearing ended with enough evidence for trial. His defense attorney, Michael Borges, filed a motion to delay the trial and to move it out of Shasta County, saying it was unlikely a fair and impartial jury could be found in Shasta County. The trial was delayed to February 23, 2027 (Judge Adam Ryan). Shasta County District Attorney Stephanie Bridgett stated the motive was to prevent Nikki from testifying in the domestic abuse case.</p>
+    <span class="grade">The charge &mdash; presumed innocent</span>
+    <p>Tyler McCain is accused of murder. He has pleaded not guilty, and the trial has not happened. Guilt has not been established. What is established is that Nikki is missing, that her case was ruled a homicide, that her husband is accused and held without bail awaiting trial, and that her body has never been found. The wall does not declare guilt. It declares that Nikki is owed justice &mdash; finding her, and accountability through the trial.</p>
+    <span class="grade">Why she is on the wall</span>
+    <p>A mother of four went to the emergency room, gave police a statement, and was the key witness in a domestic violence case &mdash; and then she disappeared. The case against her husband was dismissed because she could not appear. Ten months later her disappearance was ruled a homicide, and her husband was arrested for murder. Shasta County&rsquo;s first no-body murder case is still open, her body has still not been found, and her trial is still more than a year away. The Founder states she was part of the tribe. The call is Justice for Nikki: find her, and hold the trial to account.</p>
+    <div class="status"><strong>Status:</strong> Placed November 10, 2026. Case 006 &mdash; Justice for Nikki. Trial set for February 23, 2027. Nikki&rsquo;s body has never been found. Shasta County Sheriff&rsquo;s Major Crimes Unit: MCU@shastacounty.gov, 530-245-6135.</div>
+    <p style="margin-top:14px;font-size:.85rem;color:#8fa0bd;">Sources: Shasta County Sheriff&rsquo;s Office, Case No. SCSO24-002069; Shasta County District Attorney; public reporting, 2024&ndash;2025. The accused is presumed innocent until proven guilty.</p>
+  </div>
+</div>
+
 <script>
 (function () {
-  [['plaque-lane', 'dossier-lane'], ['plaque-harless', 'dossier-harless'], ['plaque-souza', 'dossier-souza'], ['plaque-gibbs', 'dossier-gibbs'], ['plaque-founder', 'dossier-founder']].forEach(function (pair) {
+  [['plaque-lane', 'dossier-lane'], ['plaque-harless', 'dossier-harless'], ['plaque-souza', 'dossier-souza'], ['plaque-gibbs', 'dossier-gibbs'], ['plaque-founder', 'dossier-founder'], ['plaque-nikki', 'dossier-nikki']].forEach(function (pair) {
     var plaque = document.getElementById(pair[0]);
     var overlay = document.getElementById(pair[1]);
     function open() { overlay.classList.add('open'); document.body.style.overflow = 'hidden'; }
