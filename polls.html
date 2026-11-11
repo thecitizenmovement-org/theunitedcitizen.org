@@ -49,7 +49,18 @@ a{color:inherit}
 .coming{opacity:.75}
 .note{border-left:3px solid var(--gold);padding:10px 14px;background:var(--soft);margin:14px 0;font-size:.95rem}
 footer{border-top:1px solid rgba(198,164,93,.22);padding:28px 0;text-align:center;color:var(--muted);font-size:.9rem}
+
+.authbar{border:1px solid var(--line);background:var(--panel);padding:18px 22px;margin-bottom:28px;text-align:center}
+.authbar h3{color:var(--blue);margin:0 0 4px;font-size:1.15rem}
+.authbar p{color:var(--muted);margin:0 0 12px;font-size:.95rem}
+.authbar input{display:inline-block;width:min(260px,100%);padding:10px 12px;margin:4px;border:1px solid var(--line);border-radius:4px;background:rgba(7,20,42,.6);color:var(--ink);font:inherit}
+.authbar button{background:var(--blue-dark);color:#fff;border:1px solid var(--blue-dark);padding:10px 20px;margin:4px;cursor:pointer;font:inherit;font-weight:700;border-radius:4px}
+.authbar button:hover{background:var(--blue)}
+.authbar button.ghost{background:transparent;color:var(--blue);border-color:var(--blue)}
+.authbar .err{color:#ff9d9d;font-size:.9rem;margin-top:8px}
+.authbar .ok{color:var(--bright);font-size:.95rem}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js"></script>
 </head>
 <body>
 <nav class="topnav" aria-label="Primary navigation">
@@ -62,6 +73,24 @@ footer{border-top:1px solid rgba(198,164,93,.22);padding:28px 0;text-align:cente
 <main class="wrap section">
 
 <div class="member-note"><strong>Members only.</strong> Polls are for members — <a href="https://thecitizenmovement.online">sign in to vote</a>. One vote per poll per member. Pick an option, then hit <strong>Take the Poll</strong> — the numbers and the graph change the moment you vote.</div>
+
+
+<div class="authbar" id="authbar">
+<h3>Member sign-in</h3>
+<p id="auth-status">Sign in to vote. One vote per poll per member.</p>
+<div id="auth-form">
+<input type="email" id="auth-email" placeholder="Email" autocomplete="email">
+<input type="password" id="auth-password" placeholder="Password" autocomplete="current-password">
+<br>
+<button id="auth-signin">Sign in</button>
+<button id="auth-signup" class="ghost">Join — create account</button>
+<div class="err" id="auth-err"></div>
+</div>
+<div id="auth-signedin" style="display:none">
+<div class="ok" id="auth-who"></div>
+<button id="auth-signout" class="ghost">Sign out</button>
+</div>
+</div>
 
 <div class="filters" role="group" aria-label="Filter polls by county">
 <button class="active" data-filter="all">All counties</button>
@@ -180,6 +209,67 @@ footer{border-top:1px solid rgba(198,164,93,.22);padding:28px 0;text-align:cente
 </main>
 <footer><div class="wrap">The United Citizens Movement &middot; The citizens vote.</div></footer>
 <script>
+/* Member sign-in (Supabase Auth, citizen-members project — same as the .online member system). */
+(function(){
+  var SUPABASE_URL = 'https://jesrbqrwbacuirwxbkis.supabase.co';
+  var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Implc3JicXJ3YmFjdWlyd3hia2lzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE2NTU2OTcsImV4cCI6MjEwNzIzMTY5N30._LCnNC2JIjijt6n0u3kKestF5G2Zsjju4hEv1d1tImc';
+  if (!window.supabase) { var s=document.getElementById('auth-status'); if(s) s.textContent='Sign-in could not load. Check your connection and refresh — polls still show results.'; return; }
+  var client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  var session = null;
+  var form = document.getElementById('auth-form');
+  var signedin = document.getElementById('auth-signedin');
+  var statusEl = document.getElementById('auth-status');
+  var errEl = document.getElementById('auth-err');
+  var whoEl = document.getElementById('auth-who');
+  function setSignedIn(user){
+    session = user ? { user: user } : null;
+    var on = !!user;
+    form.style.display = on ? 'none' : '';
+    signedin.style.display = on ? '' : 'none';
+    if (on) {
+      whoEl.textContent = 'Signed in as ' + (user.email || 'member') + '. Your votes count.';
+      statusEl.textContent = 'You are signed in. Pick an option and hit Take the Poll.';
+      errEl.textContent = '';
+    } else {
+      statusEl.textContent = 'Sign in to vote. One vote per poll per member.';
+    }
+    document.querySelectorAll('.take').forEach(function(b){
+      b.disabled = !on || !b.getAttribute('data-has-choice');
+      if (!on) b.textContent = 'Sign in to vote';
+      else if (!b.getAttribute('data-has-choice')) b.textContent = 'Take the Poll';
+    });
+    window.__ucmSignedIn = on;
+  }
+  function showErr(msg){ errEl.textContent = msg || 'Something went wrong. Try again.'; }
+  document.getElementById('auth-signin').addEventListener('click', async function(){
+    var email = document.getElementById('auth-email').value.trim();
+    var pw = document.getElementById('auth-password').value;
+    if (!email || !pw) { showErr('Enter your email and password.'); return; }
+    errEl.textContent = '';
+    var r = await client.auth.signInWithPassword({ email: email, password: pw });
+    if (r.error) { showErr(r.error.message); return; }
+    setSignedIn(r.data.user);
+  });
+  document.getElementById('auth-signup').addEventListener('click', async function(){
+    var email = document.getElementById('auth-email').value.trim();
+    var pw = document.getElementById('auth-password').value;
+    if (!email || !pw) { showErr('Enter an email and a password to join.'); return; }
+    errEl.textContent = '';
+    var r = await client.auth.signUp({ email: email, password: pw });
+    if (r.error) { showErr(r.error.message); return; }
+    if (r.data.user && !r.data.session) { errEl.textContent = ''; statusEl.textContent = 'Account created — check your email to confirm, then sign in.'; return; }
+    setSignedIn(r.data.user);
+  });
+  document.getElementById('auth-signout').addEventListener('click', async function(){
+    await client.auth.signOut();
+    setSignedIn(null);
+  });
+  client.auth.getSession().then(function(s){ setSignedIn(s.data.session ? s.data.session.user : null); });
+  client.auth.onAuthStateChange(function(ev, s){ setSignedIn(s ? s.user : null); });
+})();
+
+</script>
+<script>
 (function(){
   function key(id){return 'ucm-poll-'+id;}
   // County filters
@@ -230,10 +320,12 @@ footer{border-top:1px solid rgba(198,164,93,.22);padding:28px 0;text-align:cente
         opts.forEach(function(b){ b.classList.remove('selected'); });
         btn.classList.add('selected');
         selected = btn.getAttribute('data-v');
-        takeBtn.disabled = false;
+        takeBtn.disabled = !window.__ucmSignedIn; takeBtn.setAttribute('data-has-choice','1'); if(window.__ucmSignedIn) takeBtn.textContent='Take the Poll';
       });
     });
+    if(!window.__ucmSignedIn){ takeBtn.textContent='Sign in to vote'; }
     takeBtn.addEventListener('click', function(){
+      if(!window.__ucmSignedIn){ document.getElementById('authbar').scrollIntoView({behavior:'smooth'}); document.getElementById('auth-email').focus(); return; }
       if(!selected) return;
       var mine = localStorage.getItem(key(id)+'-mine');
       var d = load();
