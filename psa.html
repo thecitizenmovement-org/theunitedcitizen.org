@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Public service announcement: what Shasta County is saying about the Anderson Parks rent pause.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<title>Public Service Announcement — Anderson Parks Rent Pause — United Citizens Movement</title>
+<style>
+:root{--navy:#0d2140;--navy-2:#102b50;--ink:#f7edcf;--gold:#c6a45d;--bright:#f1cf7a;--muted:#d8c79e;--panel:rgba(7,20,42,.88);--line:rgba(214,181,106,.58);--soft:rgba(214,181,106,.12);--blue:#5eb3ff;--blue-dark:#2f8fe8;--red:#9d2f32;--paper:#d9c8a1}
+*{box-sizing:border-box}body{margin:0;background:var(--navy);color:var(--ink);font-family:"Libre Franklin",sans-serif;line-height:1.55}
+a{color:inherit}
+.serif,h1,h2,h3{font-family:"Playfair Display",Georgia,serif}
+.wrap{width:min(1080px,calc(100% - 40px));margin:auto}
+.topnav{background:rgba(6,16,34,.95);border-bottom:1px solid var(--bright);padding:10px 16px;display:flex;flex-wrap:wrap;gap:4px;justify-content:center;position:sticky;top:0;z-index:10}
+.topnav a{color:var(--ink);text-decoration:none;padding:8px 12px;border-radius:4px;font-weight:600;font-size:.95rem}
+.topnav a:hover{background:var(--soft)}
+.topnav a.active{background:var(--gold);color:#0b1830}
+.hero{padding:64px 0 40px;text-align:center;border-bottom:1px solid rgba(198,164,93,.22)}
+.hero h1{color:var(--bright);font-size:clamp(2.2rem,5vw,3.6rem);margin:0 0 12px}
+.hero p{color:var(--muted);max-width:820px;margin:0 auto;font-size:1.1rem}
+.section{padding:44px 0}
+.member-note{border:1px solid var(--blue);background:rgba(94,179,255,.08);padding:14px 18px;margin-bottom:28px;text-align:center}
+.member-note strong{color:var(--blue)}
+.filters{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:28px}
+.filters button{background:transparent;border:1px solid var(--line);color:var(--ink);padding:10px 20px;cursor:pointer;font:inherit;border-radius:4px;font-weight:600}
+.filters button.active{background:var(--blue-dark);border-color:var(--blue-dark);color:#fff}
+.poll{background:linear-gradient(145deg,rgba(20,46,79,.64),var(--panel));border:1px solid var(--line);padding:28px;margin-bottom:28px}
+.poll h2{color:var(--blue);margin:0 0 6px;font-size:1.5rem}
+.poll .tag{color:var(--gold);font-size:.8rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.poll p{margin:0 0 16px;color:var(--muted)}
+.poll .criteria{margin:0 0 16px;padding-left:22px;color:var(--muted)}
+.poll .criteria li{margin-bottom:4px}
+.opt{display:block;width:100%;text-align:left;background:transparent;border:1px solid var(--line);color:var(--ink);padding:12px 16px;margin-bottom:8px;cursor:pointer;font:inherit;border-radius:4px}
+.opt:hover{background:var(--soft)}
+.opt.selected{border-color:var(--blue);background:rgba(94,179,255,.12)}
+.opt.voted{border-color:var(--bright);background:var(--soft)}
+.take{display:block;width:100%;background:var(--blue-dark);color:#fff;border:1px solid var(--blue-dark);padding:14px 16px;margin-top:12px;cursor:pointer;font:inherit;font-weight:700;border-radius:4px;font-size:1rem}
+.take:hover{background:var(--blue)}
+.take:disabled{opacity:.45;cursor:not-allowed}
+.bar{height:8px;background:rgba(214,181,106,.2);border-radius:4px;margin-top:6px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--blue)}
+.res{display:flex;justify-content:space-between;font-size:.9rem;color:var(--muted);margin-top:4px}
+.total{font-size:.9rem;color:var(--muted);margin-top:10px}
+.readmore{display:inline-block;margin-top:14px;color:var(--blue);font-weight:700;text-decoration:none}
+.readmore:hover{text-decoration:underline}
+.coming{opacity:.75}
+.note{border-left:3px solid var(--gold);padding:10px 14px;background:var(--soft);margin:14px 0;font-size:.95rem}
+footer{border-top:1px solid rgba(198,164,93,.22);padding:28px 0;text-align:center;color:var(--muted);font-size:.9rem}
+
+.authbar{border:1px solid var(--line);background:var(--panel);padding:18px 22px;margin-bottom:28px;text-align:center}
+.authbar h3{color:var(--blue);margin:0 0 4px;font-size:1.15rem}
+.authbar p{color:var(--muted);margin:0 0 12px;font-size:.95rem}
+.authbar input{display:inline-block;width:min(260px,100%);padding:10px 12px;margin:4px;border:1px solid var(--line);border-radius:4px;background:rgba(7,20,42,.6);color:var(--ink);font:inherit}
+.authbar button{background:var(--blue-dark);color:#fff;border:1px solid var(--blue-dark);padding:10px 20px;margin:4px;cursor:pointer;font:inherit;font-weight:700;border-radius:4px}
+.authbar button:hover{background:var(--blue)}
+.authbar button.ghost{background:transparent;color:var(--blue);border-color:var(--blue)}
+.authbar .err{color:#ff9d9d;font-size:.9rem;margin-top:8px}
+.authbar .ok{color:var(--bright);font-size:.95rem}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="index.html">Home</a><a href="mission.html">Mission Statement</a><a href="library.html">Law Library</a><a href="families.html">Families</a><a href="community.html">Community</a><a href="services.html">Services</a><a href="justice-wall.html">Justice Wall</a><a href="investigations.html">Investigations</a><a href="polls.html">Polls</a><a href="grand-jury.html">Grand Jury</a><a href="legal-team.html">Legal Team</a><a href="complaints.html">Complaints</a><a href="contact.html">Contact Card</a>
+</nav>
+
+<header class="hero"><div class="wrap">
+<h1>Public Service Announcement</h1>
+<p>What Shasta County Is Saying — Anderson Parks Rent Pause</p>
+</div></header>
+<main class="wrap section">
+
+<div class="note"><strong>Posted November 11, 2026.</strong> This announcement reports what residents of Shasta County said in a public community discussion on November 10, 2026, about a rent increase at two Shasta County mobile home parks. Private residents are not named. The founder&rsquo;s own words are quoted as his account.</div>
+
+<h2 style="color:var(--blue)">The story</h2>
+<p>A planned <strong>$300 rent increase</strong> at two Shasta County mobile home parks is <strong>paused for 90 days</strong>. Residents are asking: <strong>what happens on day 91?</strong> They want written protection during the pause, transparency, and a real commitment to a permanent rent stabilization agreement. As one resident put it: this issue is bigger than one property owner or one rent increase — it affects mobile home owners throughout Shasta County.</p>
+
+<h2 style="color:var(--blue)">What the people said</h2>
+<p>Thirteen comments in the discussion. The issues the people raised:</p>
+<ul class="criteria">
+<li><strong>Redding needs the same protection.</strong> A Redding resident said landlords there raise rent every year, and Redding needs the pause too.</li>
+<li><strong>California&rsquo;s rent-increase limits.</strong> A resident said the law allows rent to be raised twice a year by 5% each time, or once a year by 10% — and called it price gouging.</li>
+<li><strong>The pause should be permanent.</strong> A resident said it should be a permanent pause, not 90 days.</li>
+<li><strong>REU power rates and shutoffs.</strong> The founder: REU &ldquo;just decides it&rsquo;s going to fluctuate your power rate&rdquo; and there is no other choice — a monopoly. A mother with two kids and one on the way had her power shut off because her payment plan lands two days after her bill every month.</li>
+<li><strong>CPS, social workers, and the judges.</strong> A resident asked whether the movement is looking into the Department of Health and Human Services — CPS and social workers — and the judges who handle CPS cases.</li>
+<li><strong>The answer given:</strong> CPS and social workers <em>are</em> being investigated. The child support division <em>is</em> being investigated. Judges have been touched on briefly; law enforcement and the District Attorney&rsquo;s offices are covered. The investigation keeps expanding.</li>
+<li><strong>Cost of living, then vs now.</strong> The founder posted the 1983 vs 2026 poster: gas $1.24 vs $5.89, a new car $8,577 vs $48,000, a median home $82,600 vs $430,000, minimum wage $3.35 vs $16.50.</li>
+</ul>
+
+<h2 style="color:var(--blue)">What happens now</h2>
+<p>Thirteen new Shasta County polls are live on the Polling Station — one for each issue the people raised. Members sign in to vote. One vote per poll per member. Anonymous — nobody sees who voted how.</p>
+<ul class="criteria">
+<li>Should Shasta County mobile home parks have permanent rent stabilization?</li>
+<li>Should Redding stop landlords from raising rent every year?</li>
+<li>Do you believe landlords in Shasta County are price gouging with rent increases?</li>
+<li>Should Redding Electric Utility&rsquo;s rates and shutoff practices be investigated?</li>
+<li>Should Shasta County CPS and its social workers be investigated?</li>
+<li>Should the judges who handle CPS cases be investigated?</li>
+<li>Should the child support division be investigated?</li>
+<li>Have you or someone you know had a vehicle stolen in Shasta County that was never recovered?</li>
+<li>Should Shasta County Registrar Clint Curtis be removed from office?</li>
+<li>Have you or someone you know been falsely accused or denied justice in Shasta County?</li>
+<li>Have you had a case in Shasta County that was never solved?</li>
+<li>Do you believe Shasta County has misplaced or misspent public money?</li>
+<li>Is life in Shasta County harder now than it was in 1983?</li>
+</ul>
+<p><a class="readmore" href="polls.html">Vote on the Polling Station &rarr;</a></p>
+
+</main>
+<footer><div class="wrap">The United Citizens Movement &middot; The citizens vote.</div></footer>
+</body>
+</html>
