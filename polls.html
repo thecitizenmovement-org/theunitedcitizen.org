@@ -215,6 +215,7 @@ footer{border-top:1px solid rgba(198,164,93,.22);padding:28px 0;text-align:cente
   var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Implc3JicXJ3YmFjdWlyd3hia2lzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE2NTU2OTcsImV4cCI6MjEwNzIzMTY5N30._LCnNC2JIjijt6n0u3kKestF5G2Zsjju4hEv1d1tImc';
   if (!window.supabase) { var s=document.getElementById('auth-status'); if(s) s.textContent='Sign-in could not load. Check your connection and refresh — polls still show results.'; return; }
   var client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  window.__ucmSupabase = client;
   var session = null;
   var form = document.getElementById('auth-form');
   var signedin = document.getElementById('auth-signedin');
@@ -223,6 +224,7 @@ footer{border-top:1px solid rgba(198,164,93,.22);padding:28px 0;text-align:cente
   var whoEl = document.getElementById('auth-who');
   function setSignedIn(user){
     session = user ? { user: user } : null;
+    window.__ucmUserId = user ? user.id : null;
     var on = !!user;
     form.style.display = on ? 'none' : '';
     signedin.style.display = on ? '' : 'none';
@@ -294,12 +296,30 @@ footer{border-top:1px solid rgba(198,164,93,.22);padding:28px 0;text-align:cente
     var resultsEl = poll.querySelector('.results');
     var totalEl = poll.querySelector('.total');
     var selected = null;
-    function load(){
+    var counts = {}; // option -> shared count (from poll_votes; localStorage fallback)
+    function loadLocal(){
       try{ return JSON.parse(localStorage.getItem(key(id)) || '{}'); }catch(e){ return {}; }
     }
-    function save(d){ try{ localStorage.setItem(key(id), JSON.stringify(d)); }catch(e){} }
+    function saveLocal(d){ try{ localStorage.setItem(key(id), JSON.stringify(d)); }catch(e){} }
+    async function hashVoter(){
+      try{
+        var uid = window.__ucmUserId || 'anon';
+        var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(uid + ':' + id));
+        return Array.prototype.map.call(new Uint8Array(buf), function(b){ return ('0'+b.toString(16)).slice(-2); }).join('');
+      }catch(e){ return null; }
+    }
+    async function fetchCounts(){
+      var sb = window.__ucmSupabase;
+      if (!sb) { counts = loadLocal(); return; }
+      try{
+        var r = await sb.from('poll_votes').select('option_text').eq('poll_id', id);
+        if (r.error) throw r.error;
+        counts = {};
+        (r.data || []).forEach(function(row){ counts[row.option_text] = (counts[row.option_text] || 0) + 1; });
+      }catch(e){ counts = loadLocal(); }
+    }
     function render(){
-      var d = load();
+      var d = counts;
       var total = 0;
       Object.keys(d).forEach(function(k){ total += d[k]; });
       resultsEl.innerHTML = '';
@@ -313,7 +333,7 @@ footer{border-top:1px solid rgba(198,164,93,.22);padding:28px 0;text-align:cente
         resultsEl.appendChild(row);
         btn.classList.toggle('voted', localStorage.getItem(key(id)+'-mine') === v);
       });
-      totalEl.textContent = total ? (total + (total===1?' vote':' votes') + ' counted on this device.') : 'No votes yet on this device — be the first.';
+      totalEl.textContent = total ? (total + (total===1?' vote':' votes') + ' counted.') : 'No votes yet — be the first.';
     }
     opts.forEach(function(btn){
       btn.addEventListener('click', function(){
@@ -324,19 +344,37 @@ footer{border-top:1px solid rgba(198,164,93,.22);padding:28px 0;text-align:cente
       });
     });
     if(!window.__ucmSignedIn){ takeBtn.textContent='Sign in to vote'; }
-    takeBtn.addEventListener('click', function(){
+    takeBtn.addEventListener('click', async function(){
       if(!window.__ucmSignedIn){ document.getElementById('authbar').scrollIntoView({behavior:'smooth'}); document.getElementById('auth-email').focus(); return; }
       if(!selected) return;
       var mine = localStorage.getItem(key(id)+'-mine');
-      var d = load();
-      if(mine && d[mine]){ d[mine]--; if(d[mine]<=0) delete d[mine]; }
-      d[selected] = (d[selected]||0)+1;
       localStorage.setItem(key(id)+'-mine', selected);
-      save(d);
+      var sb = window.__ucmSupabase;
+      var savedShared = false;
+      if (sb) {
+        try{
+          var vh = await hashVoter();
+          if (vh) {
+            var up = await sb.from('poll_votes').upsert(
+              { poll_id: id, option_text: selected, voter_hash: vh },
+              { onConflict: 'poll_id,voter_hash' });
+            if (!up.error) savedShared = true;
+          }
+        }catch(e){ savedShared = false; }
+      }
+      if (!savedShared) {
+        var d = loadLocal();
+        if(mine && d[mine]){ d[mine]--; if(d[mine]<=0) delete d[mine]; }
+        d[selected] = (d[selected]||0)+1;
+        saveLocal(d);
+        counts = d;
+      } else {
+        await fetchCounts();
+      }
       render();
       takeBtn.textContent = 'Vote counted — change it any time';
     });
-    render();
+    fetchCounts().then(render);
   });
 })();
 </script>
