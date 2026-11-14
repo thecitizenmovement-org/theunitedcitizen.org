@@ -359,7 +359,7 @@
               <input type="text" id="prayer-name" name="name" autocomplete="name" />
               <label for="prayer-message">Your prayer request</label>
               <textarea id="prayer-message" name="message" rows="4" required></textarea>
-              <button class="send" type="submit">Copy my request</button>
+              <button class="send" type="submit">Send my request</button>
               <p class="done" role="status"></p>
             </form>
           </article>
@@ -376,7 +376,7 @@
               <input type="text" id="ask-name" name="name" autocomplete="name" />
               <label for="ask-message">Your question</label>
               <textarea id="ask-message" name="message" rows="4" required></textarea>
-              <button class="send" type="submit">Copy my question</button>
+              <button class="send" type="submit">Send my question</button>
               <p class="done" role="status"></p>
             </form>
           </article>
@@ -393,7 +393,7 @@
               <input type="text" id="study-name" name="name" autocomplete="name" />
               <label for="study-message">Scripture or subject</label>
               <textarea id="study-message" name="message" rows="4" required></textarea>
-              <button class="send" type="submit">Copy my suggestion</button>
+              <button class="send" type="submit">Send my suggestion</button>
               <p class="done" role="status"></p>
             </form>
           </article>
@@ -403,7 +403,7 @@
       <p class="foot-line">Scripture &middot; Reflection &middot; Prayer &middot; Fellowship</p>
     </main>
 
-    <script>
+        <script>
       document.querySelectorAll("[data-toggle]").forEach(function (btn) {
         btn.addEventListener("click", function () {
           var form = document.getElementById(btn.getAttribute("data-toggle"));
@@ -425,21 +425,10 @@
           if (!message) return;
           var text = kind + (name ? " from " + name : " (anonymous)") + ":\n\n" + message;
           var done = form.querySelector(".done");
-          function showDone() {
-            done.textContent = "Copied — paste it into an email or message to the chaplain to send it.";
-            done.classList.add("show");
-          }
-          if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(text).then(showDone, function () { fallback(); });
-          } else {
-            fallback();
-          }
-          function fallback() {
-            var ta = form.querySelector('[name="message"]');
-            ta.focus(); ta.select();
-            try { document.execCommand("copy"); } catch (e) {}
-            showDone();
-          }
+          var href = "mailto:chaplain@thecitizenmovement.org?subject=" + encodeURIComponent(kind) + "&body=" + encodeURIComponent(text);
+          window.location.href = href;
+          done.textContent = "Your email app should have opened with your message addressed to the chaplain \u2014 press Send there to deliver it.";
+          done.classList.add("show");
         });
       });
     </script>
