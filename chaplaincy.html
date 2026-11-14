@@ -295,6 +295,24 @@
         letter-spacing: 0.16em;
         text-transform: uppercase;
       }
+      .copyright-line {
+        margin: 1rem 0 0;
+        text-align: center;
+        color: #8a9384;
+        font-weight: 600;
+        font-size: 0.72rem;
+        letter-spacing: 0.06em;
+      }
+      .cms-trigger {
+        margin: 0.4rem 0 0;
+        text-align: center;
+      }
+      .cms-crosses {
+        color: var(--gold);
+        font-size: 0.62rem;
+        letter-spacing: 0.4em;
+        cursor: default;
+      }
 
       @media (max-width: 640px) {
         .cards { grid-template-columns: 1fr; }
@@ -401,6 +419,9 @@
       </section>
 
       <p class="foot-line">Scripture &middot; Reflection &middot; Prayer &middot; Fellowship</p>
+      <p class="copyright-line">&copy; 2026 The United Citizens of America. All rights reserved.</p>
+      <!-- CHAPLAIN CMS EASTER EGG - STAGED, NOT LINKED: the three crosses below are the trigger that will open the Chaplain CMS sign-in. The CMS (artifact chaplain-console) has no public web address yet, so the crosses link to nothing. WHEN the CMS has a real address, replace the span with: <a class="cms-crosses" href="PUT-THE-REAL-CMS-ADDRESS-HERE">&#10013;&#10013;&#10013;</a>. Do NOT link them to "#", a search, or any other page. -->
+      <p class="cms-trigger"><span class="cms-crosses" id="cms-trigger">&#10013;&#10013;&#10013;</span></p>
     </main>
 
         <script>
