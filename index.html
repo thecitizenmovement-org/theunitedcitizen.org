@@ -44,20 +44,22 @@
 <body class="blueprint">
   <header class="hero" id="top">
     <div class="measure m1"></div><!-- ================= NEWS TICKER — paste into thecitizenmovement.org index.html =================
-     Placement (founder's final call, Nov 17): BETWEEN the two measure lines
-     (.measure m1 at top 8%, .measure m2 at top 17%) inside the hero — the lines
-     are his measurement for where the ticker runs. The ticker sits in the band
-     just below m1, aligned to m1's span (left 22%, width 56%), over the hero photo.
+     Placement (founder's call, Nov 17): BETWEEN the two measure lines in
+     the hero (.measure m1 top 8%, m2 top 17%) — the lines are his measurement
+     for where the ticker runs. The ticker FILLS the band from m1 down to m2
+     (wrap top 8%, height 9%), stretched FULL WIDTH edge to edge (left 0,
+     width 100%), over the hero photo — taller bar, bigger text, no gap above
+     or below, not a little centered rectangle.
      Data: live from the ticker-feed edge function (Google News RSS), refetched
-     every 5 minutes while the page is open. If the live feed is not reachable
+     every 15 minutes while the page is open. If the live feed is not reachable
      (not deployed yet, or an outage), the banner shows the embedded Nov 17
      fallback headlines and says so in the status line. No keys, no secrets.
      ========================================================================================== -->
 <style>
-  .ucm-ticker-wrap{position:absolute;top:9%;left:22%;width:56%;z-index:3;}
-  .ucm-ticker{background:#fff;color:#101828;overflow:hidden;white-space:nowrap;
-    border-bottom:3px solid #c9a227;font:600 15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;}
-  .ucm-ticker-track{display:inline-flex;align-items:center;will-change:transform;
+  .ucm-ticker-wrap{position:absolute;top:8%;left:0;width:100%;height:9%;z-index:3;display:flex;flex-direction:column;}
+  .ucm-ticker{flex:1;display:flex;align-items:center;background:#fff;color:#101828;overflow:hidden;white-space:nowrap;
+    border-bottom:3px solid #c9a227;font:600 19px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;}
+  .ucm-ticker-track{display:inline-flex;align-items:center;will-change:transform;flex:0 0 auto;
     animation:ucmTickerScroll 22s linear infinite;}
   .ucm-ticker:hover .ucm-ticker-track{animation-play-state:paused;}
   @keyframes ucmTickerScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
@@ -119,7 +121,7 @@
     track.appendChild(buildHalf());
     track.appendChild(buildHalf());
     setStatus(live
-      ? "Live \u2014 top stories, refreshed every few minutes."
+      ? "Live \u2014 top stories, refreshed every 15 minutes."
       : "Nov 17, 2026 headlines \u2014 live feed not reached, showing the latest snapshot.");
   }
 
@@ -136,7 +138,7 @@
   }
 
   update();
-  setInterval(function () { if (!document.hidden) update(); }, 5 * 60 * 1000);
+  setInterval(function () { if (!document.hidden) update(); }, 15 * 60 * 1000);
 })();
 </script>
 <!-- ================= /END NEWS TICKER ================= -->
