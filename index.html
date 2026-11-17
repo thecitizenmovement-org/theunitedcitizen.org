@@ -43,7 +43,104 @@
 <style id="ucm-fx"> .panel-link .file-card,article.panel.file-card{transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease} @media (hover:hover){.panel-link:hover .file-card,article.panel.file-card:hover{transform:translateY(-6px);border-color:var(--gold);box-shadow:0 14px 34px rgba(0,0,0,.55),0 0 0 1px rgba(198,164,93,.6),0 0 26px rgba(198,164,93,.3)}} .panel-link:active .file-card,article.panel.file-card:active{transform:translateY(-2px) scale(.99)} .panel-link.tapped .file-card,article.panel.file-card.tapped,.panel-link.selected .file-card,article.panel.file-card.selected{border-color:var(--gold);box-shadow:0 10px 28px rgba(0,0,0,.5),0 0 0 2px rgba(198,164,93,.85),0 0 30px rgba(198,164,93,.4);transform:translateY(-4px)} body.no-fx .panel-link .file-card,body.no-fx article.panel.file-card{transition:none} body.no-fx .panel-link:hover .file-card,body.no-fx article.panel.file-card:hover{transform:none;box-shadow:var(--shadow)} .ucm-prefs{margin-top:18px;padding-top:14px;border-top:1px solid var(--line)} .ucm-prefs h4{color:var(--bright);margin:0 0 10px;font-size:1rem} .ucm-pref-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:8px 0;color:var(--ink);font-size:.95rem} .ucm-toggle{position:relative;width:46px;height:26px;border-radius:13px;border:1px solid var(--gold);background:rgba(255,255,255,.08);cursor:pointer;flex:none;padding:0} .ucm-toggle::after{content:"";position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#8a93a5;transition:left .15s ease,background .15s ease} .ucm-toggle[aria-checked="true"]{background:rgba(198,164,93,.25)} .ucm-toggle[aria-checked="true"]::after{left:22px;background:var(--gold)} .ucm-prefs .note{font-size:.8rem;color:var(--muted)} </style> </head>
 <body class="blueprint">
   <header class="hero" id="top">
-    <div class="measure m1"></div><div class="measure m2"></div>
+    <div class="measure m1"></div><!-- ================= NEWS TICKER — paste into thecitizenmovement.org index.html =================
+     Placement (founder's final call, Nov 17): BETWEEN the two measure lines
+     (.measure m1 at top 8%, .measure m2 at top 17%) inside the hero — the lines
+     are his measurement for where the ticker runs. The ticker sits in the band
+     just below m1, aligned to m1's span (left 22%, width 56%), over the hero photo.
+     Data: live from the ticker-feed edge function (Google News RSS), refetched
+     every 5 minutes while the page is open. If the live feed is not reachable
+     (not deployed yet, or an outage), the banner shows the embedded Nov 17
+     fallback headlines and says so in the status line. No keys, no secrets.
+     ========================================================================================== -->
+<style>
+  .ucm-ticker-wrap{position:absolute;top:9%;left:22%;width:56%;z-index:3;}
+  .ucm-ticker{background:#fff;color:#101828;overflow:hidden;white-space:nowrap;
+    border-bottom:3px solid #c9a227;font:600 15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;}
+  .ucm-ticker-track{display:inline-flex;align-items:center;will-change:transform;
+    animation:ucmTickerScroll 22s linear infinite;}
+  .ucm-ticker:hover .ucm-ticker-track{animation-play-state:paused;}
+  @keyframes ucmTickerScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .ucm-tick-label{background:#0e1a2b;color:#fff;border-radius:999px;padding:2px 12px;
+    margin:6px 14px 6px 10px;font-size:12px;letter-spacing:.12em;flex:0 0 auto;}
+  .ucm-tick-item{flex:0 0 auto;}
+  .ucm-tick-sep{color:#c9a227;margin:0 14px;flex:0 0 auto;}
+  .ucm-ticker-status{font:500 11px/1.4 system-ui,sans-serif;color:#667085;
+    text-align:right;padding:2px 10px 4px;background:#fff;}
+</style>
+<div class="ucm-ticker-wrap">
+<div class="ucm-ticker" id="ucm-news-ticker" role="marquee" aria-label="Top stories">
+  <div class="ucm-ticker-track" id="ucm-news-track"></div>
+</div>
+<div class="ucm-ticker-status" id="ucm-news-status">Loading today&rsquo;s headlines&hellip;</div>
+</div>
+<script>
+(function () {
+  var FEED = "https://jesrbqrwbacuirwxbkis.supabase.co/functions/v1/ticker-feed?type=news";
+  // Fallback = today's verified headlines (Nov 17, 2026). Used only when the
+  // live feed is unreachable. Kept in step with news-ticker.json.
+  var FALLBACK = [
+    "U.S. loses measles elimination status after 26 years",
+    "NSA classified network went down \u2014 technical problem, not an attack",
+    "Judge keeps vast majority of Omar investigation sealed",
+    "DOJ charges 15 in nationwide veterans fraud crackdown",
+    "Fed's Williams sees no need for dramatic action on rates",
+    "Ukraine attacks Kerch Bridge",
+    "2026 Senate election results",
+    "Grand Canyon plane crash kills 3"
+  ];
+  var track = document.getElementById("ucm-news-track");
+  var statusEl = document.getElementById("ucm-news-status");
+
+  function setStatus(text) {
+    if (statusEl) statusEl.textContent = text;
+    if (window.ucmTickerStatus) window.ucmTickerStatus("news", text);
+  }
+
+  function render(items, live) {
+    // Build with text nodes (no innerHTML from the feed) — headlines are
+    // plain text, never markup. Two identical halves = seamless -50% loop.
+    track.innerHTML = "";
+    function buildHalf() {
+      var frag = document.createDocumentFragment();
+      var lab = document.createElement("span");
+      lab.className = "ucm-tick-label"; lab.textContent = "TOP STORIES";
+      frag.appendChild(lab);
+      items.forEach(function (t) {
+        var it = document.createElement("span");
+        it.className = "ucm-tick-item"; it.textContent = t;
+        frag.appendChild(it);
+        var sep = document.createElement("span");
+        sep.className = "ucm-tick-sep"; sep.textContent = "\u25C6";
+        frag.appendChild(sep);
+      });
+      return frag;
+    }
+    track.appendChild(buildHalf());
+    track.appendChild(buildHalf());
+    setStatus(live
+      ? "Live \u2014 top stories, refreshed every few minutes."
+      : "Nov 17, 2026 headlines \u2014 live feed not reached, showing the latest snapshot.");
+  }
+
+  function update() {
+    var ctrl = new AbortController();
+    var timer = setTimeout(function () { ctrl.abort(); }, 8000);
+    fetch(FEED, { signal: ctrl.signal })
+      .then(function (r) { clearTimeout(timer); if (!r.ok) throw new Error("feed " + r.status); return r.json(); })
+      .then(function (d) {
+        if (d && d.ok && d.news && d.news.items && d.news.items.length) render(d.news.items, true);
+        else render(FALLBACK, false);
+      })
+      .catch(function () { render(FALLBACK, false); });
+  }
+
+  update();
+  setInterval(function () { if (!document.hidden) update(); }, 5 * 60 * 1000);
+})();
+</script>
+<!-- ================= /END NEWS TICKER ================= -->
+<div class="measure m2"></div>
     <div class="hero-content"><h1>THE UNITED CITIZENS MOVEMENT</h1><p>America: Unified Equity In Equality</p></div>
     <nav class="nav" aria-label="Primary navigation">
       <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links">Explore the movement</button>
