@@ -445,12 +445,22 @@
           var name = form.querySelector('[name="name"]').value.trim();
           var message = form.querySelector('[name="message"]').value.trim();
           if (!message) return;
+          var kindMap = { "form-prayer": "prayer", "form-ask": "question", "form-study": "study" };
+          var apiKind = kindMap[form.id] || "prayer";
           var text = kind + (name ? " from " + name : " (anonymous)") + ":\n\n" + message;
           var done = form.querySelector(".done");
           var href = "mailto:chaplain@thecitizenmovement.org?subject=" + encodeURIComponent(kind) + "&body=" + encodeURIComponent(text);
-          window.location.href = href;
-          done.textContent = "Your email app should have opened with your message addressed to the chaplain \u2014 press Send there to deliver it.";
-          done.classList.add("show");
+          var saved = fetch("https://jesrbqrwbacuirwxbkis.supabase.co/functions/v1/prayer-inbox", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ action: "submit", kind: apiKind, name: name, message: message })
+          }).catch(function () { return null; });
+          var wait = new Promise(function (resolve) { setTimeout(resolve, 5000); });
+          Promise.race([saved, wait]).then(function () {
+            window.location.href = href;
+            done.textContent = "Your email app should have opened with your message addressed to the chaplain \u2014 press Send there to deliver it.";
+            done.classList.add("show");
+          });
         });
       });
     </script>
