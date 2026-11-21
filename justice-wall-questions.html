@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Justice Wall — Questions Sheet — The United Citizens Movement</title>
+<style>
+  :root { --gold: #d4af37; --gold-bright: #f0d060; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    color: #eef2f9; line-height: 1.7; min-height: 100vh;
+    background: #060b16; font-size: 20px;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 40px 20px 80px; }
+  nav.top { text-align: center; margin-bottom: 30px; font-size: 18px; }
+  nav.top a { color: var(--gold); text-decoration: none; margin: 0 10px; }
+  h1 { text-align: center; color: var(--gold-bright); letter-spacing: .06em; font-size: 32px;
+       text-shadow: 0 2px 14px rgba(0,0,0,.9); margin-bottom: 6px; border-bottom: 3px solid var(--gold); padding-bottom: 10px; }
+  .sub { text-align: center; color: #c8d4e8; font-style: italic; margin: 18px 0 26px; }
+  p { margin-bottom: 14px; }
+  h2 { font-size: 25px; margin-top: 34px; color: var(--gold); }
+  .rule { background: #10182a; border-left: 4px solid var(--gold); padding: 16px 20px; margin: 20px 0; }
+  .rule ul { margin-left: 22px; }
+  .rule li { margin-bottom: 8px; }
+  label.q { display: block; margin: 20px 0 6px; font-weight: bold; }
+  label.q .n { color: var(--gold-bright); }
+  input[type=text], input[type=tel], input[type=email], textarea {
+    width: 100%; background: #0d1526; color: #fff; border: 1px solid #3a4a6b; border-radius: 4px;
+    padding: 10px 12px; font-family: Georgia, 'Times New Roman', serif; font-size: 19px; line-height: 1.5;
+  }
+  input:focus, textarea:focus { outline: 2px solid var(--gold); outline-offset: 1px; }
+  textarea { min-height: 96px; }
+  .sub-field { margin: 8px 0 0; }
+  .sub-field span { display: block; font-size: 17px; color: #c8d4e8; margin-bottom: 4px; }
+  .yesno { margin: 6px 0 0; }
+  .yesno label { display: inline-block; margin-right: 28px; font-weight: normal; font-size: 19px; }
+  .yesno input { margin-right: 6px; }
+  .btn-row { margin-top: 30px; text-align: center; }
+  button { font-family: Georgia, serif; font-size: 20px; padding: 12px 26px; margin: 0 8px 10px;
+    border-radius: 6px; cursor: pointer; }
+  .btn-send { background: var(--gold); color: #1a1405; border: 2px solid var(--gold-bright); font-weight: bold; }
+  .btn-print { background: transparent; color: var(--gold); border: 2px solid var(--gold); }
+  .done { display: none; margin-top: 16px; padding: 14px 18px; border: 1px solid rgba(212,175,55,.6);
+    border-radius: 8px; background: rgba(212,175,55,.08); text-align: center; }
+  .done.show { display: block; }
+  .small { font-size: 16px; color: #8fa0bd; }
+  .foot { margin-top: 36px; text-align: center; }
+  @media (max-width: 700px) { body { font-size: 18px; } h1 { font-size: 26px; } }
+  @media print {
+    body { background: #fff; color: #000; font-size: 15px; }
+    nav.top, .btn-row, .done { display: none !important; }
+    h1, h2 { color: #000; text-shadow: none; }
+    .rule { background: #fff; border-left: 3px solid #000; }
+    input[type=text], input[type=tel], input[type=email], textarea {
+      background: #fff; color: #000; border: none; border-bottom: 1px solid #888; border-radius: 0; padding: 2px 0;
+    }
+    .small { color: #444; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="top"><a href="index.html">Home</a><a href="declarations.html">Declarations</a><a href="prosecuting-officials.html">Case Law</a><a href="justice-wall.html">The Justice Wall</a><a href="contact.html">Contact Card</a></nav>
+  <h1>The Justice Wall — Questions Sheet</h1>
+  <p class="sub"><b>The United Citizens of America</b> — standard intake for every new Justice Wall case. Use this sheet from now on.</p>
+  <p>Ask these questions of the family member or referrer. Write down exactly what they say, in their own words. Leave a blank blank — never invent an answer, never fill a gap from a guess. This sheet is the intake. The placard and the case file are built from it only after verification and the founder's approval of the exact change.</p>
+  <p class="small">Your answers stay on your device until you press Send — nothing on this page stores them. Press Send to open your email with your answers addressed to the founder, or print this sheet and send it another way.</p>
+  <div class="rule"><b>The rules for every case:</b>
+    <ul>
+      <li>Your loved one is named, always. The living stay redacted unless the person consents to be named. Minors are never identified.</li>
+      <li>Placement requires excessive force or a deliberately overboard death or injury. Not every officer-involved shooting qualifies.</li>
+      <li>A case is placed only after it is verified.</li>
+      <li>Each case carries its own record: the official account, the family and witness accounts, and why the case earned its place.</li>
+      <li>The wall preserves the record for inquiry. It does not declare guilt or innocence.</li>
+      <li>No words between us on the page. No quoted words of the founder. No profanity. Sources read &ldquo;Verified sources&rdquo; only.</li>
+      <li>Nothing goes live until the founder approves the exact change first. The family&rsquo;s material goes live only by the family&rsquo;s own choice.</li>
+    </ul>
+  </div>
+  <form id="qs">
+  <h2>A. Who is giving this</h2>
+  <label class="q" for="q1"><span class="n">1.</span> Your full name:</label>
+  <input type="text" id="q1" name="q1" autocomplete="name">
+  <label class="q"><span class="n">2.</span> Your phone and email:</label>
+  <div class="sub-field"><span>Phone:</span><input type="tel" id="q2-phone" name="q2-phone" autocomplete="tel"></div>
+  <div class="sub-field"><span>Email:</span><input type="email" id="q2-email" name="q2-email" autocomplete="email"></div>
+  <label class="q" for="q3"><span class="n">3.</span> Your relationship to your loved one:</label>
+  <input type="text" id="q3" name="q3">
+  <label class="q" for="q4"><span class="n">4.</span> How did you hear about the movement? Who referred you?</label>
+  <textarea id="q4" name="q4"></textarea>
+  <label class="q" for="q5"><span class="n">5.</span> Are you the person we should contact about this case, or is there someone else?</label>
+  <input type="text" id="q5" name="q5">
+  <h2>B. Your loved one</h2>
+  <label class="q" for="q6"><span class="n">6.</span> Full name of your loved one:</label>
+  <input type="text" id="q6" name="q6">
+  <label class="q"><span class="n">7.</span> Date of birth, date of death, age at death:</label>
+  <div class="sub-field"><span>Date of birth:</span><input type="text" id="q7-dob" name="q7-dob"></div>
+  <div class="sub-field"><span>Date of death:</span><input type="text" id="q7-dod" name="q7-dod"></div>
+  <div class="sub-field"><span>Age at death:</span><input type="text" id="q7-age" name="q7-age"></div>
+  <label class="q" for="q8"><span class="n">8.</span> Where did they live (city and county)?</label>
+  <input type="text" id="q8" name="q8">
+  <label class="q"><span class="n">9.</span> A photo of them for the placard — do you have one you want used? (Send it only if you choose to.)</label>
+  <div class="yesno"><label><input type="radio" name="q9" value="Yes">Yes</label><label><input type="radio" name="q9" value="No">No</label></div>
+  <h2>C. What happened</h2>
+  <label class="q" for="q10"><span class="n">10.</span> In your own words, what happened?</label>
+  <textarea id="q10" name="q10"></textarea>
+  <label class="q" for="q11"><span class="n">11.</span> Date and time it happened:</label>
+  <input type="text" id="q11" name="q11">
+  <label class="q" for="q12"><span class="n">12.</span> Where it happened (place, city, county):</label>
+  <input type="text" id="q12" name="q12">
+  <label class="q" for="q13"><span class="n">13.</span> Which agency was involved? Which officers or officials, by name and rank if you know them?</label>
+  <textarea id="q13" name="q13"></textarea>
+  <label class="q" for="q14"><span class="n">14.</span> What does the official account say happened? (What did the agency, the coroner, or the court say?)</label>
+  <textarea id="q14" name="q14"></textarea>
+  <label class="q" for="q15"><span class="n">15.</span> Who else saw it? Witness names and how to reach them:</label>
+  <textarea id="q15" name="q15"></textarea>
+  <label class="q" for="q16"><span class="n">16.</span> Was there video — bodycam, dashcam, jail video, a bystander&rsquo;s phone? Where is it now?</label>
+  <textarea id="q16" name="q16"></textarea>
+  <h2>D. The placement criteria</h2>
+  <label class="q" for="q17"><span class="n">17.</span> What makes this excessive force, or a deliberately overboard death or injury — in your words?</label>
+  <textarea id="q17" name="q17"></textarea>
+  <label class="q" for="q18"><span class="n">18.</span> What was your loved one doing when it happened? Were they armed? Were they in custody?</label>
+  <textarea id="q18" name="q18"></textarea>
+  <label class="q" for="q19"><span class="n">19.</span> Was there an investigation? By whom, and what did it find?</label>
+  <textarea id="q19" name="q19"></textarea>
+  <label class="q" for="q20"><span class="n">20.</span> Were charges filed against anyone? Against your loved one? What happened to those charges?</label>
+  <textarea id="q20" name="q20"></textarea>
+  <h2>E. The record</h2>
+  <label class="q" for="q21"><span class="n">21.</span> What documents do you have? (Death certificate, autopsy, incident report, coroner&rsquo;s report, court filings, news stories — list each one.)</label>
+  <textarea id="q21" name="q21"></textarea>
+  <label class="q" for="q22"><span class="n">22.</span> Which of these can you send us?</label>
+  <textarea id="q22" name="q22"></textarea>
+  <label class="q" for="q23"><span class="n">23.</span> What records do we still need to request? (Agency, court, coroner — and the case or report number, if you know it.)</label>
+  <textarea id="q23" name="q23"></textarea>
+  <label class="q" for="q24"><span class="n">24.</span> Case numbers, report numbers, or court case numbers:</label>
+  <input type="text" id="q24" name="q24">
+  <h2>F. The living</h2>
+  <label class="q" for="q25"><span class="n">25.</span> Who among the living must stay unnamed on the wall? (Names stay off unless the person consents.)</label>
+  <textarea id="q25" name="q25"></textarea>
+  <label class="q" for="q26"><span class="n">26.</span> Is there anyone living who DOES want to be named — a family member speaking for the case? Name and consent:</label>
+  <textarea id="q26" name="q26"></textarea>
+  <label class="q" for="q27"><span class="n">27.</span> Are there children involved? (Children are never identified — no names, no photos, no details.)</label>
+  <textarea id="q27" name="q27"></textarea>
+  <h2>G. What the family wants on the wall</h2>
+  <label class="q" for="q28"><span class="n">28.</span> What should the placard say? (A line or two, in the family&rsquo;s words.)</label>
+  <textarea id="q28" name="q28"></textarea>
+  <label class="q" for="q29"><span class="n">29.</span> What should the case file hold, and what should it leave out?</label>
+  <textarea id="q29" name="q29"></textarea>
+  <label class="q" for="q30"><span class="n">30.</span> Is there anything about this case you do NOT want public?</label>
+  <textarea id="q30" name="q30"></textarea>
+  <label class="q"><span class="n">31.</span> Would you like a memorial website built for your loved one at a discount rate?</label>
+  <div class="yesno"><label><input type="radio" name="q31" value="Yes">Yes</label><label><input type="radio" name="q31" value="No">No</label></div>
+  <h2>H. Permission to publish</h2>
+  <label class="q"><span class="n">32.</span> Do you give the movement permission to publish a placard and a case file for this person on the Justice Wall?</label>
+  <div class="yesno"><label><input type="radio" name="q32" value="Yes">Yes</label><label><input type="radio" name="q32" value="No">No</label></div>
+  <label class="q"><span class="n">33.</span> Do you understand the placard and case file will be public — anyone on the internet can read them, and copies may keep circulating even if the page comes down?</label>
+  <div class="yesno"><label><input type="radio" name="q33" value="Yes">Yes</label><label><input type="radio" name="q33" value="No">No</label></div>
+  <label class="q" for="q34"><span class="n">34.</span> Who is giving this permission — your name and your relationship to your loved one:</label>
+  <input type="text" id="q34" name="q34">
+  <h2>I. What happens next</h2>
+  <p><b>35.</b> Verification: we check the public record (court portals, published rulings, agency records) against what you told us. A case is placed only after it is verified.</p>
+  <p><b>36.</b> The founder reviews the placard and the case file and approves the exact change before anything goes live.</p>
+  <p><b>37.</b> When it is live, we send you the link.</p>
+  <div class="rule">Thank you for trusting us with your loved one&rsquo;s story. We are so sorry for your loss. We will honor them, we will keep their name on the wall, and we will stand with your family. If you would like someone to talk with or pray with, our chaplain is here for you — Eric Hoff, chaplain@thecitizenmovement.org.</div>
+  <div class="btn-row">
+    <button type="submit" class="btn-send">Send your answers</button>
+    <button type="button" class="btn-print" id="print-btn">Print this sheet</button>
+  </div>
+  <p class="done" id="done">Your email app should have opened with your answers addressed to the founder — press Send there to deliver it.</p>
+  </form>
+  <p class="small foot">The Justice Wall — thecitizenmovement.org/justice-wall.html — a public record, preserved for inquiry.<br>General information only — not legal advice.</p>
+</div>
+<script>
+(function () {
+  var QUESTIONS = [
+    [1, "Your full name:"],
+    [2, "Your phone and email:"],
+    [3, "Your relationship to your loved one:"],
+    [4, "How did you hear about the movement? Who referred you?"],
+    [5, "Are you the person we should contact about this case, or is there someone else?"],
+    [6, "Full name of your loved one:"],
+    [7, "Date of birth, date of death, age at death:"],
+    [8, "Where did they live (city and county)?"],
+    [9, "A photo of them for the placard — do you have one you want used?"],
+    [10, "In your own words, what happened?"],
+    [11, "Date and time it happened:"],
+    [12, "Where it happened (place, city, county):"],
+    [13, "Which agency was involved? Which officers or officials, by name and rank if you know them?"],
+    [14, "What does the official account say happened?"],
+    [15, "Who else saw it? Witness names and how to reach them:"],
+    [16, "Was there video — bodycam, dashcam, jail video, a bystander's phone? Where is it now?"],
+    [17, "What makes this excessive force, or a deliberately overboard death or injury — in your words?"],
+    [18, "What was your loved one doing when it happened? Were they armed? Were they in custody?"],
+    [19, "Was there an investigation? By whom, and what did it find?"],
+    [20, "Were charges filed against anyone? Against your loved one? What happened to those charges?"],
+    [21, "What documents do you have?"],
+    [22, "Which of these can you send us?"],
+    [23, "What records do we still need to request?"],
+    [24, "Case numbers, report numbers, or court case numbers:"],
+    [25, "Who among the living must stay unnamed on the wall?"],
+    [26, "Is there anyone living who DOES want to be named — a family member speaking for the case? Name and consent:"],
+    [27, "Are there children involved?"],
+    [28, "What should the placard say?"],
+    [29, "What should the case file hold, and what should it leave out?"],
+    [30, "Is there anything about this case you do NOT want public?"],
+    [31, "Would you like a memorial website built for your loved one at a discount rate?"],
+    [32, "Do you give the movement permission to publish a placard and a case file for this person on the Justice Wall?"],
+    [33, "Do you understand the placard and case file will be public — anyone on the internet can read them, and copies may keep circulating even if the page comes down?"],
+    [34, "Who is giving this permission — your name and your relationship to your loved one:"]
+  ];
+  function val(id) {
+    var el = document.getElementById(id);
+    return el ? el.value.trim() : "";
+  }
+  function radio(name) {
+    var el = document.querySelector('input[name="' + name + '"]:checked');
+    return el ? el.value : "";
+  }
+  function answer(n) {
+    if (n === 2) {
+      var p = val("q2-phone"), e = val("q2-email");
+      if (!p && !e) return "";
+      return "Phone: " + (p || "(left blank)") + " / Email: " + (e || "(left blank)");
+    }
+    if (n === 7) {
+      var dob = val("q7-dob"), dod = val("q7-dod"), age = val("q7-age");
+      if (!dob && !dod && !age) return "";
+      return "Date of birth: " + (dob || "(left blank)") + " / Date of death: " + (dod || "(left blank)") + " / Age at death: " + (age || "(left blank)");
+    }
+    if (n === 9 || n === 31 || n === 32 || n === 33) return radio("q" + n);
+    return val("q" + n);
+  }
+  document.getElementById("qs").addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var lines = ["Justice Wall — Questions Sheet", ""];
+    QUESTIONS.forEach(function (q) {
+      var a = answer(q[0]);
+      lines.push(q[0] + ". " + q[1] + " " + (a || "(left blank)"));
+    });
+    lines.push("", "What happens next: verification, founder review, then we send you the link when it is live.");
+    var href = "mailto:Founder@thecitizenmovement.org?subject=" +
+      encodeURIComponent("Justice Wall — questions sheet") +
+      "&body=" + encodeURIComponent(lines.join("\n"));
+    window.location.href = href;
+    var done = document.getElementById("done");
+    done.textContent = "Your email app should have opened with your answers addressed to the founder — press Send there to deliver it.";
+    done.classList.add("show");
+  });
+  document.getElementById("print-btn").addEventListener("click", function () { window.print(); });
+})();
+</script>
+</body>
+</html>
